@@ -1,4 +1,12 @@
-Flask==1.1.2
-Flask-SQLAlchemy==2.4.3
-psycopg2-binary==2.8.5
-SQLAlchemy==1.3.17
+"""Server for Study Buddy Finder app."""
+
+from flask import Flask
+
+app = Flask(__name__)
+
+
+# Replace with routes and view functions
+
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', debug=True)
