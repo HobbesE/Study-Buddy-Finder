@@ -27,14 +27,16 @@ class Student(db.Model):
     student_name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
-    icon = db.Column(db.String)
+    icon_url = db.Column(db.String) 
     cohort = db.Column(db.String) #Todo: Is this a string? Should be selected from a drop down menu;
     #removed cohort_name as a foreign key to COHORT table for the time being-- color coding feature will fall in later sprint.
     location = db.Column(db.String)
     goals = db.Column(db.String)
+    latitude = db.Column(db.Float)
+    longitude = db.Column(db.Float)
 
     def __repr__(self):
-        return f'<Student student_id={self.student_id} email={self.email} icon={self.icon} cohort={self.cohort} location = {self.location} goals = {self.goals}>'
+        return f'<Student student_id={self.student_id} email={self.email} icon.url={self.url} cohort={self.cohort} location = {self.location} goals = {self.goals}>'
 
 
 class Attendence(db.Model):
@@ -96,7 +98,6 @@ class Topic(db.Model):
 
 #     def __repr__(self):
 #         return f'<Cohort cohort_name = {self.cohort_name} cohort_color_code = {self.cohort_color_code}>'
-
 
 
 
