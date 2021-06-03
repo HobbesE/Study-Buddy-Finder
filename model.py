@@ -64,7 +64,7 @@ class StudySession(db.Model):
                         #autoincrement = True,
                         db.ForeignKey('students.student_id')) #Question: Do foreign id's like this need to be auto incrementing?
                                                                     #Answer: Nope! Only primary keys need to increment.
-    proposed_time = db.Column(db.DateTime)
+    proposed_time = db.Column(db.String) #ToDo: Change "String" datatype to "DateTime" after researching Datetime...
     topic_id = db.Column(db.Integer,  
                     db.ForeignKey('topics.topic_id')) 
 
