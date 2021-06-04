@@ -69,7 +69,7 @@ class StudySession(db.Model):
                         #autoincrement = True,
                         db.ForeignKey('students.student_id')) #Question: Do foreign id's like this need to be auto incrementing?
                                                                     #Answer: Nope! Only primary keys need to increment.
-    proposed_time = db.Column(db.String) #ToDo: Change "String" datatype to "DateTime" after researching Datetime...
+    proposed_time = db.Column(db.DateTime) #ToDo: Change "String" datatype to "DateTime" after researching Datetime...
     topic_id = db.Column(db.Integer,  
                     db.ForeignKey('topics.topic_id')) 
 
@@ -109,13 +109,13 @@ class Topic(db.Model):
 
 #Test data:
 
-test_student_sam = Student(student_name = 'Sam Bradley', email= 'testy_sam@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2021', location='Topeka, KS')
-test_student_kevyn = Student(student_name = 'Kevyn Bradley', email= 'testy_kevyn@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2022', location='Auburn, KS')
-test_student_maya = Student(student_name = 'Testy Name', email= 'testy_maya@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2023', location='Kansas City, MO')
-test_student_gillespie = Student(student_name = 'Testy Name', email= 'testy_gillespie@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2024', location='Test City, OK')
-test_attendence = Attendence()
-test_session = StudySession(proposed_time = 'High noon')
-test_topic = Topic(topic_description='Test Topic numero uno-- the first topic we will test!', topic_title='Test 1')
+# test_student_sam = Student(student_name = 'Sam Bradley', email= 'testy_sam@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2021', location='Topeka, KS')
+# test_student_kevyn = Student(student_name = 'Kevyn Bradley', email= 'testy_kevyn@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2022', location='Auburn, KS')
+# test_student_maya = Student(student_name = 'Testy Name', email= 'testy_maya@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2023', location='Kansas City, MO')
+# test_student_gillespie = Student(student_name = 'Testy Name', email= 'testy_gillespie@test.test', password='testypassword', icon_url='testy icon', cohort='Test Cohort 2024', location='Test City, OK')
+# test_attendence = Attendence()
+# test_session = StudySession(proposed_time = 'High noon')
+# test_topic = Topic(topic_description='Test Topic numero uno-- the first topic we will test!', topic_title='Test 1')
 
 if __name__=='__main__':
     from flask import Flask
