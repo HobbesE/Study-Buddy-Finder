@@ -1,10 +1,10 @@
 """Models for Study Buddy Finder app"""
 
 from flask_sqlalchemy import SQLAlchemy
+from flask_login import UserMixin, LoginManager, login_user, login_required
 import datetime
 
 db = SQLAlchemy()
-
 
 def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
@@ -17,7 +17,7 @@ def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
     print('Connected to the db!')
 
 class Student(db.Model):
-    """A student user."""
+    """A student user. Associated with login as well."""
 
     __tablename__ = 'students'
 
