@@ -16,8 +16,20 @@ def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
 
     print('Connected to the db!')
 
+class User(db.Model, UserMixin):
+    """A user of Hackbrighter"""
+
+    _tablename__='users'
+
+    user_id= db.Column(db.Integer,
+                        autoincrement=True,
+                        primary_key=True)
+    def get_it(self):
+        """Override UserMixin.get_id"""
+        return str(self.user.id)
+
 class Student(db.Model):
-    """A student user. Associated with login as well."""
+    """A student user."""
 
     __tablename__ = 'students'
 

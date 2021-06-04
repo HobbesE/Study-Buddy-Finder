@@ -1,6 +1,7 @@
 """Server for Study Buddy Finder app."""
 
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, request, session
+from flask_login import LoginManager, login_user, login_required 
 app = Flask(__name__)
 app.secret_key = "DEBUG"
 
@@ -8,22 +9,24 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 
 @app.route('/')
-@login_required
-def index():
+def home():
     """Return main study buddy table as homepage."""
-    return render_template("index.html")
-
+    if not session.get('logged_in'):
+        return render_template('login.html')
+    else:
+        return render_template('index.html')
+    
 @app.route('/register')
 def register_page():
     """Return account registration """
     return render_template("register.html")
 
 @login_manager.user_loader
-def load_student(student_id):
+def load_user(user_id):
     """Load a student user"""
-    return Student.query.get(student_id)
+    return User.query.get(user_id)
 
-@app.route('/login')
+@app.route('/login', methods=['POST'])
 def login():
     """Return log in page"""
     
@@ -34,6 +37,7 @@ def login():
 
     if user.password == password:
         #Call flask_login.login_user to log in a student user
+        session['logged_in'] = True
         login_user(user)
 
         flash("You're in!")
