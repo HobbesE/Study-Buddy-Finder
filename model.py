@@ -40,8 +40,7 @@ class Student(db.Model):
     email = db.Column(db.String, unique=True)
     password = db.Column(db.String)
     icon_url = db.Column(db.String) 
-    cohort = db.Column(db.String) #Todo: Is this a string? Should be selected from a drop down menu;
-    #removed cohort_name as a foreign key to COHORT table for the time being-- color coding feature will fall in later sprint.
+    cohort = db.Column(db.String) 
     location = db.Column(db.String)
     goals = db.Column(db.String)
     latitude = db.Column(db.Float)
