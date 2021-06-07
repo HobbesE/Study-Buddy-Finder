@@ -41,19 +41,26 @@ def login():
         login_user(user)
 
         flash("You're in!")
-
-    flash("Ope. That didn't go well.")
+        return redirect("/")
+    else:flash("Ope. That didn't go well.")
     return redirect("/")
 
-
-@app.route('/student_profile')
-@login_required
+@app.route('/student')
+# @login_required
 def profile():    
     """Return student profile page"""
     return render_template("profile")
 
+#@app.route('/create_opp')
+# @login_required
+#def create_opp:
+#     When a study_opp event is created
+# the study_opp event information should be displayed in index.html,
+# including creator icon/link to their profile, study topic, datetime, and max 
+
+
 @app.route('/hackbrighter_map')
-@login_required
+# @login_required
 def map():
     """Return student map page"""
     return render_template("map")
@@ -74,4 +81,4 @@ def map():
 
 
 if __name__ == '__main__':
-    app.run(use_reloader=True, use_debugger=True)
+    app.run(debug=True, use_reloader=True, use_debugger=True)
