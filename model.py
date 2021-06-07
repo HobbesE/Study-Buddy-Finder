@@ -13,41 +13,51 @@ def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
 
     db.app = flask_app
     db.init_app(flask_app)
+    db.drop_all()
+    db.create_all()
 
     print('Connected to the db!')
 
-class User(db.Model, UserMixin):
-    """A user of Hackbrighter"""
-
-    _tablename__='users'
-
-    user_id= db.Column(db.Integer,
-                        autoincrement=True,
-                        primary_key=True)
-    def get_it(self):
-        """Override UserMixin.get_id"""
-        return str(self.user.id)
 
 class Student(db.Model):
     """A student user."""
 
     __tablename__ = 'students'
 
-    student_id = db.Column(db.Integer,
+    def __init__(self, username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url= "url", location = "This is a string for location.", goals= 'Write about your goals!', latitude= 0.0, longitude= 0.0):
+
+        self.username = username
+        self.password = password
+        self.last_name = last_name
+        self.first_name = first_name
+        self.email = email
+        self.icon_url = icon_url
+        self.cohort_name = cohort_name
+        self.cohort_year = cohort_year
+        self.location = location
+        self.goals = goals
+        self.latitude = latitude
+        self.longitude = longitude
+        print(username, password, first_name, last_name, email, cohort_name, cohort_year)
+
+    user_id= db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    student_name = db.Column(db.String)
-    email = db.Column(db.String, unique=True)
+    username = db.Column(db.String, unique=True)
     password = db.Column(db.String)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    email = db.Column(db.String, unique=True)
     icon_url = db.Column(db.String) 
-    cohort = db.Column(db.String) 
+    cohort_name = db.Column(db.String) 
+    cohort_year = db.Column(db.String) 
     location = db.Column(db.String)
     goals = db.Column(db.String)
     latitude = db.Column(db.Float)
     longitude = db.Column(db.Float)
 
     def __repr__(self):
-        return f'<Student student_id={self.student_id} email={self.email}>'
+        return f'<Student username={self.username} email={self.email}>'
 
 
 class Attendence(db.Model):
@@ -59,13 +69,13 @@ class Attendence(db.Model):
                         autoincrement = True,
                         primary_key = True)
     study_session_id = db.Column(db.Integer, db.ForeignKey('study_sessions.study_session_id'))
-    student_id = db.Column(db.Integer, db.ForeignKey('students.student_id'))
+    username = db.Column(db.String, db.ForeignKey('students.username'))
 
     study_session = db.relationship('StudySession', backref='attendences')
     student = db.relationship('Student', backref='attendences')
 
     def __repr__(self):
-        return f'<Attendence attendence_id= {self.attendence_id} study_session_id {self.study_session_id} student_id= {self.student_id}>'
+        return f'<Attendence attendence_id= {self.attendence_id} study_session_id {self.study_session_id} username= {self.username}>'
 
 class StudySession(db.Model):
     """an opportunity for study buddies to join"""
@@ -76,9 +86,9 @@ class StudySession(db.Model):
                         autoincrement = True,
                         primary_key = True,
                         unique = True)
-    creator_id = db.Column(db.Integer, 
+    creator_id = db.Column(db.String, 
                         #autoincrement = True,
-                        db.ForeignKey('students.student_id')) #Question: Do foreign id's like this need to be auto incrementing?
+                        db.ForeignKey('students.username')) #Question: Do foreign id's like this need to be auto incrementing?
                                                                     #Answer: Nope! Only primary keys need to increment.
     proposed_time = db.Column(db.DateTime) #ToDo: Change "String" datatype to "DateTime" after researching Datetime...
     topic_id = db.Column(db.Integer,  
@@ -128,7 +138,7 @@ class Topic(db.Model):
 # test_session = StudySession(proposed_time = 'High noon')
 # test_topic = Topic(topic_description='Test Topic numero uno-- the first topic we will test!', topic_title='Test 1')
 
-if __name__=='__main__':
-    from flask import Flask
-    app=Flask(__name__)
-    connect_to_db(app)
+# if __name__=='__main__':
+#     from flask import Flask
+#     app=Flask(__name__)
+#     connect_to_db(app)
