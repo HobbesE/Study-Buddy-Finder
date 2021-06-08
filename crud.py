@@ -4,7 +4,7 @@ from model import Student, Attendence, StudySession, Topic, connect_to_db, db
 
 
 
-def make_user(first_name, last_name, email, username, password, cohort_name, cohort_year):
+def create_user(first_name, last_name, email, username, password, cohort_name, cohort_year):
     """Create and return a new student."""
 
     student = Student(
@@ -58,4 +58,4 @@ def create_topic(topic_description, topic_title):
 
 if __name__ == '__main__':
     from server import app
-    #connect_to_db(app)
+    connect_to_db(app)

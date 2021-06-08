@@ -4,7 +4,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, session
 from flask_login import LoginManager, login_user, login_required
 from model import Student, Attendence, Topic, StudySession, connect_to_db
-from crud import make_user
+from crud import create_user
+from datetime import timedelta
 
 
 db = SQLAlchemy()
@@ -30,19 +31,20 @@ login_manager.init_app(app)
 def home():
     """Return main study buddy table as homepage."""
     if not session.get('logged_in'):
-        return render_template('login.html')
+         return render_template('login.html')
     else:
-        return render_template('index.html')
+         return render_template('index.html')
     
 @app.route('/register')
 def register_page():
     """Return account registration """
+    
     return render_template("register.html")
 
 @app.route('/create_user', methods = ['POST'])
 def create_user():
     """create a new user"""
-    #user_id???
+    #retrieve values from user's registration form
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
     email = request.form.get('email')
@@ -52,37 +54,45 @@ def create_user():
     cohort_year = request.form.get('cohort_year')
 
     # TODO:Check if user exists before adding them  
-    make_user(first_name, last_name, email, username, password, cohort_name, cohort_year)
+    new_user= Student(first_name, last_name, email, username, password, cohort_name, cohort_year)
+
+    #if new_user in students
+
     #print(first_name, last_name, email, username, password, cohort_name, cohort_year)
     return redirect('/')
 
 @login_manager.user_loader
 def load_user(user_id):
     """Load a student user"""
+    
     return Student.query.get(user_id)
 
-@app.route('/login', methods=['POST'])
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     """Return log in page"""
-    
-    username = request.form.get("username")
-    password = request.form.get("password")
+    if request.method == 'POST':
+        username = request.form.get("username")
+        password = request.form.get("password")
 
-    user = User.query.filter_by(username=username).first()
+        user = User.query.filter_by(username=username).first()
 
-    if user.password == password:
-        #Call flask_login.login_user to log in a student user
-        session['logged_in'] = True
-        login_user(user)
+        if not user:
+            return 'User does not exist!'
 
-        flash("You're in!")
+        login_user(user, remember=True)
+
+        if user.password == password:
+            #Call flask_login.login_user to log in a student user
+            session['logged_in'] = True
+            login_user(user)
+            flash("You're in!")
+            return redirect("/")
+        else:flash("Ope. That didn't go well.")
         return redirect("/")
-    else:flash("Ope. That didn't go well.")
-    return redirect("/")
 
-@app.route('/student')
+@app.route('/student/<username>')
 # @login_required
-def profile():    
+def profile(username):    
     """Return student profile page"""
     return render_template("profile")
 
