@@ -6,7 +6,7 @@ import datetime
 
 db = SQLAlchemy()
 
-def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
+def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
@@ -14,8 +14,8 @@ def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
 
     db.app = flask_app
     db.init_app(flask_app)
-    db.drop_all()
-    db.create_all()
+#    db.drop_all()
+#    db.create_all()
 
     print('Connected to the db!')
 
@@ -139,7 +139,7 @@ class Topic(db.Model):
 # test_session = StudySession(proposed_time = 'High noon')
 # test_topic = Topic(topic_description='Test Topic numero uno-- the first topic we will test!', topic_title='Test 1')
 
-# if __name__=='__main__':
-#     from flask import Flask
-#     app=Flask(__name__)
-#     connect_to_db(app)
+if __name__=='__main__':
+    from flask import Flask
+    app=Flask(__name__)
+    connect_to_db(app)

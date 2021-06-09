@@ -2,9 +2,7 @@
 
 from model import Student, Attendence, StudySession, Topic, connect_to_db, db
 
-
-
-def create_user(first_name, last_name, email, username, password, cohort_name, cohort_year):
+def create_student(first_name, last_name, email, username, password, cohort_name, cohort_year):
     """Create and return a new student."""
 
     student = Student(
@@ -48,7 +46,7 @@ def create_study_session(creator_id, proposed_time, topic_id):
 
 def create_topic(topic_description, topic_title):
     topic=Topic(
-        topic_description=topic_descriptioin, 
+        topic_description=topic_description, 
         topic_title=topic_title)
 
     db.session.add(topic)

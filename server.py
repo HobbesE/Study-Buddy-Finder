@@ -4,19 +4,18 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, session
 from flask_login import LoginManager, login_user, login_required
 from model import Student, Attendence, Topic, StudySession, connect_to_db
-from crud import create_user
+from crud import create_student
 from datetime import timedelta
 
 
-db = SQLAlchemy()
 
-# def connect_to_db(flask_app, db_uri='postgresql:///students', echo=True):
+# def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
 #     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
 #     flask_app.config['SQLALCHEMY_ECHO'] = echo
 #     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 #     db.app = flask_app
-#     db.init_app(flask_app)
+#     db.init_app(fask_app)
 
 #     print('Connected to the db!')
 
@@ -41,9 +40,9 @@ def register_page():
     
     return render_template("register.html")
 
-@app.route('/create_user', methods = ['POST'])
-def create_user():
-    """create a new user"""
+@app.route('/create_student', methods = ['POST'])
+def create_student():
+    """create a new student"""
     #retrieve values from user's registration form
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
@@ -55,8 +54,6 @@ def create_user():
 
     # TODO:Check if user exists before adding them  
     new_user= Student(first_name, last_name, email, username, password, cohort_name, cohort_year)
-
-    #if new_user in students
 
     #print(first_name, last_name, email, username, password, cohort_name, cohort_year)
     return redirect('/')
@@ -126,5 +123,5 @@ def map():
 
 
 if __name__ == '__main__':
-    connect_to_db(app)
+    connect_to_db(app, echo=False)
     app.run(debug=True, use_reloader=True, use_debugger=True)
