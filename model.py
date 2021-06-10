@@ -11,10 +11,8 @@ def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
     flask_app.config['SQLALCHEMY_ECHO'] = echo
     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     flask_app.config['REMEMBER-COOKIE_DURATION'] = datetime.timedelta(days=30)
-
     db.app = flask_app
     db.init_app(flask_app)
-#    db.drop_all()
 #    db.create_all()
 
     print('Connected to the db!')
@@ -34,6 +32,8 @@ class Student(db.Model):
         self.cohort_name = cohort_name
         self.cohort_year = cohort_year
 
+    #^Lucia's not sure if this needs to be here? Sean or Ashley recommended it. Order of arguments seems to matter.)
+
     user_id= db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
@@ -45,7 +45,7 @@ class Student(db.Model):
     # icon_url = db.Column(db.String) 
     cohort_name = db.Column(db.String) 
     cohort_year = db.Column(db.String) 
-    # location = db.Column(db.String)
+    # location = db.Column(db.String) .  #Keep it!
     # goals = db.Column(db.String)
     # latitude = db.Column(db.Float)
     # longitude = db.Column(db.Float)
@@ -99,7 +99,7 @@ class Topic(db.Model):
     topic_id = db.Column(db.Integer,
                     autoincrement = True,
                     primary_key = True)
-    topic_description = db.Column(db.String)
+    topic_description = db.Column(db.String) #pre-requisite recommentations
     topic_title = db.Column(db.String)
 
     def __repr__(self):

@@ -1,3 +1,10 @@
+
+
+#TODO: Why is information seeding to the database incorrectly?
+#Table order is user_id, username, password, first_name, last_name, email, cohort_name, cohort_year
+#but data is populating user_id, username, password, last_name, email, first_name, cohort_name, cohorty_year
+#I've put everything I can find in this order. Is it my for loop at the end, in seed_database.py?
+
 """Script to seed Study Buddy database."""
 
 import os

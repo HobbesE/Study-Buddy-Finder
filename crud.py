@@ -2,7 +2,7 @@
 
 from model import Student, Attendence, StudySession, Topic, connect_to_db, db
 
-def create_student(first_name, last_name, email, username, password, cohort_name, cohort_year):
+def create_student(username, password, email, first_name, last_name, cohort_name, cohort_year):
     """Create and return a new student."""
 
     student = Student(
@@ -20,16 +20,12 @@ def create_student(first_name, last_name, email, username, password, cohort_name
 
     return student
 
-
-    
-
 def attend(study_session_id, user_id):
 
     attendence = Attendence(
         study_session_id=study_session_id, 
         user_id=user_id
     )
-    
     db.session.add(attendence)
     db.session.commit()
 
@@ -58,6 +54,6 @@ def create_topic(topic_description, topic_title):
 
     return topic
 
-if __name__ == '__main__':
-    from server import app
-    connect_to_db(app)
+# if __name__ == '__main__':
+#     from server import app
+#     connect_to_db(app)

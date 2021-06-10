@@ -1,11 +1,12 @@
 """Server for Study Buddy Finder app."""
 
 from flask_sqlalchemy import SQLAlchemy
-from flask import Flask, render_template, redirect, request, session
+from flask import Flask, render_template, redirect, request, session, flash
 from flask_login import LoginManager, login_user, login_required
 from model import Student, Attendence, Topic, StudySession, connect_to_db
-from crud import create_student
+# from crud import create_student
 from datetime import timedelta
+import crud
 
 
 
@@ -33,27 +34,32 @@ def home():
     else:
          return render_template('index.html')
     
-@app.route('/register', methods=['POST'])
+@app.route('/register')
 def register_page():
     """Return account registration """
     
     return render_template("register.html")
 
-@app.route('/create_student', methods = ['POST'])
+@app.route('/register', methods = ['POST'])
 def create_student():
     """create a new student"""
     #retrieve values from user's registration form
+    username = request.form.get('username')
+    password = request.form.get('password')
     first_name = request.form.get('first_name')
     last_name = request.form.get('last_name')
     email = request.form.get('email')
-    username = request.form.get('username')
-    password = request.form.get('password')
     cohort_name = request.form.get('cohort_name')
     cohort_year = request.form.get('cohort_year')
 
-    # TODO:Check if user exists before adding them  
-    new_user= Student(first_name, last_name, email, username, password, cohort_name, cohort_year)
+    print(first_name, cohort_name, cohort_year, username)
 
+    new_user=crud.create_student(username, password, email, first_name, last_name, cohort_name, cohort_year)
+    print(new_user)
+    #^Needs to be in the same order as the create_students function's argument in crud.py!!!
+    # TODO:Check if user exists before adding them  
+    # new_user= Student(username, password, first_name, last_name, email, cohort_name, cohort_year)
+    
     #print(first_name, last_name, email, username, password, cohort_name, cohort_year)
     return redirect('/')
 
@@ -70,17 +76,18 @@ def login():
         username = request.form.get("username")
         password = request.form.get("password")
 
-        user = User.query.filter_by(username=username).first()
+        student = Student.query.filter_by(username=username).first()
+        print(student)
 
-        if not user:
+        if not student:
             return 'User does not exist!'
 
-        login_user(user, remember=True)
+#        login_user(user, remember=True)
 
-        if user.password == password:
+        if student.password == password:
             #Call flask_login.login_user to log in a student user
             session['logged_in'] = True
-            login_user(user)
+            # login_user(student)
             flash("You're in!")
             return redirect("/")
         else:flash("Ope. That didn't go well.")
