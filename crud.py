@@ -6,13 +6,14 @@ def create_student(first_name, last_name, email, username, password, cohort_name
     """Create and return a new student."""
 
     student = Student(
-        first_name = first_name,
-        last_name = last_name,
-        email = email,
         username = username,
         password = password,
+        email = email,
+        first_name = first_name,
+        last_name = last_name,
         cohort_name = cohort_name,
-        cohort_year = cohort_year)
+        cohort_year = cohort_year
+    )
 
     db.session.add(student)
     db.session.commit()
@@ -26,7 +27,8 @@ def attend(study_session_id, user_id):
 
     attendence = Attendence(
         study_session_id=study_session_id, 
-        user_id=user_id)
+        user_id=user_id
+    )
     
     db.session.add(attendence)
     db.session.commit()
@@ -37,7 +39,8 @@ def create_study_session(creator_id, proposed_time, topic_id):
     study_session = StudySession(
         creator_id=creator_id, 
         proposed_time=proposed_time, 
-        topic_id=topic_id)
+        topic_id=topic_id
+    )
 
     db.session.add(study_session)
     db.session.commit()
@@ -47,7 +50,8 @@ def create_study_session(creator_id, proposed_time, topic_id):
 def create_topic(topic_description, topic_title):
     topic=Topic(
         topic_description=topic_description, 
-        topic_title=topic_title)
+        topic_title=topic_title
+    )
 
     db.session.add(topic)
     db.session.commit()

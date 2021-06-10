@@ -25,21 +25,14 @@ class Student(db.Model):
 
     __tablename__ = 'students'
 
-    def __init__(self, username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url= "url", location = "This is a string for location.", goals= 'Write about your goals!', latitude= 0.0, longitude= 0.0):
-
+    def __init__(self, username, password, first_name, last_name, email, cohort_name, cohort_year):
         self.username = username
         self.password = password
-        self.last_name = last_name
         self.first_name = first_name
+        self.last_name = last_name
         self.email = email
-        self.icon_url = icon_url
         self.cohort_name = cohort_name
         self.cohort_year = cohort_year
-        self.location = location
-        self.goals = goals
-        self.latitude = latitude
-        self.longitude = longitude
-        print(username, password, first_name, last_name, email, cohort_name, cohort_year)
 
     user_id= db.Column(db.Integer,
                         autoincrement=True,
@@ -49,13 +42,13 @@ class Student(db.Model):
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
-    icon_url = db.Column(db.String) 
+    # icon_url = db.Column(db.String) 
     cohort_name = db.Column(db.String) 
     cohort_year = db.Column(db.String) 
-    location = db.Column(db.String)
-    goals = db.Column(db.String)
-    latitude = db.Column(db.Float)
-    longitude = db.Column(db.Float)
+    # location = db.Column(db.String)
+    # goals = db.Column(db.String)
+    # latitude = db.Column(db.Float)
+    # longitude = db.Column(db.Float)
 
     def __repr__(self):
         return f'<Student username={self.username} email={self.email}>'
@@ -70,8 +63,7 @@ class Attendence(db.Model):
                         autoincrement = True,
                         primary_key = True)
     study_session_id = db.Column(db.Integer, db.ForeignKey('study_sessions.study_session_id'))
-    username = db.Column(db.String, db.ForeignKey('students.username'))
-
+    user_id = db.Column(db.Integer, db.ForeignKey('students.user_id'))
     study_session = db.relationship('StudySession', backref='attendences')
     student = db.relationship('Student', backref='attendences')
 
@@ -87,11 +79,10 @@ class StudySession(db.Model):
                         autoincrement = True,
                         primary_key = True,
                         unique = True)
-    creator_id = db.Column(db.String, 
-                        #autoincrement = True,
-                        db.ForeignKey('students.username')) #Question: Do foreign id's like this need to be auto incrementing?
-                                                                    #Answer: Nope! Only primary keys need to increment.
-    proposed_time = db.Column(db.DateTime) #ToDo: Change "String" datatype to "DateTime" after researching Datetime...
+    creator_id = db.Column(db.Integer, 
+                        #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
+                        db.ForeignKey('students.user_id'))
+    proposed_time = db.Column(db.DateTime) #TODO: Change DateTime to account for time zones!!!!
     topic_id = db.Column(db.Integer,  
                     db.ForeignKey('topics.topic_id')) 
 
@@ -115,7 +106,6 @@ class Topic(db.Model):
         return f'<Topic topic_id={self.topic_id} topic_title={self.topic_title}>'
 
 #removed cohort_name as a foreign key to COHORT table for the time being-- color coding feature will fall in later sprint.
-
 # class Cohort(db.Model):
 
 #     __tablename__ = 'cohorts'

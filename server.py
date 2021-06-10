@@ -25,7 +25,6 @@ app.secret_key = "DEBUG"
 # connect_to_db(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
-
 @app.route('/')
 def home():
     """Return main study buddy table as homepage."""
@@ -34,7 +33,7 @@ def home():
     else:
          return render_template('index.html')
     
-@app.route('/register')
+@app.route('/register', methods=['POST'])
 def register_page():
     """Return account registration """
     

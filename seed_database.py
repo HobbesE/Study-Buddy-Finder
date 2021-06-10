@@ -1,9 +1,8 @@
 """Script to seed Study Buddy database."""
 
 import os
-#import csv file
 from random import choice, randint
-from datetime import datetime
+#from datetime import datetime
 
 import crud
 import model
@@ -24,27 +23,27 @@ student_data= [
         "first_name": "Jessica", 
         "last_name": "Blandley", 
         "email":"jbland07@yahoo.com", 
-        "icon_url":"static/cute_puppy", 
+        #"icon_url":"static/cute_puppy", 
         "cohort_name":"Ada", 
         "cohort_year":"2018", 
-        "location":"Peru", 
-        "goals":"Exist in a damn table", 
-        "latitude":"", 
-        "longitude":""
+        # "location":"Peru", 
+        # "goals":"Exist in a damn table", 
+        # "latitude":"", 
+        # "longitude":""
     }, 
     {   
         "username":"japandpanda", 
         "password": "yum", 
         "first_name": "Cassity", 
         "last_name": "Jefferson", 
-        "email":"bananarama@gmail.com", 
-        "icon_url":"static/whoops_pic", 
+        "email":"dgillespie@gmail.com", 
+        #"icon_url":"static/whoops_pic", 
         "cohort_name":"Katherine", 
         "cohort_year":"2020", 
-        "location":"San Francisco", 
-        "goals":"To log in successfully!", 
-        "latitude":"", 
-        "longitude":""
+        # "location":"San Francisco", 
+        # "goals":"To log in successfully!", 
+        # "latitude":"", 
+        # "longitude":""
     },
     {   
         "username":"notthefool", 
@@ -52,27 +51,27 @@ student_data= [
         "first_name": "d", 
         "last_name": "Gillespie", 
         "email":"dgillespie@gmail.com", 
-        "icon_url":"static/clifford", 
+        #"icon_url":"static/clifford", 
         "cohort_name":"Ada", 
         "cohort_year":"2021", 
-        "location":"2112 67th Terr", 
-        "goals":"", 
-        "latitude":"", 
-        "longitude":""
+        # "location":"2112 67th Terr", 
+        # "goals":"", 
+        # "latitude":"", 
+        # "longitude":""
     },
     {
-        "username":"notthefool", 
-        "password": "mamaraised", 
+        "username":"notthefool2", 
+        "password": "duplicate_account", 
         "first_name": "deborah", 
         "last_name": "Gillespie", 
         "email":"notthefool@gmail.com", 
-        "icon_url":"static/clifford", 
+        #"icon_url":"static/clifford", 
         "cohort_name":"Ada", 
         "cohort_year":"2021", 
-        "location":"Kansas City", 
-        "goals":"", 
-        "latitude":"", 
-        "longitude":""
+        # "location":"Kansas City", 
+        # "goals":"", 
+        # "latitude":"", 
+        # "longitude":""
     },
     {
         "username":"mamamaya", 
@@ -80,28 +79,57 @@ student_data= [
         "first_name": "Maya", 
         "last_name": "Lou", 
         "email":"maya@gmail.com", 
-        "icon_url":"static/babies", 
+        #"icon_url":"static/babies", 
         "cohort_name":"Katherine", 
         "cohort_year":"2019", 
-        "location":"KS", 
-        "goals":"", 
-        "latitude":"", 
-        "longitude":""
+        # "location":"KS", 
+        # "goals":"", 
+        # "latitude":"", 
+        # "longitude":""
+    },
+    {
+        "username":"susieq", 
+        "password": "86theboyz", 
+        "first_name": "Susan", 
+        "last_name": "Wesolek", 
+        "email":"susieq86@gmail.com", 
+        #"icon_url":"static/turtle", 
+        "cohort_name":"Ada", 
+        "cohort_year":"2020", 
+        # "location":"Chicago", 
+        # "goals":"", 
+        # "latitude":"", 
+        # "longitude":""
+    },
+    {
+        "username":"balloonicorn", 
+        "password": "omgIHATEchoosingpasswords!!!", 
+        "first_name": "Balloonicorn", 
+        "last_name": "The Unicorn", 
+        "email":"balloonicorn@hackbright.com", 
+        #"icon_url":"static/balloonicorn_selfie", 
+        "cohort_name":"Katherine", 
+        "cohort_year":"2021", 
+        # "location":"Hackbright desk", 
+        # "goals":"", 
+        # "latitude":"", 
+        # "longitude":""
     }]
 
 students_in_db = []
 for student in student_data:
-    username, password, first_name, last_name, email, icon_url, cohort_name, cohort_year : (
+    username, password, first_name, last_name, email, cohort_name, cohort_year = (
         student["username"],
         student["password"],
         student['first_name'],
         student['last_name'],
         student['email'],
-        student['icon_url'],
+#       student['icon_url'],
         student['cohort_name'],
-        student['cohort_year']
+        student['cohort_year'],
     )
-    students_in_db.append(student)
+    db_student = crud.create_student(username, password, first_name, last_name, email, cohort_name, cohort_year)
+    students_in_db.append(db_student)
 
 
 
