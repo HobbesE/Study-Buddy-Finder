@@ -1,0 +1,44 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Hackbright- Create a new Study Opportunity</title>
+  </head>
+  
+  <body></body>
+
+<!-- Modal Box Form Section -->
+<!-- TODO: link to create_opp_button.js and create CSS for Modal Box -->
+
+<div class="modal_opp_form">
+<div class="modal-content">
+  <div class="close">(close)</div>
+  <div class="img src=/static/HBlogo.svg" alt="hackbright logo"></div>
+  <form action="/create_opportunity"
+    <div id="topic"><label>Topic:</label><select name="topic">
+      <option value="Skills Assessment">Study Guide Week 1</option>
+      <option value="Lab work">Javascript Skills Assessment</option>
+      <option value="Feelings Circle">Feelings Circle</option>
+      <option value="Testing">Testing 2</option>
+      <option value="Flask & Jinja">Flask & Jinja</option>
+      <option value="Other">Other</option>
+      <option value="Homework">Homework</option>
+      <div id="specifics"><label>Specifics</label><input type="text" name=specifics</div>
+    </select>
+    
+    </div>  
+    <div id="proposed_time"><label>Time of Day:</label><select name="proposed_time">
+      <option value="morning">Dawn</option>
+      <option value="noon">High Noon</option>
+      <option value="night">Sundown</option>
+      </select></div>
+    <div id="capacity"><label>Room Capacity:</label><input type="text" name=capacity</div>
+    <div id="prerequisites"><label>Prerequisites:</label><input type="text" name="prerequisites"></div>
+    <div id="submit_opportunity"><input type="Submit" alt="submit form to create a new study session"></button></div>
+  </form>
+</div>
+</div>
+</html>
+
+

@@ -32,7 +32,7 @@ class Student(db.Model):
         self.cohort_name = cohort_name
         self.cohort_year = cohort_year
 
-    #^Lucia's not sure if this needs to be here? Sean or Ashley recommended it. Order of arguments seems to matter.)
+    #^Lucia's not sure if this needs to be here. Sean or Ashley recommended it. Order of arguments seems to matter.)
 
     user_id= db.Column(db.Integer,
                         autoincrement=True,
@@ -82,9 +82,12 @@ class StudySession(db.Model):
     creator_id = db.Column(db.Integer, 
                         #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
                         db.ForeignKey('students.user_id'))
+    proposed_date = db.Column(db.DateTime)
     proposed_time = db.Column(db.DateTime) #TODO: Change DateTime to account for time zones!!!!
     topic_id = db.Column(db.Integer,  
                     db.ForeignKey('topics.topic_id')) 
+    capacity = db.Column(db.Integer)
+    prerequisites = db.Column(db.Integer)
 
     creator = db.relationship('Student', backref='study_sessions')
     topic = db.relationship('Topic', backref='study_sessions')
