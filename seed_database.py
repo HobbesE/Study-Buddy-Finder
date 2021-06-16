@@ -43,7 +43,7 @@ student_data= [
         "password": "yum", 
         "first_name": "Cassity", 
         "last_name": "Jefferson", 
-        "email":"dgillespie@gmail.com", 
+        "email":"dgillespie2@gmail.com", 
         #"icon_url":"static/whoops_pic", 
         "cohort_name":"Katherine", 
         "cohort_year":"2020", 

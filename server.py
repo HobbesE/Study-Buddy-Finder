@@ -1,13 +1,13 @@
 """Server for Study Buddy Finder app."""
 
-from flask_sqlalchemy import SQLAlchemy
+from flask_sqlalchemy import SQLAlchemy 
 from flask import Flask, render_template, redirect, request, session, flash
-from flask_login import LoginManager, login_user, login_required
+from flask_login import LoginManager, login_user, login_required, logout_user
 from model import Student, Attendence, Topic, StudySession, connect_to_db
 # from crud import create_student
 from datetime import timedelta
 import crud
-
+from jinja2 import StrictUndefined
 
 
 # def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
@@ -23,24 +23,37 @@ import crud
 
 app = Flask(__name__)
 app.secret_key = "DEBUG"
+app.jinja_env.undefined = StrictUndefined
 # connect_to_db(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
+
 @app.route('/')
 def home():
     """Return main study buddy table as homepage."""
     if not session.get('logged_in'):
          return render_template('login.html')
     else:
-         return render_template('index.html')
+        study_sessions=crud.get_study_sessions()
+        print('*'*20)
+        print(study_sessions)
+        return render_template('index.html', study_sessions=study_sessions)
+
+# @app.route('/')
+# def home_table():
+#     """query database for existing study sessions, and display them!"""
+#     study_sessions=crud.get_sessions()
+#     print('*'*20)
+#     print(study_sessions)
+#     return render_template('index.html', study_sessions=study_sessions)
     
-@app.route('/register')
+@app.route('/register') #same endpoint for a different method
 def render_register_page():
     """Return account registration """
     
     return render_template("register.html")
 
-@app.route('/register', methods = ['POST'])
+@app.route('/register', methods = ['POST']) #same endpoint for a different method
 def create_student():
     """create a new student"""
     #retrieve values from user's registration form
@@ -86,17 +99,19 @@ def login():
 
         if student.password == password:
             #Call flask_login.login_user to log in a student user
-            session['logged_in'] = True
+            session['logged_in'] = student.user_id
+            print(session['logged_in'])
             #  login_user(student)  #TODO: is this causing problems? Commented out when "flask_module not imported"
             flash("You're in!")
             return redirect("/")
         else:flash("Ope. That didn't go well.")
         return redirect("/")
 
-@app.route('/logout', methods=['POST'])
+@app.route("/logout", methods=['POST'])
+@login_required
 def logout():
-    """Log student out"""
-    #TODO: Finish logout function
+    """log a student out"""
+    logout_user()
     return redirect("/")
 
 @app.route('/student/<username>')
@@ -114,14 +129,13 @@ def render_create_opportunity():
 @app.route('/create_opportunity', methods=['POST'])
 #@login_required
 def create_opportunity():
+    creator_id=session['logged_in']
     proposed_time = request.form.get('proposed_time')
     topic_id= request.form.get('topic_id')
     capacity= request.form.get('capacity')
     prerequisites= request.form.get('prerequisites')
-    #max_students
-    #proposed_day
-    new_opportunity=crud.create_student(proposed_time, topic_id, capacity, prerequisites)    
-    
+    new_opportunity=crud.create_study_session(creator_id, proposed_time, topic_id, capacity, prerequisites)    
+
 #     When a study_opp event is created
 # the study_opp event information should be displayed in index.html,
 # including creator icon/link to their profile, study topic, datetime, and max 

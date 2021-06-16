@@ -49,10 +49,14 @@ class Student(db.Model):
     # goals = db.Column(db.String)
     # latitude = db.Column(db.Float)
     # longitude = db.Column(db.Float)
+    # sessions_attended = db.Column(db.Integer)
 
     def __repr__(self):
         return f'<Student username={self.username} email={self.email}>'
-
+    
+    # def study(self, sessions_attended=1):
+    #     """Add one study session to student's count"""
+    #     self.study += sessions_attended
 
 class Attendence(db.Model):
     """association between student and study opportunity posting"""
@@ -83,17 +87,18 @@ class StudySession(db.Model):
                         #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
                         db.ForeignKey('students.user_id'))
     proposed_date = db.Column(db.DateTime)
-    proposed_time = db.Column(db.DateTime) #TODO: Change DateTime to account for time zones!!!!
+    proposed_time = db.Column(db.String) #TODO: Change DateTime to account for time zones!!!!
     topic_id = db.Column(db.Integer,  
                     db.ForeignKey('topics.topic_id')) 
     capacity = db.Column(db.Integer)
-    prerequisites = db.Column(db.Integer)
+    prerequisites = db.Column(db.String)
+    active = db.Column(db.Boolean, default=True)
 
     creator = db.relationship('Student', backref='study_sessions')
     topic = db.relationship('Topic', backref='study_sessions')
 
     def __repr__(self):
-        return f'<StudySession study_session_id={self.study_session_id} creator_id={self.creator_id} proposed_time={self.proposed_time} topic_id = {self.topic_id}>'
+        return f'<StudySession study_session_id={self.study_session_id} creator_id={self.creator_id} proposed_time={self.proposed_time} topic_id = {self.topic_id} active = {self.active}>'
 
 class Topic(db.Model):
 

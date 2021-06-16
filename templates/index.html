@@ -1,14 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-<title>Hackbrighter</title>
-</head>
-
-<body>
-
-<h1>Study Buddy Opportunities</h1>
-<h1><a href="/create_opportunity">+ session</href></h1>
-<h5><a href="/team_calendar">Calendar View</a></h5><br>
-<br>
-</body>
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Hackbright- Create a new Study Opportunity</title>
+    </head>
+    <body>
+        <h1>Study Buddy Opportunities</h1>
+        <h1><a href="/create_opportunity">+ session</href></h1>
+        <h5><a href="/team_calendar">Calendar View</a></h5><br>
+            {% for session in study_sessions %}
+                <p>{{session}}</p>
+            {% endfor %}   
+           
+    </body>
+    
 </html>
