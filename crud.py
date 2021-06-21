@@ -61,6 +61,22 @@ def get_study_sessions():
     
     return StudySession.query.all()
 
+def get_creator_study_sessions(username):
+    """Return user's relevant study sessions"""
+    # user_study_session=StudySession(
+    # )
+    user = db.session.query(Student).filter_by(username=username)
+    target_user_id= user.user_id
+
+    creator_study_sessions = StudySession.query.filter_by(creator_id=target_user_id)
+
+    return creator_study_sessions
+
+# def get_participants_for_study_session(target_user_id):
+#     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)
+
+#     return  participants_for_study_sessions
+
 # if __name__ == '__main__':
 #     from server import app
 #     connect_to_db(app)

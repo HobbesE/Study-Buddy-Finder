@@ -23,16 +23,18 @@ class Student(db.Model):
 
     __tablename__ = 'students'
 
-    def __init__(self, username, password, first_name, last_name, email, cohort_name, cohort_year):
-        self.username = username
-        self.password = password
-        self.first_name = first_name
-        self.last_name = last_name
-        self.email = email
-        self.cohort_name = cohort_name
-        self.cohort_year = cohort_year
+    # def __init__(self, username, password, first_name, last_name, email, cohort_name, cohort_year):
+    #     self.username = username
+    #     self.password = password
+    #     self.first_name = first_name
+    #     self.last_name = last_name
+    #     self.email = email
+    #     self.icon_url = icon_url
+    #     self.cohort_name = cohort_name
+    #     self.cohort_year = cohort_year
 
-    #^Lucia's not sure if this needs to be here. Sean or Ashley recommended it. Order of arguments seems to matter.)
+    # #^Lucia's not sure if this needs to be here. Sean or Ashley recommended it. Order of arguments seems to matter.)
+    #^ Normally, this init would be necessary; in this project, SQLAlchemy does it for me. 
 
     user_id= db.Column(db.Integer,
                         autoincrement=True,
@@ -42,7 +44,7 @@ class Student(db.Model):
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
     email = db.Column(db.String, unique=True)
-    # icon_url = db.Column(db.String) 
+    icon_url = db.Column(db.String) 
     cohort_name = db.Column(db.String) 
     cohort_year = db.Column(db.String) 
     # location = db.Column(db.String) .  #Keep it!
@@ -86,6 +88,10 @@ class StudySession(db.Model):
     creator_id = db.Column(db.Integer, 
                         #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
                         db.ForeignKey('students.user_id'))
+    # participant_id = db.Column # This attribute needs to make room for multiple students)
+    #                 (db.Integer, 
+    #                     #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
+    #                     db.ForeignKey('students.user_id'))
     proposed_date = db.Column(db.DateTime)
     proposed_time = db.Column(db.String) #TODO: Change DateTime to account for time zones!!!!
     topic_id = db.Column(db.Integer,  
@@ -93,9 +99,12 @@ class StudySession(db.Model):
     capacity = db.Column(db.Integer)
     prerequisites = db.Column(db.String)
     active = db.Column(db.Boolean, default=True)
+    
 
     creator = db.relationship('Student', backref='study_sessions')
+    # participant = db.relationship('Student', backref='study_sessions')
     topic = db.relationship('Topic', backref='study_sessions')
+    
 
     def __repr__(self):
         return f'<StudySession study_session_id={self.study_session_id} creator_id={self.creator_id} proposed_time={self.proposed_time} topic_id = {self.topic_id} active = {self.active}>'
@@ -103,7 +112,6 @@ class StudySession(db.Model):
 class Topic(db.Model):
 
     __tablename__ = 'topics'
-
     topic_id = db.Column(db.Integer,
                     autoincrement = True,
                     primary_key = True)

@@ -6,7 +6,9 @@ from flask_login import LoginManager, login_user, login_required, logout_user
 from model import Student, Attendence, Topic, StudySession, connect_to_db
 # from crud import create_student
 from datetime import timedelta
-import crud
+#import crud sometimes doesn't work. Try "from crud import *"
+from crud import *
+#import crud
 from jinja2 import StrictUndefined
 
 
@@ -116,10 +118,13 @@ def logout():
 
 @app.route('/student/<username>')
 # @login_required
-def profile(username):    
+def profile(username):  
     """Return student profile page"""
-    return render_template("profile.html")
 
+    get_creator_study_sessions(username)
+    # participants_for_study_sessions(participant_id)
+
+    return render_template("profile.html")
 @app.route('/create_opportunity')
 # @login_required
 def render_create_opportunity():
@@ -130,6 +135,7 @@ def render_create_opportunity():
 #@login_required
 def create_opportunity():
     creator_id=session['logged_in']
+    #participant_id=
     proposed_time = request.form.get('proposed_time')
     topic_id= request.form.get('topic_id')
     capacity= request.form.get('capacity')

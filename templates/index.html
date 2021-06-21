@@ -9,9 +9,21 @@
         <h1>Study Buddy Opportunities</h1>
         <h1><a href="/create_opportunity">+ session</href></h1>
         <h5><a href="/team_calendar">Calendar View</a></h5><br>
-            {% for session in study_sessions %}
-                <p>{{session}}</p>
-            {% endfor %}   
+        <!-- Opportunity Table -->
+            {% if study_sessions %}
+                <table>
+                    <tr>
+                        {% for study_session in study_sessions %}
+                        Creator: {{ study_session.creator.username}}<br>
+                        <!-- {{ study_session.creator.icon_url}} -->
+                        Proposed Time: {{ study_session.proposed_time}}<br>
+                        Topic: {{study_session.topic}}<br>
+                        Maximum Capacity: {{ study_session.capacity}} <br><br>
+                        {% endfor %}
+                    </tr>
+                    
+                </table>    
+            {% endif %}   
            
     </body>
     
