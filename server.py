@@ -3,24 +3,24 @@
 from flask_sqlalchemy import SQLAlchemy 
 from flask import Flask, render_template, redirect, request, session, flash
 from flask_login import LoginManager, login_user, login_required, logout_user
-from model import Student, Attendence, Topic, StudySession, connect_to_db
+from model import Student, Attendence, Topic, StudySession, connect_to_db, db
 # from crud import create_student
 from datetime import timedelta
-#import crud sometimes doesn't work. Try "from crud import *"
+# import crud sometimes doesn't work. Try "from crud import astrisk"
 from crud import *
-#import crud
+# import crud
 from jinja2 import StrictUndefined
 
 
-# def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
-#     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-#     flask_app.config['SQLALCHEMY_ECHO'] = echo
-#     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+# # def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
+# #     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
+# #     flask_app.config['SQLALCHEMY_ECHO'] = echo
+# #     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-#     db.app = flask_app
-#     db.init_app(fask_app)
+# #     db.app = flask_app
+# #     db.init_app(fask_app)
 
-#     print('Connected to the db!')
+# #     print('Connected to the db!')
 
 
 app = Flask(__name__)
@@ -33,10 +33,11 @@ login_manager.init_app(app)
 @app.route('/')
 def home():
     """Return main study buddy table as homepage."""
+    # create_student()
     if not session.get('logged_in'):
-         return render_template('login.html')
+        return render_template('login.html')
     else:
-        study_sessions=crud.get_study_sessions()
+        study_sessions=get_study_sessions()
         print('*'*20)
         print(study_sessions)
         return render_template('index.html', study_sessions=study_sessions)
@@ -56,7 +57,7 @@ def render_register_page():
     return render_template("register.html")
 
 @app.route('/register', methods = ['POST']) #same endpoint for a different method
-def create_student():
+def create_student_view():
     """create a new student"""
     #retrieve values from user's registration form
     username = request.form.get('username')
@@ -69,7 +70,7 @@ def create_student():
 
     #print(first_name, cohort_name, cohort_year, username)
 
-    new_user=crud.create_student(username, password, email, first_name, last_name, cohort_name, cohort_year)
+    new_user=create_student(username, password, email, first_name, last_name, cohort_name, cohort_year)
     print(new_user)
     #^Needs to be in the same order as the create_students function's argument in crud.py!!!
     # TODO:Check if user exists before adding them  
@@ -121,10 +122,17 @@ def logout():
 def profile(username):  
     """Return student profile page"""
 
-    get_creator_study_sessions(username)
+    username = Student.query.filter_by(username=username).first()
+    student_session = get_user_study_sessions(username)
+
+    print('*****************IN USER PROFILE ROUTE!******************')
+    print(student_session) #when you print in a view function it prints in the ~terminal~!
+
     # participants_for_study_sessions(participant_id)
 
-    return render_template("profile.html")
+    return render_template("profile.html", student_session=student_session)
+
+
 @app.route('/create_opportunity')
 # @login_required
 def render_create_opportunity():
@@ -134,17 +142,17 @@ def render_create_opportunity():
 @app.route('/create_opportunity', methods=['POST'])
 #@login_required
 def create_opportunity():
-    creator_id=session['logged_in']
+    participant=session['logged_in']
     #participant_id=
     proposed_time = request.form.get('proposed_time')
     topic_id= request.form.get('topic_id')
     capacity= request.form.get('capacity')
     prerequisites= request.form.get('prerequisites')
-    new_opportunity=crud.create_study_session(creator_id, proposed_time, topic_id, capacity, prerequisites)    
+    new_opportunity=create_study_session(participant, proposed_time, topic_id, capacity, prerequisites)    
 
 #     When a study_opp event is created
 # the study_opp event information should be displayed in index.html,
-# including creator icon/link to their profile, study topic, datetime, and max 
+# including participant icon/link to their profile, study topic, datetime, and max 
     return redirect("/")
 
 @app.route('/hackbrighter_map')
@@ -167,6 +175,8 @@ def view_calendar():
 #inside a study session
 #study buddy opportunty board-- homepage?
 #dashboard
+
+
 
 
 if __name__ == '__main__':

@@ -70,6 +70,7 @@ class Attendence(db.Model):
                         primary_key = True)
     study_session_id = db.Column(db.Integer, db.ForeignKey('study_sessions.study_session_id'))
     user_id = db.Column(db.Integer, db.ForeignKey('students.user_id'))
+    
     study_session = db.relationship('StudySession', backref='attendences')
     student = db.relationship('Student', backref='attendences')
 
@@ -85,8 +86,7 @@ class StudySession(db.Model):
                         autoincrement = True,
                         primary_key = True,
                         unique = True)
-    creator_id = db.Column(db.Integer, 
-                        #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
+    participant = db.Column(db.Integer, 
                         db.ForeignKey('students.user_id'))
     # participant_id = db.Column # This attribute needs to make room for multiple students)
     #                 (db.Integer, 
@@ -107,7 +107,7 @@ class StudySession(db.Model):
     
 
     def __repr__(self):
-        return f'<StudySession study_session_id={self.study_session_id} creator_id={self.creator_id} proposed_time={self.proposed_time} topic_id = {self.topic_id} active = {self.active}>'
+        return f'<StudySession study_session_id={self.study_session_id} participant={self.participant} proposed_time={self.proposed_time} topic_id = {self.topic_id} active = {self.active}>'
 
 class Topic(db.Model):
 
@@ -127,7 +127,7 @@ class Topic(db.Model):
 #     __tablename__ = 'cohorts'
 
 #     cohort_name = db.Column(db.String, primary_key = True)
-#     cohort_color_code = db.Column(db.String, db.ForeignKey('study_sessions.creator_id')
+#     cohort_color_code = db.Column(db.String, db.ForeignKey('study_sessions.participant')
 #     )
 
 #     def __repr__(self):
