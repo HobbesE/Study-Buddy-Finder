@@ -63,12 +63,28 @@ def get_study_sessions():
     
     return StudySession.query.all()
 
-def get_user_study_sessions(username):
+def get_user_study_sessions(student_obj):
     """Return user's relevant study sessions"""
     # user_study_session=StudySession(
 
-    user = db.session.query(Student).filter_by(username=target_user)
-    user_study_sessions = StudySession.query.filter_by(participant=target_user_id)
+    #user = db.session.query(Student).filter_by(username=target_user) #only use db.session when the database isn't connected yet
+    user = Student.query.filter_by(username=student_obj.username).first()
+    # user_study_sessions = StudySession.query.filter_by(participant=target_user_id)
+    # to get the created study sessions:
+   
+    created_sessions = user.study_sessions 
+    # [<StudySession study_session_id=1 participant=1 proposed_time=noon topic_id = None active = True>, 
+    #  <StudySession study_session_id=2 participant=1 proposed_time=noon topic_id = None active = True>]
+    
+    # to find all sessions where this user is a participant
+    joined_sessions = Attendence.query.filter_by(user_id=user.user_id).all()
+    # Attendence = attendence_id, user_id, study_session_id
+
+    user_study_sessions = []
+    for study_sess in joined_sessions:
+        print(study_sess)
+        study_session = StudySession.query.get(study_session_id=study_sess.study_session_id)
+        user_study_sessions.append(study_session)
 
     return user_study_sessions
 

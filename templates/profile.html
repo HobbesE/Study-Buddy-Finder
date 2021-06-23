@@ -13,20 +13,23 @@
 #if user tries to create a new study session without a valid location in their profile,
 #bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
 
-{{ student_session }}
+{{ student_sessions }}
+{{ student_obj }}
 
-<table>
-    <tr>
-        {% for study_session in study_sessions %}
-        Creator: {{ study_session.creator.username}}<br>
-        <!-- {{ study_session.creator.icon_url}} -->
-        Proposed Time: {{ study_session.proposed_time}}<br>
-        Topic: {{study_session.topic}}<br>
-        Maximum Capacity: {{ study_session.capacity}} <br><br>
-        {% endfor %}
-    </tr>
-    
-</table>
+    {% if student_sessions %}
+    <table>
+        <tr>
+            {% for study_session in student_sessions %}
+            Creator: {{ study_session.creator.username}}<br>
+            <!-- {{ study_session.creator.icon_url}} -->
+            Proposed Time: {{ study_session.proposed_time}}<br>
+            Topic: {{study_session.topic}}<br>
+            Maximum Capacity: {{ study_session.capacity}} <br><br>
+            {% endfor %}
+        </tr>
+        
+    </table>    
+    {% endif %}  
 
 
 <body><br>

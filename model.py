@@ -33,7 +33,6 @@ class Student(db.Model):
     #     self.cohort_name = cohort_name
     #     self.cohort_year = cohort_year
 
-    # #^Lucia's not sure if this needs to be here. Sean or Ashley recommended it. Order of arguments seems to matter.)
     #^ Normally, this init would be necessary; in this project, SQLAlchemy does it for me. 
 
     user_id= db.Column(db.Integer,
@@ -105,6 +104,14 @@ class StudySession(db.Model):
     # participant = db.relationship('Student', backref='study_sessions')
     topic = db.relationship('Topic', backref='study_sessions')
     
+    # attempting to get all study sessions based off a user
+    # From a student:    => get the student obj 
+    # >> user  = Student.query.get(*put in a student id*)
+    # >> sess = user.sutdy_sessions 
+    # [<StudySession study_session_id=1 participant=1 proposed_time=noon topic_id = None active = True>, 
+    #  <StudySession study_session_id=2 participant=1 proposed_time=noon topic_id = None active = True>]
+    # >> sess[0].proposed_time
+    #  'noon'
 
     def __repr__(self):
         return f'<StudySession study_session_id={self.study_session_id} participant={self.participant} proposed_time={self.proposed_time} topic_id = {self.topic_id} active = {self.active}>'

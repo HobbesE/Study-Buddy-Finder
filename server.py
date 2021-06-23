@@ -122,15 +122,15 @@ def logout():
 def profile(username):  
     """Return student profile page"""
 
-    username = Student.query.filter_by(username=username).first()
-    student_session = get_user_study_sessions(username)
+    student_obj = Student.query.filter_by(username=username).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
+    student_sessions = get_user_study_sessions(student_obj)
 
-    print('*****************IN USER PROFILE ROUTE!******************')
-    print(student_session) #when you print in a view function it prints in the ~terminal~!
+    # print('*****************IN USER PROFILE ROUTE!******************')
+    # print(student_sessions) #when you print in a view function it prints in the ~terminal~!
 
     # participants_for_study_sessions(participant_id)
 
-    return render_template("profile.html", student_session=student_session)
+    return render_template("profile.html", student_obj=student_obj, student_sessions=student_sessions)
 
 
 @app.route('/create_opportunity')
