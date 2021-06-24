@@ -72,9 +72,11 @@ class Attendence(db.Model):
     
     study_session = db.relationship('StudySession', backref='attendences')
     student = db.relationship('Student', backref='attendences')
+    # student = Student.query.get(user_id)  <Student username="JBland07"
+    # student.username => "JBland07"
 
     def __repr__(self):
-        return f'<Attendence attendence_id= {self.attendence_id} study_session_id {self.study_session_id} username= {self.username}>'
+        return f'<Attendence attendence_id= {self.attendence_id} study_session_id {self.study_session_id}>'
 
 class StudySession(db.Model):
     """an opportunity for study buddies to join"""
@@ -114,7 +116,7 @@ class StudySession(db.Model):
     #  'noon'
 
     def __repr__(self):
-        return f'<StudySession study_session_id={self.study_session_id} participant={self.participant} proposed_time={self.proposed_time} topic_id = {self.topic_id} active = {self.active}>'
+        return f'<StudySession study_session_id={self.study_session_id} proposed_time={self.proposed_time} participant={self.participant} topic_id = {self.topic_id} active = {self.active}>'
 
 class Topic(db.Model):
 

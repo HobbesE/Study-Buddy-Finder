@@ -63,29 +63,32 @@ def get_study_sessions():
     
     return StudySession.query.all()
 
-def get_user_study_sessions(student_obj):
+def get_user_study_sessions(student_obj): # <Student username="JBland07">
     """Return user's relevant study sessions"""
     # user_study_session=StudySession(
 
     #user = db.session.query(Student).filter_by(username=target_user) #only use db.session when the database isn't connected yet
-    user = Student.query.filter_by(username=student_obj.username).first()
+    # user = Student.query.filter_by(username=student_obj.username).first()   #we grabbed this in our profile route
     # user_study_sessions = StudySession.query.filter_by(participant=target_user_id)
     # to get the created study sessions:
    
-    created_sessions = user.study_sessions 
+    created_sessions = student_obj.study_sessions # refers to model relationship-- creator = db.relationship('Student', backref='study_sessions')
     # [<StudySession study_session_id=1 participant=1 proposed_time=noon topic_id = None active = True>, 
     #  <StudySession study_session_id=2 participant=1 proposed_time=noon topic_id = None active = True>]
-    
+    print("*****************IN CRUD TRYING TO GET STUDY  SESSIONS!******************")
+    print("created_sessions: ", created_sessions)
     # to find all sessions where this user is a participant
-    joined_sessions = Attendence.query.filter_by(user_id=user.user_id).all()
+    joined_sessions = Attendence.query.filter_by(user_id=student_obj.user_id).all()
     # Attendence = attendence_id, user_id, study_session_id
-
-    user_study_sessions = []
+    print("joined_sessions: ", joined_sessions)
+    user_study_sessions = [] 
     for study_sess in joined_sessions:
-        print(study_sess)
-        study_session = StudySession.query.get(study_session_id=study_sess.study_session_id)
+        study_session = StudySession.query.filter_by(study_session_id=study_sess.study_session_id).first()
+        print("study_sess: ", study_sess)
         user_study_sessions.append(study_session)
 
+    #user_study_sessions.extend(created_sessions)
+    
     return user_study_sessions
 
 # def get_participants_for_study_session(target_user_id):

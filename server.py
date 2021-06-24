@@ -104,7 +104,7 @@ def login():
             #Call flask_login.login_user to log in a student user
             session['logged_in'] = student.user_id
             print(session['logged_in'])
-            #  login_user(student)  #TODO: is this causing problems? Commented out when "flask_module not imported"
+            login_user(student) 
             flash("You're in!")
             return redirect("/")
         else:flash("Ope. That didn't go well.")
@@ -117,20 +117,30 @@ def logout():
     logout_user()
     return redirect("/")
 
+@app.route('/study-session/<study_session_id>')
+def display_study_sess(study_session_id):
+    # grab the corresponding study_sesion from the id given
+
 @app.route('/student/<username>')
 # @login_required
 def profile(username):  
     """Return student profile page"""
 
     student_obj = Student.query.filter_by(username=username).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
-    student_sessions = get_user_study_sessions(student_obj)
+    # to get the created study sessions by  this specific user:
+    created_sessions = student_obj.study_sessions
+    # one student can create many study sessions
+    # a study session can only be created by one user
+    # student.study_sessions = [] <-- "many" of our "one to many"  rlsp
+    # study_session.creator = <Student> <-- "one"
+    participating_sessions = get_user_study_sessions(student_obj)
 
     # print('*****************IN USER PROFILE ROUTE!******************')
     # print(student_sessions) #when you print in a view function it prints in the ~terminal~!
 
     # participants_for_study_sessions(participant_id)
 
-    return render_template("profile.html", student_obj=student_obj, student_sessions=student_sessions)
+    return render_template("profile.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
 
 
 @app.route('/create_opportunity')

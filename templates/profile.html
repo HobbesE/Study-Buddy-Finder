@@ -7,32 +7,23 @@
                 Hackbrighter Base Page
             </title>
     </head>   
-<!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
+<body><!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
 #Location is vital to scheduling by time zone.
 #if user has a valid location chosen, cancel pop-up sticky
 #if user tries to create a new study session without a valid location in their profile,
 #bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
+<h2>Created Sessions: {{ created_sessions }}</h2>
 
-{{ student_sessions }}
-{{ student_obj }}
-
-    {% if student_sessions %}
-    <table>
-        <tr>
-            {% for study_session in student_sessions %}
-            Creator: {{ study_session.creator.username}}<br>
-            <!-- {{ study_session.creator.icon_url}} -->
-            Proposed Time: {{ study_session.proposed_time}}<br>
-            Topic: {{study_session.topic}}<br>
-            Maximum Capacity: {{ study_session.capacity}} <br><br>
-            {% endfor %}
-        </tr>
-        
-    </table>    
-    {% endif %}  
+<!-- Let's create <a> for each study session (both created/participating)
+    so that we can click on that link and it'll take us to a new page with 
+    the study session information and participants -->
 
 
-<body><br>
+<h2>Paricipating Sessions: {{ participating_sessions }}</h2>
+
+
+
+<br>
 <br>
 Auto-generated cute animal picture for icon-- import choice<br>
 Input to let people upload their own picture. POST How can I round frame it?<br>
