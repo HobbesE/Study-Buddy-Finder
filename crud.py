@@ -1,6 +1,6 @@
 """Crud Operations for Study Buddy finder"""
 
-from model import Student, Attendence, StudySession, Topic, connect_to_db, db
+from model import Student, Attendence, StudySession, connect_to_db, db
 
 
 
@@ -33,11 +33,11 @@ def attend(study_session_id, user_id):
 
     return attendence
 
-def create_study_session(participant, proposed_time, topic_id, capacity, prerequisites):
+def create_study_session(participant, proposed_time, topic, capacity, prerequisites):
     study_session = StudySession(
         participant=participant, 
         proposed_time=proposed_time, 
-        topic_id=topic_id,
+        topic=topic,
         capacity=capacity,
         prerequisites=prerequisites
     )
@@ -47,16 +47,16 @@ def create_study_session(participant, proposed_time, topic_id, capacity, prerequ
 
     return study_session
 
-def create_topic(topic_description, topic_title):
-    topic=Topic(
-        topic_description=topic_description, 
-        topic_title=topic_title
-    )
+# def create_topic(topic_description, topic_title):
+#     topic=Topic(
+#         topic_description=topic_description, 
+#         topic_title=topic_title
+#     )
 
-    db.session.add(topic)
-    db.session.commit()
+#     db.session.add(topic)
+#     db.session.commit()
 
-    return topic
+#     return topic
 
 def get_study_sessions():
     """Return all study sessions"""
@@ -75,12 +75,16 @@ def get_user_study_sessions(student_obj): # <Student username="JBland07">
     created_sessions = student_obj.study_sessions # refers to model relationship-- creator = db.relationship('Student', backref='study_sessions')
     # [<StudySession study_session_id=1 participant=1 proposed_time=noon topic_id = None active = True>, 
     #  <StudySession study_session_id=2 participant=1 proposed_time=noon topic_id = None active = True>]
+
     print("*****************IN CRUD TRYING TO GET STUDY  SESSIONS!******************")
     print("created_sessions: ", created_sessions)
+
     # to find all sessions where this user is a participant
     joined_sessions = Attendence.query.filter_by(user_id=student_obj.user_id).all()
     # Attendence = attendence_id, user_id, study_session_id
+
     print("joined_sessions: ", joined_sessions)
+    
     user_study_sessions = [] 
     for study_sess in joined_sessions:
         study_session = StudySession.query.filter_by(study_session_id=study_sess.study_session_id).first()
@@ -90,6 +94,19 @@ def get_user_study_sessions(student_obj): # <Student username="JBland07">
     #user_study_sessions.extend(created_sessions)
     
     return user_study_sessions
+
+def get_participant():
+    """Return the username of a student within a study session"""
+
+    return
+
+    # TO DO:
+    # make get_study_session_by_id => connect with your server at /study-session
+
+def get_study_session_by_id(study_session_id):
+    """get study session for study-session html page"""
+    print("*"*20, "yo're in the crud funtion" , study_session_id)
+    return StudySession.query.get(study_session_id)
 
 # def get_participants_for_study_session(target_user_id):
 #     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)

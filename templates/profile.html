@@ -4,7 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
             <title>
-                Hackbrighter Base Page
+                Hackbrighter Profile
             </title>
     </head>   
 <body><!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
@@ -12,14 +12,62 @@
 #if user has a valid location chosen, cancel pop-up sticky
 #if user tries to create a new study session without a valid location in their profile,
 #bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
-<h2>Created Sessions: {{ created_sessions }}</h2>
 
-<!-- Let's create <a> for each study session (both created/participating)
-    so that we can click on that link and it'll take us to a new page with 
-    the study session information and participants -->
+<h2>Created Sessions: </h2>
+{% for study_session in created_sessions %}
+<table>
+<form>
+    <tr>    
+    <a href="/study-session/{{study_session.study_session_id}}"> Study Session Page </a><br>
+    </tr>
+    <tr>
+        Topic: {{study_session.topic}}<br>
+        Proposed Time: {{ study_session.proposed_time}}<br>
+        Capacity: {{ study_session.capacity }}
+    </tr>
+    <tr>
+        <td>Participants:
+            <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
+            <!-- {{ study_session.creator.icon_url}} --></td>
+        <td>Participant</td>
+        <td><input type="submit" value="JOIN" ></input></td>
+    </tr>
+</form>>
+</table>
+<br>
+<br>         
+{% endfor %}
+
+<br>
+
+<br>
+<br>
 
 
-<h2>Paricipating Sessions: {{ participating_sessions }}</h2>
+<h2>Participating Sessions: </h2>
+{% for study_session in participating_sessions %}
+<table>
+<form>
+    <tr>    
+    <a href="/study-session/{{study_session.study_session_id}}"> Study Session Page </a><br>
+    </tr>
+    <tr>
+        Topic: {{study_session.topic}}<br>
+        Proposed Time: {{ study_session.proposed_time}}<br>
+        Capacity: {{ study_session.capacity }}
+    </tr>
+    <tr>
+        <td>Participants:
+            <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
+            <!-- {{ study_session.creator.icon_url}} --></td>
+        <td>Participant</td>
+        <td><input type="submit" value="JOIN" ></input></td>
+    </tr>
+</form>>
+</table>
+<br>
+<br>         
+{% endfor %}
 
 
 

@@ -3,7 +3,7 @@
 from flask_sqlalchemy import SQLAlchemy 
 from flask import Flask, render_template, redirect, request, session, flash
 from flask_login import LoginManager, login_user, login_required, logout_user
-from model import Student, Attendence, Topic, StudySession, connect_to_db, db
+from model import Student, Attendence, StudySession, connect_to_db, db
 # from crud import create_student
 from datetime import timedelta
 # import crud sometimes doesn't work. Try "from crud import astrisk"
@@ -117,9 +117,17 @@ def logout():
     logout_user()
     return redirect("/")
 
-@app.route('/study-session/<study_session_id>')
+@app.route('/study-session/<study_session_id>', methods=['POST', 'GET'])
 def display_study_sess(study_session_id):
     # grab the corresponding study_sesion from the id given
+    print("*"*20, study_session_id)
+    # query for the specific study_session based on the study_session_id given to us
+    study_session = get_study_session_by_id(study_session_id)
+    participants = "test"
+
+    return render_template("study-session.html", study_session_id=study_session_id, study_session=study_session, participants=participants)
+    # render template => load this html file
+    # redirect => take this user to another route
 
 @app.route('/student/<username>')
 # @login_required
@@ -127,8 +135,10 @@ def profile(username):
     """Return student profile page"""
 
     student_obj = Student.query.filter_by(username=username).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
-    # to get the created study sessions by  this specific user:
+   
+    # to get the created study sessions by this specific user:
     created_sessions = student_obj.study_sessions
+    
     # one student can create many study sessions
     # a study session can only be created by one user
     # student.study_sessions = [] <-- "many" of our "one to many"  rlsp
@@ -152,13 +162,13 @@ def render_create_opportunity():
 @app.route('/create_opportunity', methods=['POST'])
 #@login_required
 def create_opportunity():
-    participant=session['logged_in']
-    #participant_id=
+    participant=1
     proposed_time = request.form.get('proposed_time')
-    topic_id= request.form.get('topic_id')
-    capacity= request.form.get('capacity')
+    topic= request.form.get('topic')
+    capacity= request.form.get('capacity') # when it's None it's actually returning ""
+    print("*"*20, type(capacity))
     prerequisites= request.form.get('prerequisites')
-    new_opportunity=create_study_session(participant, proposed_time, topic_id, capacity, prerequisites)    
+    new_opportunity=create_study_session(participant, proposed_time, topic, capacity, prerequisites)    
 
 #     When a study_opp event is created
 # the study_opp event information should be displayed in index.html,

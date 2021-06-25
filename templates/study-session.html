@@ -1,0 +1,91 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width">
+            <title>
+                Hackbrighter Study Session
+            </title>
+        
+            <style>
+                
+                /* Create two equal columns that floats next to each other */
+                .column {
+                  float: left;
+                  width: 50%;
+                  padding: 10px;
+                  height: 300px; /* Should be removed. Only for demonstration */
+                  flex: 50%;
+                }
+                
+                /* Clear floats after the columns */
+                .row {
+                  content: "";
+                  display: flex;
+                }
+            </style>
+    </head>   
+<body>
+    <h2>Study Session: {{ study_session.topic }}</h2>
+    
+    <table>
+        <tr>
+            <td>Topic: {{ study_session.topic }}</td>
+            <td>Proposed Time: {{ study_session.proposed_time}}</td>
+            <td>Capacity: {{ study_session.capacity }}</td>
+        </tr>
+        <tr></tr>
+        <tr>
+            {% for participant in participants %}
+            <td>
+                Icon URL Here<br>
+                Participant Profile Link Here<br>
+            </td>
+            {% endfor %}
+            <!-- Reference trading cards for grid, to make participants overflow to next line as needed -->
+        </tr>
+        <tr></tr>
+    </table>
+    <br>
+    <br>
+    <br>
+    <table>
+        <div class="row">
+            <div class="column">
+                <form action="/study-session/{{study_session_id}}" method="POST">
+                Study Session Details
+                <br>
+                <br>
+                <label>Prerequisites:</label><br>
+                <textarea id="prerequisites" name="prerequisites_textarea">
+                    Update this textarea to specificy any resources users should reference.
+                </textarea>
+                <br>
+                <br>
+                <input type="submit" value="Update" onclick="insert()">
+                </form>
+            </div>
+            <div class="column">
+                <form action="/study-session/{{study_session_id}}" method="POST">
+                    Discussion<br><br>
+                    <div id="comments">*******COMMENTS GO HERE*******<br><br>
+                    <textarea id="comment_input" name="comment_textarea">
+                        What do you think?
+                    </textarea><br><br>
+                    <input type="submit" value="Post" onclick="insert()">
+                    </div>
+
+                </form>
+
+
+            </div>
+        </div>
+
+    </table>
+
+    
+
+
+</body>
+
+</html>

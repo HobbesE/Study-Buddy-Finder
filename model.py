@@ -53,7 +53,7 @@ class Student(db.Model):
     # sessions_attended = db.Column(db.Integer)
 
     def __repr__(self):
-        return f'<Student username={self.username} email={self.email}>'
+        return (f"<Student username={self.username} id={self.user_id} ")
     
     # def study(self, sessions_attended=1):
     #     """Add one study session to student's count"""
@@ -95,16 +95,17 @@ class StudySession(db.Model):
     #                     db.ForeignKey('students.user_id'))
     proposed_date = db.Column(db.DateTime)
     proposed_time = db.Column(db.String) #TODO: Change DateTime to account for time zones!!!!
-    topic_id = db.Column(db.Integer,  
-                    db.ForeignKey('topics.topic_id')) 
-    capacity = db.Column(db.Integer)
+    topic = db.Column(db.String, nullable=False)
+    capacity = db.Column(db.String)
     prerequisites = db.Column(db.String)
     active = db.Column(db.Boolean, default=True)
     
 
     creator = db.relationship('Student', backref='study_sessions')
     # participant = db.relationship('Student', backref='study_sessions')
-    topic = db.relationship('Topic', backref='study_sessions')
+    #^Since there can be multiple participants in a study session, we will actually reference the Attendence table
+    # topic = db.relationship('Topic', backref='study_sessions')
+    #^Since I decided to change topic from a drop down menu to an open-ended input, I removed the topic table.
     
     # attempting to get all study sessions based off a user
     # From a student:    => get the student obj 
@@ -116,19 +117,18 @@ class StudySession(db.Model):
     #  'noon'
 
     def __repr__(self):
-        return f'<StudySession study_session_id={self.study_session_id} proposed_time={self.proposed_time} participant={self.participant} topic_id = {self.topic_id} active = {self.active}>'
+        return f'<StudySession study_session_id={self.study_session_id} proposed_time={self.proposed_time} participant={self.participant} topic = {self.topic} active = {self.active}>'
 
-class Topic(db.Model):
+# class Topic(db.Model):
 
-    __tablename__ = 'topics'
-    topic_id = db.Column(db.Integer,
-                    autoincrement = True,
-                    primary_key = True)
-    topic_description = db.Column(db.String) #pre-requisite recommentations
-    topic_title = db.Column(db.String)
+#     __tablename__ = 'topics'
+#     topic = db.Column(db.String,
+#                     primary_key = True)
+#     topic_description = db.Column(db.String) #pre-requisite recommentations
+#     topic_title = db.Column(db.String)
 
-    def __repr__(self):
-        return f'<Topic topic_id={self.topic_id} topic_title={self.topic_title}>'
+#     def __repr__(self):
+#         return f'<Topic topic_id={self.topic_id} topic_title={self.topic_title}>'
 
 #removed cohort_name as a foreign key to COHORT table for the time being-- color coding feature will fall in later sprint.
 # class Cohort(db.Model):

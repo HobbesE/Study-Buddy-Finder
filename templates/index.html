@@ -11,19 +11,34 @@
         <h5><a href="/team_calendar">Calendar View</a></h5><br>
         <!-- Opportunity Table -->
             {% if study_sessions %}
-                <table>
-                    <tr>
-                        {% for study_session in study_sessions %}
-                        Creator: {{ study_session.creator.username}}<br>
-                        <!-- {{ study_session.creator.icon_url}} -->
-                        Proposed Time: {{ study_session.proposed_time}}<br>
-                        Topic: {{study_session.topic}}<br>
-                        Maximum Capacity: {{ study_session.capacity}} <br><br>
-                        {% endfor %}
-                    </tr>
                     
-                </table>    
-            {% endif %}   
+                {% for study_session in study_sessions %}
+                    <table>
+                    <form>
+                        <tr>    
+                        <a href="/study-session/{{study_session.study_session_id}}"> Study Session Page </a><br>
+                        </tr>
+                        <tr>
+                            Topic: {{study_session.topic}}<br>
+                            Proposed Time: {{ study_session.proposed_time}}<br>
+                            Capacity: {{ study_session.capacity }}
+                        </tr>
+                        <tr>
+                            <td>Participants:
+                                <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
+                                <!-- {{ study_session.creator.icon_url}} --></td>
+                            <td>Participant</td>
+                            <td><input type="submit" value="JOIN" ></input></td>
+                        </tr>
+                    </form>>
+                    </table>
+                    <br>
+                    <br>         
+                {% endfor %}
+
+                    
+                       
+                {% endif %}   
            
     </body>
     
