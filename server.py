@@ -37,12 +37,13 @@ login_manager.init_app(app)
 @app.route('/')
 def home():
     """Return main study buddy table as homepage."""
-    # create_student()
+
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
         study_sessions=get_study_sessions()
         print('*'*20)
+    
         return render_template('index.html', study_sessions=study_sessions)
 
 # @app.route('/')
@@ -88,6 +89,11 @@ def load_user(user_id):
     
     return Student.query.get(user_id)
 
+@app.route('/define-cohort')
+def display_chort_help():
+    """Display page to explain Hackbright cohorts"""
+    return render_template("define-cohort.html")
+
 @app.route('/login')
 def display_login():
     """Display login"""
@@ -102,7 +108,7 @@ def login():
         password = request.form.get("password")
 
         student = Student.query.filter_by(username=username).first()
-
+        print(student)
         if not student:
             flash("Hmm.. that didn't quite work.")
             return redirect("/")
@@ -131,13 +137,13 @@ def logout():
 def display_study_sess(study_session_id):
     # grab the corresponding study_sesion from the id given
     # query for the specific study_session based on the study_session_id given to us
-    participants="test"
+    
+    user_id = session['logged_in']
+    roster = take_attendence(study_session_id)
     study_session = get_study_session_by_id(study_session_id)
-    attendees = Attendence.query.filter_by(study_session_id=study_session.participant).all()
-    print('*'*20)
-    print(participants)
+    
 
-    return render_template("study-session.html", study_session=study_session, attendees=attendees)
+    return render_template("study-session.html", study_session=study_session, roster=roster)
     # render template => load this html file
     # redirect => take this user to another route
 
@@ -174,7 +180,7 @@ def render_create_opportunity():
 @app.route('/create_opportunity', methods=['POST'])
 #@login_required
 def create_opportunity():
-    participant=1
+    # participant= request.form.get('participant')
     proposed_time = request.form.get('proposed_time')
     topic= request.form.get('topic')
     capacity= request.form.get('capacity') # when it's None it's actually returning ""
@@ -190,9 +196,17 @@ def create_opportunity():
 @app.route('/join_session/<study_session_id>')
 # @login_required
 def create_connection(study_session_id):
+    study_sessions=get_study_sessions()
+    # study_session = get_study_session_by_id(study_session_id)
     user_id=session['logged_in']
-    attend(study_session_id, user_id)
-    return redirect("/")
+    roster = take_attendence(study_session_id)
+ 
+    print(user_id)
+    print("********")
+    print(roster) # [<student>, <student>]
+    print("********")
+
+    return render_template('index.html', study_sessions=study_sessions, roster=roster)
 
 
 @app.route('/res')
@@ -219,7 +233,6 @@ def geolocate():
         long = geometry['location']['lng']
     else:
         print("Pllzzzzz give me your addresss!!!! It'll be fiiiine.")
-
 
     return redirect("/hackbrighter_map")
 

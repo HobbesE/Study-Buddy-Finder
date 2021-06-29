@@ -88,7 +88,6 @@ def get_user_study_sessions(student_obj): # <Student username="JBland07">
     user_study_sessions = [] 
     for study_sess in joined_sessions:
         study_session = StudySession.query.filter_by(study_session_id=study_sess.study_session_id).first()
-        print("study_sess: ", study_sess)
         user_study_sessions.append(study_session)
 
     #user_study_sessions.extend(created_sessions)
@@ -99,10 +98,42 @@ def get_study_session_by_id(study_session_id):
     """get study session for study-session html page"""
     return StudySession.query.get(study_session_id)
 
-def get_participant():
+def take_attendence(study_session_id):
+    """return a list of students in a study session"""
+    study_session = get_study_session_by_id(study_session_id)
+    attendees = Attendence.query.filter_by(study_session_id=study_session.study_session_id).all()
+    # [<Attendence attendence_id= 1 study_session_id 1>, <Attendence attendence_id= 2 study_session_id 1>, 
+    #  <Attendence attendence_id= 3 study_session_id 1>, ...]
+    
+    student_objects=[]
+    student_usernames = []
+
+    for attendee in attendees:
+        student = get_participant(attendee.user_id)
+        username = student.username
+        if username not in student_usernames:
+            student_usernames.append(username)
+            student_objects.append(student)
+        else:
+            pass
+            
+        # trying to check if that student is in there twice
+        # each student we grab their unique username
+        # append their username into the student_useranmes if it isnt' there
+            # also append that student obj to the stuent_objects list
+    #<Student id=1, username=lracine0> <Student id=2, usernmae=lracine0>
+        # otherwise we caught a duplicate
+        
+   # create an empty list for the return statement that will hold all student objects
+   # loop over each <Attendence> object, get the student_id, and send it to get_participant
+
+    return student_objects
+
+def get_participant(user_id):
     """Return the username of a student within a study session"""
 
-    return
+    return Student.query.get(user_id)
+
 # def get_participants_for_study_session(target_user_id):
 #     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)
 

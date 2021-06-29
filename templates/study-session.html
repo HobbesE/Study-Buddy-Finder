@@ -36,12 +36,15 @@
         </tr>
         <tr></tr>
         <tr>
-            {% for attendee in attendees %}
             <td>
-                Icon URL Here<br>
-                {{attendee}}<br>
+                Participants:
+                    {{ study_session.creator.username}}</a><br>
+                    <!-- {{ study_session.creator.icon_url}} --></td>
+                {% for student in roster %}
+                    <a href="/student/{{student.username}}">{{student.username}}</a>
+                {% endfor %}
             </td>
-            {% endfor %}
+            
             <!-- Reference trading cards for grid, to make participants overflow to next line as needed -->
         </tr>
         <tr></tr>

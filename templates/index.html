@@ -12,8 +12,8 @@
         <h5><a href="/team_calendar">Calendar View</a></h5><br>
         <!-- Opportunity Table -->
             {% if study_sessions %}
-                    
                 {% for study_session in study_sessions %}
+                    
                     <table>
                             <tr>    
                             Topic: <a href="/study-session/{{study_session.study_session_id}}"> {{study_session.topic}} </a><br>
@@ -26,11 +26,11 @@
                                 <td>Participants:
                                     <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
                                     <!-- {{ study_session.creator.icon_url}} --></td>
-                                <td>Participant</td>
+                                </td>
                                 <form action="/join_session/{{study_session.study_session_id}}">
                                 <td><button value={{study_session.study_session_id}} >JOIN</button></td>
+                                </form>
                             </tr>
-                        </form>
                     </table>
                     <br>
                     <br>         
