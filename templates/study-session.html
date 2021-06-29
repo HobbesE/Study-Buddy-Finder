@@ -36,10 +36,10 @@
         </tr>
         <tr></tr>
         <tr>
-            {% for participant in participants %}
+            {% for attendee in attendees %}
             <td>
                 Icon URL Here<br>
-                Participant Profile Link Here<br>
+                {{attendee}}<br>
             </td>
             {% endfor %}
             <!-- Reference trading cards for grid, to make participants overflow to next line as needed -->
@@ -52,13 +52,13 @@
     <table>
         <div class="row">
             <div class="column">
-                <form action="/study-session/{{study_session_id}}" method="POST">
+                <form action="/" method="POST">
                 Study Session Details
                 <br>
                 <br>
                 <label>Prerequisites:</label><br>
                 <textarea id="prerequisites" name="prerequisites_textarea">
-                    Update this textarea to specificy any resources users should reference.
+                    {{study_session.prerequisites}}
                 </textarea>
                 <br>
                 <br>
@@ -66,7 +66,7 @@
                 </form>
             </div>
             <div class="column">
-                <form action="/study-session/{{study_session_id}}" method="POST">
+                <form action="/study-session/{{study_session}}" method="POST">
                     Discussion<br><br>
                     <div id="comments">*******COMMENTS GO HERE*******<br><br>
                     <textarea id="comment_input" name="comment_textarea">

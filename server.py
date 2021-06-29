@@ -1,5 +1,7 @@
 """Server for Study Buddy Finder app."""
 
+import requests
+import json
 from flask_sqlalchemy import SQLAlchemy 
 from flask import Flask, render_template, redirect, request, session, flash
 from flask_login import LoginManager, login_user, login_required, logout_user
@@ -22,6 +24,8 @@ from jinja2 import StrictUndefined
 
 # #     print('Connected to the db!')
 
+API_KEY = 'AIzaSyC0cTAdoSChx8oVXvgrLQYSBQ8RwhTYXKI'
+
 
 app = Flask(__name__)
 app.secret_key = "DEBUG"
@@ -39,7 +43,6 @@ def home():
     else:
         study_sessions=get_study_sessions()
         print('*'*20)
-        print(study_sessions)
         return render_template('index.html', study_sessions=study_sessions)
 
 # @app.route('/')
@@ -85,6 +88,12 @@ def load_user(user_id):
     
     return Student.query.get(user_id)
 
+@app.route('/login')
+def display_login():
+    """Display login"""
+    return render_template("login.html")
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """Return log in page"""
@@ -103,8 +112,9 @@ def login():
         if student.password == password:
             #Call flask_login.login_user to log in a student user
             session['logged_in'] = student.user_id
+            print('*'*20)
             print(session['logged_in'])
-            login_user(student) 
+            # login_user(student) 
             flash("You're in!")
             return redirect("/")
         else:flash("Ope. That didn't go well.")
@@ -120,12 +130,14 @@ def logout():
 @app.route('/study-session/<study_session_id>', methods=['POST', 'GET'])
 def display_study_sess(study_session_id):
     # grab the corresponding study_sesion from the id given
-    print("*"*20, study_session_id)
     # query for the specific study_session based on the study_session_id given to us
+    participants="test"
     study_session = get_study_session_by_id(study_session_id)
-    participants = "test"
+    attendees = Attendence.query.filter_by(study_session_id=study_session.participant).all()
+    print('*'*20)
+    print(participants)
 
-    return render_template("study-session.html", study_session_id=study_session_id, study_session=study_session, participants=participants)
+    return render_template("study-session.html", study_session=study_session, attendees=attendees)
     # render template => load this html file
     # redirect => take this user to another route
 
@@ -174,6 +186,42 @@ def create_opportunity():
 # the study_opp event information should be displayed in index.html,
 # including participant icon/link to their profile, study topic, datetime, and max 
     return redirect("/")
+
+@app.route('/join_session/<study_session_id>')
+# @login_required
+def create_connection(study_session_id):
+    user_id=session['logged_in']
+    attend(study_session_id, user_id)
+    return redirect("/")
+
+
+@app.route('/res')
+# @login_required
+def geolocate():
+    address = "683 Sutter St., San Francisco, CA 94102"
+
+    params = {
+        'key': API_KEY,
+        'address': address
+    }
+
+    base_url ='https://maps.googleapis.com/maps/api/geocode/json?'
+
+    response = requests.get(base_url, params=params)
+    res = response.json()
+    print(response)
+    # print(response.json().keys)
+
+    if res['status'] == 'OK':
+        geometry = res['results'][0]['geometry']
+        geometry['location']['lat']
+        lat = geometry['location']['lat']
+        long = geometry['location']['lng']
+    else:
+        print("Pllzzzzz give me your addresss!!!! It'll be fiiiine.")
+
+
+    return redirect("/hackbrighter_map")
 
 @app.route('/hackbrighter_map')
 # @login_required

@@ -95,19 +95,14 @@ def get_user_study_sessions(student_obj): # <Student username="JBland07">
     
     return user_study_sessions
 
+def get_study_session_by_id(study_session_id):
+    """get study session for study-session html page"""
+    return StudySession.query.get(study_session_id)
+
 def get_participant():
     """Return the username of a student within a study session"""
 
     return
-
-    # TO DO:
-    # make get_study_session_by_id => connect with your server at /study-session
-
-def get_study_session_by_id(study_session_id):
-    """get study session for study-session html page"""
-    print("*"*20, "yo're in the crud funtion" , study_session_id)
-    return StudySession.query.get(study_session_id)
-
 # def get_participants_for_study_session(target_user_id):
 #     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)
 

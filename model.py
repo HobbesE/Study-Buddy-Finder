@@ -48,8 +48,8 @@ class Student(db.Model):
     cohort_year = db.Column(db.String) 
     # location = db.Column(db.String) .  #Keep it!
     # goals = db.Column(db.String)
-    # latitude = db.Column(db.Float)
-    # longitude = db.Column(db.Float)
+    latitude = db.Column(db.String)
+    longitude = db.Column(db.String)
     # sessions_attended = db.Column(db.Integer)
 
     def __repr__(self):
@@ -71,7 +71,7 @@ class Attendence(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey('students.user_id'))
     
     study_session = db.relationship('StudySession', backref='attendences')
-    student = db.relationship('Student', backref='attendences')
+    student = db.relationship('Student', backref='attendences')  #TODO: Add uniqueness constraight to user, study_session 
     # student = Student.query.get(user_id)  <Student username="JBland07"
     # student.username => "JBland07"
 

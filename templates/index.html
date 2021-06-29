@@ -4,6 +4,7 @@
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Hackbright- Create a new Study Opportunity</title>
+        <link rel="icon" href="static/HBlogobluewithbackground.svg">
     </head>
     <body>
         <h1>Study Buddy Opportunities</h1>
@@ -14,23 +15,22 @@
                     
                 {% for study_session in study_sessions %}
                     <table>
-                    <form>
-                        <tr>    
-                        <a href="/study-session/{{study_session.study_session_id}}"> Study Session Page </a><br>
-                        </tr>
-                        <tr>
-                            Topic: {{study_session.topic}}<br>
-                            Proposed Time: {{ study_session.proposed_time}}<br>
-                            Capacity: {{ study_session.capacity }}
-                        </tr>
-                        <tr>
-                            <td>Participants:
-                                <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-                                <!-- {{ study_session.creator.icon_url}} --></td>
-                            <td>Participant</td>
-                            <td><input type="submit" value="JOIN" ></input></td>
-                        </tr>
-                    </form>>
+                            <tr>    
+                            Topic: <a href="/study-session/{{study_session.study_session_id}}"> {{study_session.topic}} </a><br>
+                            </tr>
+                            <tr>
+                                Proposed Time: {{ study_session.proposed_time}}<br>
+                                Capacity: {{ study_session.capacity }}
+                            </tr>
+                            <tr>
+                                <td>Participants:
+                                    <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
+                                    <!-- {{ study_session.creator.icon_url}} --></td>
+                                <td>Participant</td>
+                                <form action="/join_session/{{study_session.study_session_id}}">
+                                <td><button value={{study_session.study_session_id}} >JOIN</button></td>
+                            </tr>
+                        </form>
                     </table>
                     <br>
                     <br>         
