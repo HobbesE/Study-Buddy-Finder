@@ -180,7 +180,7 @@ def render_create_opportunity():
 @app.route('/create_opportunity', methods=['POST'])
 #@login_required
 def create_opportunity():
-    # participant= request.form.get('participant')
+    participant= request.form.get('participant')
     proposed_time = request.form.get('proposed_time')
     topic= request.form.get('topic')
     capacity= request.form.get('capacity') # when it's None it's actually returning ""

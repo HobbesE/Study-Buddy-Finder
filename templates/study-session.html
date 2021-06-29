@@ -38,7 +38,7 @@
         <tr>
             <td>
                 Participants:
-                    {{ study_session.creator.username}}</a><br>
+                    <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
                     <!-- {{ study_session.creator.icon_url}} --></td>
                 {% for student in roster %}
                     <a href="/student/{{student.username}}">{{student.username}}</a>
