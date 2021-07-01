@@ -33,13 +33,14 @@ def attend(study_session_id, user_id):
 
     return attendence
 
-def create_study_session(participant, proposed_time, topic, capacity, prerequisites):
+def create_study_session(participant, proposed_time, topic, capacity, prerequisites, creator):
     study_session = StudySession(
         participant=participant, 
         proposed_time=proposed_time, 
         topic=topic,
         capacity=capacity,
-        prerequisites=prerequisites
+        prerequisites=prerequisites,
+        creator=creator
     )
 
     db.session.add(study_session)
@@ -76,14 +77,14 @@ def get_user_study_sessions(student_obj): # <Student username="JBland07">
     # [<StudySession study_session_id=1 participant=1 proposed_time=noon topic_id = None active = True>, 
     #  <StudySession study_session_id=2 participant=1 proposed_time=noon topic_id = None active = True>]
 
-    print("*****************IN CRUD TRYING TO GET STUDY  SESSIONS!******************")
-    print("created_sessions: ", created_sessions)
+    # print("*****************IN CRUD TRYING TO GET STUDY  SESSIONS!******************")
+    # print("created_sessions: ", created_sessions)
 
     # to find all sessions where this user is a participant
     joined_sessions = Attendence.query.filter_by(user_id=student_obj.user_id).all()
     # Attendence = attendence_id, user_id, study_session_id
 
-    print("joined_sessions: ", joined_sessions)
+    # print("joined_sessions: ", joined_sessions)
     
     user_study_sessions = [] 
     for study_sess in joined_sessions:
@@ -101,9 +102,13 @@ def get_study_session_by_id(study_session_id):
 def take_attendence(study_session_id):
     """return a list of students in a study session"""
     study_session = get_study_session_by_id(study_session_id)
+    print(study_session)
     attendees = Attendence.query.filter_by(study_session_id=study_session.study_session_id).all()
     # [<Attendence attendence_id= 1 study_session_id 1>, <Attendence attendence_id= 2 study_session_id 1>, 
     #  <Attendence attendence_id= 3 study_session_id 1>, ...]
+
+    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
+    print(attendees)
     
     student_objects=[]
     student_usernames = []
@@ -114,8 +119,6 @@ def take_attendence(study_session_id):
         if username not in student_usernames:
             student_usernames.append(username)
             student_objects.append(student)
-        else:
-            pass
             
         # trying to check if that student is in there twice
         # each student we grab their unique username

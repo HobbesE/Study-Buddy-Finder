@@ -10,6 +10,7 @@ from model import Student, Attendence, StudySession, connect_to_db, db
 from datetime import timedelta
 # import crud sometimes doesn't work. Try "from crud import astrisk"
 from crud import *
+import crud
 # import crud
 from jinja2 import StrictUndefined
 
@@ -42,7 +43,7 @@ def home():
         return render_template('login.html')
     else:
         study_sessions=get_study_sessions()
-        print('*'*20)
+        # print('*'*20)
     
         return render_template('index.html', study_sessions=study_sessions)
 
@@ -108,7 +109,6 @@ def login():
         password = request.form.get("password")
 
         student = Student.query.filter_by(username=username).first()
-        print(student)
         if not student:
             flash("Hmm.. that didn't quite work.")
             return redirect("/")
@@ -118,8 +118,6 @@ def login():
         if student.password == password:
             #Call flask_login.login_user to log in a student user
             session['logged_in'] = student.user_id
-            print('*'*20)
-            print(session['logged_in'])
             # login_user(student) 
             flash("You're in!")
             return redirect("/")
@@ -184,9 +182,10 @@ def create_opportunity():
     proposed_time = request.form.get('proposed_time')
     topic= request.form.get('topic')
     capacity= request.form.get('capacity') # when it's None it's actually returning ""
-    print("*"*20, type(capacity))
+    # print("*"*20, type(capacity))
     prerequisites= request.form.get('prerequisites')
-    new_opportunity=create_study_session(participant, proposed_time, topic, capacity, prerequisites)    
+    creator= crud.get_participant(session['logged_in'])
+    new_opportunity=create_study_session(participant, proposed_time, topic, capacity, prerequisites, creator)    
 
 #     When a study_opp event is created
 # the study_opp event information should be displayed in index.html,
@@ -199,6 +198,7 @@ def create_connection(study_session_id):
     study_sessions=get_study_sessions()
     # study_session = get_study_session_by_id(study_session_id)
     user_id=session['logged_in']
+    take_attendence(study_session_id, user_id)
     roster = take_attendence(study_session_id)
  
     print(user_id)
@@ -223,7 +223,7 @@ def geolocate():
 
     response = requests.get(base_url, params=params)
     res = response.json()
-    print(response)
+    # print(response)
     # print(response.json().keys)
 
     if res['status'] == 'OK':
