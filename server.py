@@ -7,7 +7,7 @@ from flask import Flask, render_template, redirect, request, session, flash
 from flask_login import LoginManager, login_user, login_required, logout_user
 from model import Student, Attendence, StudySession, connect_to_db, db
 # from crud import create_student
-from datetime import timedelta
+from datetime import timedelta, datetime, timezone
 # import crud sometimes doesn't work. Try "from crud import astrisk"
 from crud import *
 import crud
