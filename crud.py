@@ -164,12 +164,12 @@ def create_comment(comment, study_session_id, user_id):
 def get_comments(study_session_id):
     """Return all comments within a study session page"""
 
-    comments = Comment.query.filter(Comment.event_id == event_id).all()
+    comments = Comment.query.filter(Comment.study_session_id == study_session_id).all()
     comments_list = []
     if comments:
         for comment in comments:
             dict_comments = {}
-            user = get_participant(user_id)
+            author = get_participant(author_id)
             dict_comments[user] = comment.comment
             list_comments.append(dict_comments)
 
