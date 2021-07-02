@@ -16,23 +16,27 @@
 <h2>Created Sessions: </h2>
 {% for study_session in created_sessions %}
 <table>
-<form>
-    <tr>    
-    <a href="/study-session/{{study_session.study_session_id}}"> Study Session Page </a><br>
+    <tr><td>Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></td>
+        <td>Proposed Time: {{ study_session.proposed_time}}</td>
+        <td>Capacity: {{ study_session.capacity }}</td>
     </tr>
     <tr>
-        Topic: {{study_session.topic}}<br>
-        Proposed Time: {{ study_session.proposed_time}}<br>
-        Capacity: {{ study_session.capacity }}
-    </tr>
+        <td>Participants: </td>
     <tr>
-        <td>Participants:
+        <td>
             <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-            <!-- {{ study_session.creator.icon_url}} --></td>
-        <td>Participant</td>
-        <td><input type="submit" value="JOIN" ></input></td>
+            {{ study_session.creator.icon_url}}
+        </td>
+            {% for attendence in study_session.attendences %}
+        <td>
+            <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
+            {{ attendence.student.icon_url }}
+        </td>
+            {% endfor %}
+        <form action="/join_session/{{study_session.study_session_id}}">
+        <td><button type='submit' >JOIN</button></form>
     </tr>
-</form>>
+
 </table>
 <br>
 <br>         
@@ -47,23 +51,31 @@
 <h2>Participating Sessions: </h2>
 {% for study_session in participating_sessions %}
 <table>
-<form>
-    <tr>    
-    <a href="/study-session/{{study_session.study_session_id}}"> Study Session Page </a><br>
+    <tr><td>Topic= <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></td>
+        <td>Proposed Time: {{ study_session.proposed_time}}</td>
+        <td>Capacity: {{ study_session.capacity }}</td>
     </tr>
     <tr>
-        Topic: {{study_session.topic}}<br>
-        Proposed Time: {{ study_session.proposed_time}}<br>
-        Capacity: {{ study_session.capacity }}
-    </tr>
+        <td>Participants: </td>
     <tr>
-        <td>Participants:
+        <td>
             <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-            <!-- {{ study_session.creator.icon_url}} --></td>
-        <td>Participant</td>
-        <td><input type="submit" value="JOIN" ></input></td>
+            {{ study_session.creator.icon_url}}
+        </td>
+            {% for attendence in study_session.attendences %}
+            <td>   
+                <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
+                {{ attendence.student.icon_url }}
+            </td>
+            {% endfor %}
+        <td>
+            <form action="/join_session/{{study_session.study_session_id}}">
+                <td>
+                    <button type='submit' >JOIN</button>
+                </td>
+            </form>
+        </td>
     </tr>
-</form>>
 </table>
 <br>
 <br>         

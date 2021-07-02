@@ -24,14 +24,20 @@ def create_student(username, password, first_name, last_name, email, cohort_name
 
 def attend(study_session_id, user_id):
 
-    attendence = Attendence(
-        study_session_id=study_session_id, 
-        user_id=user_id
-    )
-    db.session.add(attendence)
-    db.session.commit()
+    record_exists = Attendence.query.filter(Attendence.study_session_id==study_session_id, Attendence.user_id==user_id).first()
 
-    return attendence
+    if record_exists:
+        return
+    else:
+        attendence = Attendence(
+            study_session_id=study_session_id, 
+            user_id=user_id
+        
+        )
+        db.session.add(attendence)
+        db.session.commit()
+
+        return attendence
 
 def create_study_session(participant, proposed_time, topic, capacity, prerequisites, creator):
     study_session = StudySession(
@@ -58,6 +64,17 @@ def create_study_session(participant, proposed_time, topic, capacity, prerequisi
 #     db.session.commit()
 
 #     return topic
+
+def get_roster_list():
+    study_sessions=get_study_sessions()
+    roster_list=[]
+    
+    for study_session in study_sessions:
+        roster = take_attendence(study_session.study_session_id)
+        roster_list.append(roster)
+    print('888888888888888888888888')
+    print(roster_list)
+    return roster_list
 
 def get_study_sessions():
     """Return all study sessions"""
@@ -106,9 +123,6 @@ def take_attendence(study_session_id):
     attendees = Attendence.query.filter_by(study_session_id=study_session.study_session_id).all()
     # [<Attendence attendence_id= 1 study_session_id 1>, <Attendence attendence_id= 2 study_session_id 1>, 
     #  <Attendence attendence_id= 3 study_session_id 1>, ...]
-
-    print("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!")
-    print(attendees)
     
     student_objects=[]
     student_usernames = []
@@ -136,6 +150,28 @@ def get_participant(user_id):
     """Return the username of a student within a study session"""
 
     return Student.query.get(user_id)
+
+def create_comment(comment, study_session_id, user_id):
+    """Create a new comment within a study session page"""
+
+    new_comment = Comment(comment=comment, study_session_id=study_session_id, user_id=user_id)
+
+    db.session.add(new_comment)
+    db.session.commit()
+
+    return new_comment
+
+def get_comments(study_session_id):
+    """Return all comments within a study session page"""
+
+    comments = Comment.query.filter(Comment.event_id == event_id).all()
+    comments_list = []
+    if comments:
+        for comment in comments:
+            dict_comments = {}
+            user = get_participant(user_id)
+            dict_comments[user] = comment.comment
+            list_comments.append(dict_comments)
 
 # def get_participants_for_study_session(target_user_id):
 #     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)

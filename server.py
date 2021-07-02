@@ -35,6 +35,7 @@ app.jinja_env.undefined = StrictUndefined
 login_manager = LoginManager()
 login_manager.init_app(app)
 
+
 @app.route('/')
 def home():
     """Return main study buddy table as homepage."""
@@ -43,9 +44,9 @@ def home():
         return render_template('login.html')
     else:
         study_sessions=get_study_sessions()
-        # print('*'*20)
+        print('&&&&&&&&&&&&')
     
-        return render_template('index.html', study_sessions=study_sessions)
+    return render_template('index.html', study_sessions=study_sessions)
 
 # @app.route('/')
 # def home_table():
@@ -124,8 +125,13 @@ def login():
         else:flash("Ope. That didn't go well.")
         return redirect("/")
 
+@app.route("/logout")
+# @login_required
+def display_logout():
+    return render_template("logout.html")
+
 @app.route("/logout", methods=['POST'])
-@login_required
+# @login_required
 def logout():
     """log a student out"""
     logout_user()
@@ -185,28 +191,40 @@ def create_opportunity():
     # print("*"*20, type(capacity))
     prerequisites= request.form.get('prerequisites')
     creator= crud.get_participant(session['logged_in'])
-    new_opportunity=create_study_session(participant, proposed_time, topic, capacity, prerequisites, creator)    
+    new_opportunity=create_study_session(participant, proposed_time, topic, capacity, prerequisites, creator)   
 
+    return redirect("/")
 #     When a study_opp event is created
 # the study_opp event information should be displayed in index.html,
 # including participant icon/link to their profile, study topic, datetime, and max 
-    return redirect("/")
 
-@app.route('/join_session/<study_session_id>')
+# @app.route('/creator_attending<study_session_id>')
+# #@login_required
+# def creator_join(study_session_id):
+#     creator=session['logged_in']
+#     study_sessions=get_study_sessions()
+#     attend(study_session_id, creator)
+    
+#     I wish I could get this to work! Creator should automatically join the study_session
+#     return redirect("/")
+
+@app.route('/join_session/<int:study_session_id>')
 # @login_required
 def create_connection(study_session_id):
+    # roster_list = get_roster_list()
     study_sessions=get_study_sessions()
     # study_session = get_study_session_by_id(study_session_id)
-    user_id=session['logged_in']
-    take_attendence(study_session_id, user_id)
-    roster = take_attendence(study_session_id)
- 
+    user_id=session['logged_in']    
+    attend(study_session_id, user_id)
+    print('$$$$$$$$$$ study session id: $$$$$$$$$$$$')
+    print(study_session_id)
+    print(type(study_session_id))
+    print('$$$$$$$$$$ user id: $$$$$$$$$$$$')   #TODO: Why do I have to click JOIN twice for it to go through?
     print(user_id)
     print("********")
-    print(roster) # [<student>, <student>]
     print("********")
 
-    return render_template('index.html', study_sessions=study_sessions, roster=roster)
+    return render_template('index.html', study_sessions=study_sessions)
 
 
 @app.route('/res')

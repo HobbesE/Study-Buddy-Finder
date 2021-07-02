@@ -11,35 +11,38 @@
         <h1><a href="/create_opportunity">+ session</href></h1>
         <h5><a href="/team_calendar">Calendar View</a></h5><br>
         <!-- Opportunity Table -->
-            {% if study_sessions %}
-                {% for study_session in study_sessions %}
+        {% if study_sessions %}
+        {% for study_session in study_sessions %}
+            <table>
+                <tr><td>Topic= <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></td>
+                    <td>Proposed Time: {{ study_session.proposed_time}}</td>
+                    <td>Capacity: {{ study_session.capacity }}</td>
+                </tr>
+                <tr>
+                    <td>Participants: </td>
+                <tr>
+                    <td>
+                        <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
+                        {{ study_session.creator.icon_url}}
+                    </td>
                     
-                    <table>
-                            <tr>    
-                            Topic: <a href="/study-session/{{study_session.study_session_id}}"> {{study_session.topic}} </a><br>
-                            </tr>
-                            <tr>
-                                Proposed Time: {{ study_session.proposed_time}}<br>
-                                Capacity: {{ study_session.capacity }}
-                            </tr>
-                            <tr>
-                                <td>Participants:
-                                    <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-                                    <!-- {{ study_session.creator.icon_url}} --></td>
-                                </td>
-                                <form action="/join_session/{{study_session.study_session_id}}">
-                                <td><button value={{study_session.study_session_id}} >JOIN</button></td>
-                                </form>
-                            </tr>
-                    </table>
-                    <br>
-                    <br>         
-                {% endfor %}
-
+                    {% for attendence in study_session.attendences %}
+                    <td>
+                        
+                        <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
+                        {{ attendence.student.icon_url }}
+                    </td>
+                    {% endfor %}
                     
-                       
-                {% endif %}   
-           
+                
+                    <form action="/join_session/{{study_session.study_session_id}}">
+                    <td><button type='submit' >JOIN</button></td>
+                    </form>
+                </tr>
+            </table>
+            <br>
+            <br>         
+        {% endfor %}
+        {% endif %}   
     </body>
-    
 </html>

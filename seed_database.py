@@ -39,7 +39,7 @@ student_data= [
         # "longitude":""
     }, 
     {   
-        "username":"japandpanda", 
+        "username":"japanpanda", 
         "password": "yum", 
         "first_name": "Cassity", 
         "last_name": "Jefferson", 

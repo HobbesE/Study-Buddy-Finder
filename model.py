@@ -38,7 +38,7 @@ class Student(db.Model):
     user_id= db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    username = db.Column(db.String, unique=True)
+    username = db.Column(db.String(32), unique=True)
     password = db.Column(db.String)
     first_name = db.Column(db.String)
     last_name = db.Column(db.String)
@@ -76,7 +76,7 @@ class Attendence(db.Model):
     # student.username => "JBland07"
 
     def __repr__(self):
-        return f'<Attendence attendence_id= {self.attendence_id} study_session_id {self.study_session_id}>'
+        return f'<Attendence attendence_id= {self.attendence_id} user_id = {self.user_id}> study_session_id {self.study_session_id}>'
 
 class StudySession(db.Model):
     """an opportunity for study buddies to join"""
@@ -119,6 +119,19 @@ class StudySession(db.Model):
     def __repr__(self):
         return f'<StudySession study_session_id={self.study_session_id} proposed_time={self.proposed_time} participant={self.participant} topic = {self.topic} active = {self.active}>'
 
+class Comment(db.Model):
+    """Comments within a study session page"""
+
+    __tablename__: 'comments'
+
+    comment_id = db.Column(db.Integer, primary_key=True)
+    text = db.Column(db.String(700))
+    author_id = db.Column(db.String(32))
+    timestamp = db.Column(db.DateTime(), default=datetime.utcnow, index=True)
+
+    def __repr__(self):
+        return f'<Comment comment_id={self.comment_id}> text={self.text} author={self.author}'
+
 # class Topic(db.Model):
 
 #     __tablename__ = 'topics'
@@ -141,6 +154,17 @@ class StudySession(db.Model):
 
 #     def __repr__(self):
 #         return f'<Cohort cohort_name = {self.cohort_name} cohort_color_code = {self.cohort_color_code}>'
+
+# def get_rosters():
+#     study_sessions=get_study_sessions()
+#     rosters=[]
+#     for study_session in study_sessions:
+#         roster = take_attendence(study_session.study_session_id)
+#         rosters.append(roster)
+#     print('&&&&&&&&&&&&&&&&&&&&&&')    
+#     print (rosters)
+#     return rosters
+
 
 
 
