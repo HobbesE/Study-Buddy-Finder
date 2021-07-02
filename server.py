@@ -25,7 +25,7 @@ from jinja2 import StrictUndefined
 
 # #     print('Connected to the db!')
 
-API_KEY = 'AIzaSyC0cTAdoSChx8oVXvgrLQYSBQ8RwhTYXKI'
+# API_KEY = 'AIzaSyAa-gF8p3QpuV1Yh0GnqjWUDDyZ43ixQpE'
 
 
 app = Flask(__name__)
@@ -227,36 +227,36 @@ def create_connection(study_session_id):
     return render_template('index.html', study_sessions=study_sessions)
 
 
-@app.route('/res')
-# @login_required
-def geolocate():
-    address = "683 Sutter St., San Francisco, CA 94102"
+# @app.route('/res')
+# # @login_required
+# def geolocate():
+# address = "683 Sutter St., San Francisco, CA 94102"
 
-    params = {
-        'key': API_KEY,
-        'address': address
-    }
+# params = {
+#     'key': API_KEY_2,
+#     'address': address
+# }
 
-    base_url ='https://maps.googleapis.com/maps/api/geocode/json?'
+# base_url ='https://maps.googleapis.com/maps/api/geocode/json?'
 
-    response = requests.get(base_url, params=params)
-    res = response.json()
-    # print(response)
-    # print(response.json().keys)
+# response = requests.get(base_url, params=params)
+# res = response.json()
+# # print(response)
+# # print(response.json().keys)
 
-    if res['status'] == 'OK':
-        geometry = res['results'][0]['geometry']
-        geometry['location']['lat']
-        lat = geometry['location']['lat']
-        long = geometry['location']['lng']
-    else:
-        print("Pllzzzzz give me your addresss!!!! It'll be fiiiine.")
+# if res['status'] == 'OK':
+#     geometry = res['results'][0]['geometry']
+#     geometry['location']['lat']
+#     lat = geometry['location']['lat']
+#     long = geometry['location']['lng']
+# else:
+#     print("Pllzzzzz give me your addresss!!!! It'll be fiiiine.")
 
-    return redirect("/hackbrighter_map")
+    # return redirect("/hackbrighter_map")
 
 @app.route('/hackbrighter_map')
 # @login_required
-def view_map():
+def initMap():
     """Return student map page"""
     return render_template("hackbrighter_map.html")
 
