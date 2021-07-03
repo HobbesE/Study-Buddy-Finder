@@ -266,6 +266,30 @@ def view_calendar():
     """Return student calendar view of application"""
     return render_template("team_calendar.html")
 
+@app.route('/buddies')
+# @login_required
+def view_buddies():
+    """Return page with students user has collaborated with in the past"""
+    return render_template("buddies.html")
+
+@app.route('/inbox')
+# @login_required
+def view_inbox():
+    """Return student direct message inbox'"""
+    return render_template("inbox.html")
+
+@app.route('/projects')
+# @login_required
+def view_projects():
+    """Return project sharing page'"""
+    return render_template("projects.html")
+
+@app.route('/about')
+# @login_required
+def view_about():
+    """Return information about the Hackbrighter web application'"""
+    return render_template("about.html")
+
 #log out
 #forgot password
 #about the website

@@ -1,15 +1,15 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>Hackbright- Create a new Study Opportunity</title>
-        <link rel="icon" href="static/HBlogobluewithbackground.svg">
-    </head>
-    <body>
+{% extends "base.html" %}
+{% block content %}
         <h1>Study Buddy Opportunities</h1>
-        <h1><a href="/create_opportunity">+ session</href></h1>
+        <h2><a href="/create_opportunity">+ session</href></h2>
         <h5><a href="/team_calendar">Calendar View</a></h5><br>
+
+        <!-- Search Study Sessions -->
+        <form class="form-inline">
+            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+        </form>
+
         <!-- Opportunity Table -->
         {% if study_sessions %}
         {% for study_session in study_sessions %}
@@ -44,5 +44,4 @@
             <br>         
         {% endfor %}
         {% endif %}   
-    </body>
-</html>
+{% endblock %}

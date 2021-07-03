@@ -1,18 +1,23 @@
-<!doctype html>
-<html>
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
-            <title>
-                Hackbrighter Profile
-            </title>
-    </head>   
-<body><!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
+{% extends "base.html" %}
+{% block title %}Hackbrighter Profile{% endblock %}
+
+
+<!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
 #Location is vital to scheduling by time zone.
 #if user has a valid location chosen, cancel pop-up sticky
 #if user tries to create a new study session without a valid location in their profile,
 #bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
+{% block content %}
+<h2></h2>
 
+    <form>
+        <div class="form-group">
+        <label for="exampleFormControlFile1">Upload a Custom Icon</label>
+        <input type="file" class="form-control-file" id="exampleFormControlFile1">
+        </div>
+    </form>
+    
+<br>
 <h2>Created Sessions: </h2>
 {% for study_session in created_sessions %}
 <table>
@@ -41,12 +46,6 @@
 <br>
 <br>         
 {% endfor %}
-
-<br>
-
-<br>
-<br>
-
 
 <h2>Participating Sessions: </h2>
 {% for study_session in participating_sessions %}
@@ -80,7 +79,7 @@
 <br>
 <br>         
 {% endfor %}
-
+{% endblock %}
 
 
 <br>
@@ -99,6 +98,4 @@ Github field POST(interactive url)<br>
 
 
 
-</body>
 
-</html>

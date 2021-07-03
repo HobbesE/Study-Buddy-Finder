@@ -1,14 +1,8 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Logout of Hackbrighter</title>
-  </head>
-  <body>
+{% extends "base.html" %}
+{% block title %}Hackbrighter Log Out{% endblock %}
+    {% block content %}
     <form action="/logout" method="POST">
         <h2>Log Out</h2>
         <div id= "submit_button"><input type="Submit" alt="Click to log out."></div>
     </form>
-  </body>
-</html>
+    {% endblock %}

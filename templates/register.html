@@ -1,43 +1,125 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hackbrighter Create An Account</title>
-  </head>
-  <body>
-    <p id= "reg_intro" class="intro"><h2>Create a Hackbrighter Account</h2></p><br>
-    <form action="/register" method="POST">
-        <div id= "first_name"><label>First Name </label><input type="text" name="first_name" alt="Please input your first name."></div>
-        <div id= "last_name"><label>Last Name </label><input type="text" name="last_name" alt="Please input your last name."></div>
-        <div id= "email"><label>Email </label><input type="text" name="email" alt="Please input your email."></div>
-        <div id= "username"><label>Username </label><input type="text" name="username" alt="Please input your username."></div>
-        <div id= "password"><label>Password </label><input type="password" name="password" alt="Please input your password."></div>
-        <div id= "password_suggestion">
-            <h5>You can use letters, numbers, and symbols.</h5></div><br>
-<!-- <div id= "password_confirmation"><label>enter your password again: </label><input type="password" name="password confirmation" alt="Please input your password."></div> -->
-        <label>Cohort Name</label><select name="cohort_name">
-            <option value="Ada">Ada</option>
-            <option value="Katherine">Katherine</option>
-            <option value="Margaret">Margaret</option>
-            <option value="Grace">Grace</option>
-        </select>
-            <label>Cohort Year</label><select name="cohort_year">
-            <option value="2022">2022</option>
-            <option value="2021">2021</option>
-            <option value="2020">2020</option>
-            <option value="2019">2019</option>
-            <option value="2018">2018</option>
-            <option value="2017">2017</option>
-            <option value="Beyond">Beyond!</option>
-        </select><br>
-        <h5><a href="/define-cohort">What's this?</a></h5>
-        <div id= "submit_registration"><input type="Submit" alt="create account"></div>
-        <h5><a href="/login">Log in here</href></a> if you already have an account!</h5>
-        
-        <!-- Remember me checkbox-->
-    </form>
+{% extends "base.html" %}
+{% block title %}Hackbrighter Sign Up{% endblock %}
 
-  </body>
-</html>
+{% block content %}
+    <p id= "reg_intro" class="intro"><h2>Create a Hackbrighter Account</h2></p><br>
+    <form action="/register" method="POST" class="needs-validation" novalidate>
+        <div class="form-row">
+            <div class="col-md-6">
+            <label for="validationCustom01">First name</label>
+            <input type="text" class="form-control" id="validationCustom01" placeholder="First name" value="Balloonicorn" required>
+            <div class="valid-feedback">
+                Nice!
+            </div>
+            </div>
+            <div class="col-md-6">
+            <label for="validationCustom02">Last name</label>
+            <input type="text" class="form-control" id="validationCustom02" placeholder="Last name" value="Unicorn" required>
+            <div class="valid-feedback">
+                Nice!
+            </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group">
+            <label for="validationCustom03">Email</label>
+            <input type="text" class="form-control" id="validationCustom02" placeholder="Email" value="balloonicorn.d.unicorn@hackbright.com" required>
+              <div class="valid-feedback">
+                  Nice!
+              </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+            <label for="validationCustomUsername">Username</label>
+              <div class="input-group">
+              <input type="text" class="form-control" id="validationCustomUsername" placeholder="balloonicorn" aria-describedby="inputGroupPrepend" required>
+                <div class="invalid-feedback">
+                    Please choose a unique username.
+                </div>
+              </div>
+            </div>
+            <div class=col-md-6">
+            <label for="validationCustomPassword">Password</label>
+              <div class="input-group">
+              <input type="password" class="form-control" id="validationCustomUsername" placeholder="" aria-describedby="inputGroupPrepend" required>
+                <div id= "password_suggestion">
+                    <h5>You can use letters, numbers, and symbols.</h5>
+                  <div class="invalid-feedback">
+                      Please choose a strong password.
+                  </div>
+                </div>    
+              </div>
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6 mb-3">
+            <label for="validationCustom04">City</label>
+            <input type="text" class="form-control" id="validationCustom03" placeholder="City" required>
+            <div class="invalid-feedback">
+                Please provide a valid city. 
+            </div>
+            </div>
+            <div class="col-md-3 mb-3">
+            <label for="validationCustom05">State</label>
+            <input type="text" class="form-control" id="validationCustom04" placeholder="State" required>
+            <div class="invalid-feedback">
+                Please provide a valid state.
+            </div>
+            </div>
+            <div class="col-md-3 mb-3">
+            <label for="validationCustom06">Zip</label>
+            <input type="text" class="form-control" id="validationCustom05" placeholder="Zip" required>
+            <div class="invalid-feedback">
+                Please provide a valid zip.
+            </div>
+            </div>
+        </div>
+        <div class="form-row">
+          <div class="col-md-3 mb-3">
+          <label for="validationCustom07">Cohort Name</label>
+          <select name="cohort_name">
+              <option value="Ada">Ada</option>
+              <option value="Katherine">Katherine</option>
+              <option value="Margaret">Margaret</option>
+              <option value="Grace">Grace</option>
+          </select>
+          </div>
+          <div class="col-md-3 mb-3">
+          <label for="validationCustom08">Cohort Year</label>
+          <select name="cohort_year">
+              <option value="2019">2022</option>
+              <option value="2018">2021</option>
+              <option value="2017">2020</option>
+              <option value="Beyond">Beyond!</option>
+          </select>
+          <h5><a href="/define-cohort">What's this?</a></h5>
+        </div>
+
+        <button class="btn btn-primary" type="submit">Submit</button>
+
+    </form>
+    
+    <script>
+    // Example starter JavaScript for disabling form submissions if there are invalid fields
+    (function() {
+    'use strict';
+    window.addEventListener('load', function() {
+        // Fetch all the forms we want to apply custom Bootstrap validation styles to
+        var forms = document.getElementsByClassName('needs-validation');
+        // Loop over them and prevent submission
+        var validation = Array.prototype.filter.call(forms, function(form) {
+        form.addEventListener('submit', function(event) {
+            if (form.checkValidity() === false) {
+            event.preventDefault();
+            event.stopPropagation();
+            }
+            form.classList.add('was-validated');
+        }, false);
+        });
+    }, false);
+    })();
+    </script>
+
+{% endblock %}
 
