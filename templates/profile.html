@@ -1,6 +1,21 @@
 {% extends "base.html" %}
 {% block title %}Hackbrighter Profile{% endblock %}
 
+<style>
+                
+    /* Create two equal columns that floats next to each other */
+    .column {
+    float: left;
+    width: 50%;
+    }
+
+    /* Clear floats after the columns */
+    .row:after {
+    content: "";
+    display: table;
+    clear: both;
+    }
+</style>
 
 <!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
 #Location is vital to scheduling by time zone.
@@ -8,7 +23,9 @@
 #if user tries to create a new study session without a valid location in their profile,
 #bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
 {% block content %}
-<h2></h2>
+<h2>My Profile</h2>
+<div class="row">
+<div class="column" id="Profile" col=6>
 
     <form>
         <div class="form-group">
@@ -16,74 +33,97 @@
         <input type="file" class="form-control-file" id="exampleFormControlFile1">
         </div>
     </form>
+
+</div>
+<div class="column" id="User sessions" col=6>
     
-<br>
-<h2>Created Sessions: </h2>
-{% for study_session in created_sessions %}
-<table>
-    <tr><td>Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></td>
-        <td>Proposed Time: {{ study_session.proposed_time}}</td>
-        <td>Capacity: {{ study_session.capacity }}</td>
-    </tr>
-    <tr>
-        <td>Participants: </td>
-    <tr>
-        <td>
-            <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-            {{ study_session.creator.icon_url}}
-        </td>
-            {% for attendence in study_session.attendences %}
-        <td>
-            <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
-            {{ attendence.student.icon_url }}
-        </td>
-            {% endfor %}
-        <form action="/join_session/{{study_session.study_session_id}}">
-        <td><button type='submit' >JOIN</button></form>
-    </tr>
+    <br>
+    {% if created_sessions %}
+    <h2>My Study Sessions: </h2>
+    <div class="container">
+        {% for study_session in created_sessions %}
+        <div class="row">
+            <div class="row">
+                <div class="col-3">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
+                <div class="col-3">Date: {{ study_session.proposed_date}}</div>
+                <div class="col-3">Time: {{ study_session.proposed_time}}</div>
+                {% if study_session.capacity %}
+                <div class="col-3">Capacity: {{ study_session.capacity }}</div>
+                {% endif %}
+            </div>
+                <div class="col">Participants: </div>
+            <div class="row">
+                <div class="col-2">
+                    <a href="/student/{{study_session.creator.username}}"> 
+                    {{ study_session.creator.username}}</a><br>
+                    <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:42px;height:42px;"></a>
+                </div>
+                {% for attendence in study_session.attendences %}
+                <div class="col-2">
+                    <a href="/student/{{ attendence.student.username}}">
+                    {{attendence.student.username}}</a><br>
+                    <a href="/student/{{ attendence.student.icon_url }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
+                </div>
+            </div>
+                {% endfor %}
+                <div class="col">
+                    <form action="/join_session/{{study_session.study_session_id}}">
+                    <button class='float-end' type='submit' >JOIN</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        {% endfor %}
+        {% endif %}
+        </div>
+</div>
+</div>
 
-</table>
-<br>
-<br>         
-{% endfor %}
 
-<h2>Participating Sessions: </h2>
-{% for study_session in participating_sessions %}
-<table>
-    <tr><td>Topic= <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></td>
-        <td>Proposed Time: {{ study_session.proposed_time}}</td>
-        <td>Capacity: {{ study_session.capacity }}</td>
-    </tr>
-    <tr>
-        <td>Participants: </td>
-    <tr>
-        <td>
-            <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-            {{ study_session.creator.icon_url}}
-        </td>
-            {% for attendence in study_session.attendences %}
-            <td>   
-                <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
-                {{ attendence.student.icon_url }}
-            </td>
-            {% endfor %}
-        <td>
-            <form action="/join_session/{{study_session.study_session_id}}">
-                <td>
-                    <button type='submit' >JOIN</button>
-                </td>
-            </form>
-        </td>
-    </tr>
-</table>
-<br>
-<br>         
-{% endfor %}
+
+        <h2>My Joined Sessions: </h2>
+    {% if participating_sessions %}
+    <div class="container">
+        {% for study_session in participating_sessions %}
+        <div class="row">
+            <div class="row">
+                <div class="col-3">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
+                <div class="col-3">Date: {{ study_session.proposed_date}}</div>
+                <div class="col-3">Time: {{ study_session.proposed_time}}</div>
+                {% if study_session.capacity %}
+                <div class="col-3">Capacity: {{ study_session.capacity }}</div>
+                {% endif %}
+            </div>
+                <div class="col">Participants: </div>
+            <div class="row">
+                <div class="col-2">
+                    <a href="/student/{{study_session.creator.username}}"> 
+                    {{ study_session.creator.username}}</a><br>
+                    <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:42px;height:42px;"></a>
+                </div>
+                {% for attendence in study_session.attendences %}
+                <div class="col-2">
+                    <a href="/student/{{ attendence.student.username}}">
+                    {{attendence.student.username}}</a><br>
+                    <a href="/student/{{ attendence.student.icon_url }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
+                </div>
+                {% endfor %}
+                <div class="col">
+                    <form action="/join_session/{{study_session.study_session_id}}">
+                    <button class='float-end' type='submit' >JOIN</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        <br>
+        <br>
+        {% endfor %}
+        {% endif %}
+        </div>
 {% endblock %}
 
-
-<br>
-<br>
 Auto-generated cute animal picture for icon-- import choice<br>
 Input to let people upload their own picture. POST How can I round frame it?<br>
 <br>

@@ -1,8 +1,7 @@
-<!doctype html>
-<html>
+{% extends "base.html" %}
+{% block content %}
+    
     <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width">
             <title>
                 Hackbrighter Study Session
             </title>
@@ -13,7 +12,7 @@
                 .column {
                   float: left;
                   width: 50%;
-                  padding: 10px;
+                  padding: 100px;
                   height: 300px; /* Should be removed. Only for demonstration */
                   flex: 50%;
                 }
@@ -27,39 +26,44 @@
     </head>   
 <body>
     <h2>Study Session: {{ study_session.topic }}</h2>
-    
-    <table>
-        <tr>
-            <td>Topic: {{ study_session.topic }}</td>
-            <td>Proposed Time: {{ study_session.proposed_time}}</td>
-            <td>Capacity: {{ study_session.capacity }}</td>
-        </tr>
-        <tr>
-            <td>Participants: </td>
-        </tr>
-        <tr>
-            <td>
-                <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-                {{ study_session.creator.icon_url}}
-            </td>
-            {% for attendence in study_session.attendences %}
-            <td>
-                <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
-                {{ attendence.student.icon_url }}
-            </td>
-            {% endfor %}
-            <form action="/join_session/{{study_session.study_session_id}}">
-                <td>
-                    <button type='submit' >JOIN</button>
-                </td>
-            </form>
-        </tr>
-        <!-- Reference trading cards for grid, to make participants overflow to next line as needed -->
-    </table>
-    
+    <div class="container">
+        <div class="row">
+            <div class="row">
+            <div class="col-3">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
+            <div class="col-3">Date: {{ study_session.proposed_date}}</div>
+            <div class="col-3">Time: {{ study_session.proposed_time}}</div>
+            {% if study_session.capacity %}
+            <div class="col-3">Capacity: {{ study_session.capacity }}</div>
+            {% endif %}
+        </div><br>
+        <div class="row">
+            <div class="col">Participants: </div>
+        </div>
+        <div class="row">
+            <div class="col-2">
+                <a href="/student/{{study_session.creator.username}}"> 
+                {{ study_session.creator.username}}</a><br>
+                <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:42px;height:42px;"></a>
+            </div>
+                {% for attendence in study_session.attendences %}
+            <div class="col-2">
+                <a href="/student/{{ attendence.student.username}}">
+                {{attendence.student.username}}</a><br>
+                <a href="/student/{{ attendence.student.icon_url }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
+            </div>
+                {% endfor %}
+            <div class="col">
+                <form action="/join_session/{{study_session.study_session_id}}">
+                <button class='float-end' type='submit' >JOIN</button>
+                </form>
+            </div>
+            </div>
+        </div>
+    </div>
     <br>
     <br>
-    <br>
+    <br>            <!-- Reference trading cards for grid, to make participants overflow to next line as needed -->
+
     
     <table>
         <div class="row">
@@ -74,17 +78,16 @@
                 </textarea>
                 <br>
                 <br>
-                <input type="submit" value="Update" onclick="insert()">
+                <input type="button" name="prerequisites" value="Update" onclick="insert()">
                 </form>
             </div>
             <div class="column">
+                {{comments}}
                 <form action="/study-session/{{study_session}}" method="POST">
-                    Discussion<br><br>
+                    <Discussion<br><br>
                     <div id="comments">*******COMMENTS GO HERE*******<br><br>
-                    <textarea id="comment_input" name="comment_textarea">
-                        What do you think?
-                    </textarea><br><br>
-                    <input type="submit" value="Post" onclick="insert()">
+                    <div id="add_comment"><input type="text" name="add_comment" placeholder="Chat here"></div>
+                    <input type="submit" name="comments" value="Post" onclick="insert()">
                     </div>
 
                 </form>
@@ -94,10 +97,4 @@
         </div>
 
     </table>
-
-    
-
-
-</body>
-
-</html>
+    {% endblock %}

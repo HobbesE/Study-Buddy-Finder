@@ -1,10 +1,3 @@
-
-
-#TODO: Why is information seeding to the database incorrectly?
-#Table order is user_id, username, password, first_name, last_name, email, cohort_name, cohort_year
-#but data is populating user_id, username, password, last_name, email, first_name, cohort_name, cohorty_year
-#I've put everything I can find in this order. Is it my for loop at the end, in seed_database.py?
-
 """Script to seed Study Buddy database."""
 
 import os
@@ -30,13 +23,12 @@ student_data= [
         "first_name": "Jessica", 
         "last_name": "Blandley", 
         "email":"jbland07@yahoo.com", 
-        #"icon_url":"static/cute_puppy", 
+        "icon_url":"static/Creative-Tail-Animal-squirrel.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2018", 
-        # "location":"Peru", 
-        # "goals":"Exist in a damn table", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"Topeka", 
+        "state":"KS", 
+        "zipcode":"66604", 
     }, 
     {   
         "username":"japanpanda", 
@@ -44,13 +36,12 @@ student_data= [
         "first_name": "Cassity", 
         "last_name": "Jefferson", 
         "email":"dgillespie2@gmail.com", 
-        #"icon_url":"static/whoops_pic", 
+        "icon_url":"static/Creative-Tail-Animal-tiger.svg.png", 
         "cohort_name":"Katherine", 
         "cohort_year":"2020", 
-        # "location":"San Francisco", 
-        # "goals":"To log in successfully!", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"San Francisco", 
+        "state":"CA", 
+        "zipcode":"94114", 
     },
     {   
         "username":"notthefool", 
@@ -58,13 +49,12 @@ student_data= [
         "first_name": "d", 
         "last_name": "Gillespie", 
         "email":"dgillespie@gmail.com", 
-        #"icon_url":"static/clifford", 
+        "icon_url":"static/Creative-Tail-Animal-fox.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2021", 
-        # "location":"2112 67th Terr", 
-        # "goals":"", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"Kansas City", 
+        "state":"MO", 
+        "zipcode":"64114", 
     },
     {
         "username":"notthefool2", 
@@ -72,13 +62,12 @@ student_data= [
         "first_name": "deborah", 
         "last_name": "Gillespie", 
         "email":"notthefool@gmail.com", 
-        #"icon_url":"static/clifford", 
+        "icon_url":"static/Creative-Tail-Animal-elephant.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2021", 
-        # "location":"Kansas City", 
-        # "goals":"", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"Kansas City", 
+        "state":"MO", 
+        "zipcode":"64110", 
     },
     {
         "username":"mamamaya", 
@@ -86,13 +75,12 @@ student_data= [
         "first_name": "Maya", 
         "last_name": "Lou", 
         "email":"maya@gmail.com", 
-        #"icon_url":"static/babies", 
+        "icon_url":"static/Creative-Tail-Animal-duck.svg.png", 
         "cohort_name":"Katherine", 
         "cohort_year":"2019", 
-        # "location":"KS", 
-        # "goals":"", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"Kansas City", 
+        "state":"KS", 
+        "zipcode":"68142", 
     },
     {
         "username":"susieq", 
@@ -100,13 +88,12 @@ student_data= [
         "first_name": "Susan", 
         "last_name": "Wesolek", 
         "email":"susieq86@gmail.com", 
-        #"icon_url":"static/turtle", 
+        "icon_url":"static/Creative-Tail-Animal-bee.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2020", 
-        # "location":"Chicago", 
-        # "goals":"", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"Chicago", 
+        "state":"IL", 
+        "zipcode":"77712", 
     },
     {
         "username":"balloonicorn", 
@@ -114,28 +101,30 @@ student_data= [
         "first_name": "Balloonicorn", 
         "last_name": "The Unicorn", 
         "email":"balloonicorn@hackbright.com", 
-        #"icon_url":"static/balloonicorn_selfie", 
+        "icon_url":"static/Creative-Tail-Animal-zebra.svg.png", 
         "cohort_name":"Katherine", 
         "cohort_year":"2021", 
-        # "location":"Hackbright desk", 
-        # "goals":"", 
-        # "latitude":"", 
-        # "longitude":""
+        "city":"San Francisco", 
+        "state":"CA", 
+        "zipcode":"94103", 
     }]
 
 students_in_db = []
 for student in student_data:
-    username, password, first_name, last_name, email, cohort_name, cohort_year = (
+    username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url, city, state, zipcode = (
         student["username"],
         student["password"],
         student['first_name'],
         student['last_name'],
         student['email'],
-#       student['icon_url'],
         student['cohort_name'],
         student['cohort_year'],
+        student['icon_url'],
+        student['city'],
+        student['state'],
+        student['zipcode']
     )
-    db_student = crud.create_student(username, password, first_name, last_name, email, cohort_name, cohort_year)
+    db_student = crud.create_student(username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url, city, state, zipcode)
     students_in_db.append(db_student)
 
 

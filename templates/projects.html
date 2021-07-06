@@ -1,2 +1,87 @@
-{% extends "base.html" %}
-{% block title %}Hackbrighter Projects{% endblock %}
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "https://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="https://www.w3.org/1999/xhtml" xml:lang="en-GB">
+<head>
+	
+
+	<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+	<style media="screen" type="text/css">
+
+	/* column container */
+	.colmask {
+		clear:both;
+		float:left;
+		width:100%;			/* width of whole page */
+		overflow:hidden;		/* This chops off any overhanging divs */
+	}
+	/* common column settings */
+	.colright,
+	.colmid,
+	.colleft {
+		float:left;
+		width:100%;
+		position:relative;
+	}
+	.col1,
+	.col2,
+	.col3 {
+		float:left;
+		position:relative;
+		padding:0 0 1em 0;
+		overflow:hidden;
+	}
+	/* 2 Column (double page) settings */
+	.doublepage {
+		background:#eee;		/* right column background colour */
+	}
+	.doublepage .colleft {
+		right:50%;			/* right column width */
+		background:#fff;		/* left column background colour */
+	}
+	.doublepage .col1 {
+		width:46%;			/* left column content width (column width minus left and right padding) */
+		left:52%;			/* right column width plus left column left padding */
+	}
+	.doublepage .col2 {
+		width:46%;			/* right column content width (column width minus left and right padding) */
+		left:56%;			/* (right column width) plus (left column left and right padding) plus (right column left padding) */
+	}
+	/* Footer styles */
+	#footer {
+		clear:both;
+		float:left;
+		width:100%;
+		border-top:1px solid #000;
+	}
+	#footer p {
+		padding:10px;
+		margin:0;
+	}
+	/* --> */
+	</style>
+</head>
+<body>
+
+<div id="header">
+	Header goes here.
+</div>
+<div class="colmask doublepage">
+	<div class="colleft">
+		<div class="col1">
+			<!-- Column 1 start -->
+			Left column
+            <!-- Column 2 end -->
+		</div>
+		<div class="col2">
+			<!-- Column 2 start -->
+			Right column
+            <!-- Column 2 end -->
+		</div>
+	</div>
+</div>
+<div id="footer">
+Footer goes here
+</div>
+
+</body>
+</html>

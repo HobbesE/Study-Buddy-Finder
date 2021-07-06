@@ -1,0 +1,47 @@
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createStudySession">+</button>
+
+<div class="modal fade" id="createStudySession" tabindex="-1" aria-labelledby="createStudySessionlabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="createStudySessionlabel">Create a New Study Session</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="/create_opportunity" method='POST'>
+          <div class="mb-3" id="topic">
+            <label for="topic" class="col-form-label">Topic:</label>
+            <input type="text" class="form-control" id="topic">
+          </div>
+          <div class="mb-3" id="date">
+            <label for="date" class="col-form-label">Date:</label>
+            <input type="text" class="form-control" id="date">
+          </div>
+          <div class="mb-3" id="proposed_time">
+            <label for="proposed_time" class="col-form-label">Time:</label>
+            <select name="proposed_time">
+                <option value="morning">Dawn</option>
+                <option value="noon">High Noon</option>
+                <option value="night">Sundown</option>
+                </select></div>
+          <div class="mb-3" id="capacity">
+            <label for="capacity" class="col-form-label">Room Capacity:</label>
+            <input type="text" class="form-control" id="capacity">
+          </div>
+          <div class="mb-3">
+            <label for="prerequisites" class="col-form-label">Prerequisites</label>
+            <textarea class="form-control" id="prerequisites"></textarea>
+          </div>
+          <div class="mb-3" id="date">
+            <label for="invite" class="col-form-label">Invite by username (separate by comma):</label>
+            <input type="text" class="form-control" id="invite">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Post</button>
+      </div>
+    </div>
+  </div>
+</div>

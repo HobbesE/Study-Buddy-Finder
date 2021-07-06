@@ -1,8 +1,25 @@
 {% extends "base.html" %}
 {% block content %}
-        <h1>Study Buddy Opportunities</h1>
-        <h2><a href="/create_opportunity">+ session</href></h2>
-        <h5><a href="/team_calendar">Calendar View</a></h5><br>
+
+        <!-- Page Heading -->
+        <div class="container">
+        <div class="row p-5 navbar navbar-light">
+            <div class="col-6"><h2>Study Buddy Opportunities</h2></div>
+            <div class="col-1"> 
+                <ul class="navbar-nav ms-auto text-center">
+                    <li>
+                        <form method="get" action="/create_opportunity">
+                        <button class="nbtn btn-warning btn-lg float-end" ">+</button>
+                        </form>
+                    </li>
+                </ul>
+            </div>
+        </div>
+        
+        
+        <div class="row p-5 float-end">
+            <h7><a href="/team_calendar">Calendar View</a></h7></p>
+        </div>
 
         <!-- Search Study Sessions -->
         <form class="form-inline">
@@ -11,37 +28,45 @@
         </form>
 
         <!-- Opportunity Table -->
+
+        
+
         {% if study_sessions %}
+        <div class="container">
         {% for study_session in study_sessions %}
-            <table>
-                <tr><td>Topic= <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></td>
-                    <td>Proposed Time: {{ study_session.proposed_time}}</td>
-                    <td>Capacity: {{ study_session.capacity }}</td>
-                </tr>
-                <tr>
-                    <td>Participants: </td>
-                <tr>
-                    <td>
-                        <a href="/student/{{study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
-                        {{ study_session.creator.icon_url}}
-                    </td>
-                    
-                    {% for attendence in study_session.attendences %}
-                    <td>
-                        
-                        <a href="/student/{{ attendence.student.username}}"> {{ attendence.student.username}}</a><br>
-                        {{ attendence.student.icon_url }}
-                    </td>
-                    {% endfor %}
-                    
-                
+        <div class="row">
+            <div class="row">
+                <div class="col-3">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
+                <div class="col-3">Date: {{ study_session.proposed_date}}</div>
+                <div class="col-3">Time: {{ study_session.proposed_time}}</div>
+                {% if study_session.capacity %}
+                <div class="col-3">Capacity: {{ study_session.capacity }}</div>
+                {% endif %}
+            </div>
+                <div class="col">Participants: </div>
+            <div class="row">
+                <div class="col-2">
+                    <a href="/student/{{study_session.creator.username}}"> 
+                    {{ study_session.creator.username}}</a><br>
+                    <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url}}" alt="user icon" style="width:42px;height:42px;"></a>
+                </div>
+                {% for attendence in study_session.attendences %}
+                <div class="col-2">
+                    <a href="/student/{{ attendence.student.username}}">
+                    {{attendence.student.username}}</a><br>
+                    <a href="/student/{{ attendence.student.icon_url }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
+                </div>
+                {% endfor %}
+                <div class="col">
                     <form action="/join_session/{{study_session.study_session_id}}">
-                    <td><button type='submit' >JOIN</button></td>
+                    <button class='float-end' type='submit' >JOIN</button>
                     </form>
-                </tr>
-            </table>
+                </div>
+            </div>
+        </div>
             <br>
             <br>         
         {% endfor %}
-        {% endif %}   
+        {% endif %}
+        </div>   
 {% endblock %}

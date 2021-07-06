@@ -48,8 +48,9 @@ class Student(db.Model):
     cohort_year = db.Column(db.String) 
     # location = db.Column(db.String) .  #Keep it!
     # goals = db.Column(db.String)
-    latitude = db.Column(db.String)
-    longitude = db.Column(db.String)
+    city = db.Column(db.String)
+    state = db.Column(db.String)
+    zipcode = db.Column(db.String)
     # sessions_attended = db.Column(db.Integer)
 
     def __repr__(self):
@@ -124,13 +125,14 @@ class Comment(db.Model):
 
     __tablename__: 'comments'
 
-    comment_id = db.Column(db.Integer, primary_key=True)
+    comment_id = db.Column(db.Integer, autoincrement = True, primary_key=True)
+    study_session_id = db.Column(db.Integer), db.ForeignKey('study_sessions.study_session_id')
     text = db.Column(db.String(700))
-    author_id = db.Column(db.String(32))
+    user_id = db.Column(db.Integer), db.ForeignKey('students.user_id')
     timestamp = db.Column(db.DateTime(), index=True)
 
     def __repr__(self):
-        return f'<Comment comment_id={self.comment_id}> text={self.text} author={self.author}'
+        return f'<Comment comment_id={self.comment_id}> text={self.text} user_id={self.user_id}'
 
 # class Topic(db.Model):
 

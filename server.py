@@ -73,17 +73,65 @@ def create_student_view():
     email = request.form.get('email')
     cohort_name = request.form.get('cohort_name')
     cohort_year = request.form.get('cohort_year')
+    city = request.form.get('city')
+    state = request.form.get('state')
+    zipcode = request.form.get('zipcode')
+
+    icons= [
+    "static/Creative-Tail-Animal-bat.svg.png", 
+    "static/Creative-Tail-Animal-bear.svg.png",
+    "static/Creative-Tail-Animal-bee.svg.png",
+    "static/Creative-Tail-Animal-but.svg.png",
+    "static/Creative-Tail-Animal-butterflly.svg.png",
+    "static/Creative-Tail-Animal-camel.svg.png",
+    "static/Creative-Tail-Animal-cat.svg.png",
+    "static/Creative-Tail-Animal-cheetah.svg.png",
+    "static/Creative-Tail-Animal-coala.svg.png",
+    "static/Creative-Tail-Animal-cow.svg.png",
+    "static/Creative-Tail-Animal-crocodile.svg.png",
+    "static/Creative-Tail-Animal-dinosaur.svg.png",
+    "static/Creative-Tail-Animal-dog.svg.png",
+    "static/Creative-Tail-Animal-dolphin.svg.png",
+    "static/Creative-Tail-Animal-dove.svg.png",
+    "static/Creative-Tail-Animal-duck.svg.png",
+    "static/Creative-Tail-Animal-eagle.svg.png",
+    "static/Creative-Tail-Animal-elephant.svg.png",
+    "static/Creative-Tail-Animal-flamingo.svg.png",
+    "static/Creative-Tail-Animal-fox.svg.png",
+    "static/Creative-Tail-Animal-frog.svg.png",
+    "static/Creative-Tail-Animal-giraffe.svg.png",
+    "static/Creative-Tail-Animal-gorilla.svg.png",
+    "static/Creative-Tail-Animal-horse.svg.png",
+    "static/Creative-Tail-Animal-kangoroo.svg.png",
+    "static/Creative-Tail-Animal-leopard.svg.png",
+    "static/Creative-Tail-Animal-lion.svg.png",
+    "static/Creative-Tail-Animal-monkey.svg.png",
+    "static/Creative-Tail-Animal-mouse.svg.png",
+    "static/Creative-Tail-Animal-panda.svg.png",
+    "static/Creative-Tail-Animal-parrot.svg.png",
+    "static/Creative-Tail-Animal-penguin.svg.png",
+    "static/Creative-Tail-Animal-sheep.svg.png",
+    "static/Creative-Tail-Animal-snake.svg.png",
+    "static/Creative-Tail-Animal-squirrel.svg.png",
+    "static/Creative-Tail-Animal-tiger.svg.png",
+    "static/Creative-Tail-Animal-turtle.svg.png",
+    "static/Creative-Tail-Animal-wolf.svg.png",
+    "static/Creative-Tail-Animal-zebra.svg.png"
+    ]
+    icon_url=random.choice(icons)
+
 
     #print(first_name, cohort_name, cohort_year, username)
 
-    new_user=create_student(username, password, email, first_name, last_name, cohort_name, cohort_year)
+    new_user=create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url, city, state, zipcode)
     print(new_user)
-    #^Needs to be in the same order as the create_students function's argument in crud.py!!!
-    # TODO:Check if user exists before adding them  
-    # new_user= Student(username, password, first_name, last_name, email, cohort_name, cohort_year)
+
+    
+    # TODO:Check if user exists before adding them
+    # TODO: Sign newly registered user in automatically
     
     #print(first_name, last_name, email, username, password, cohort_name, cohort_year)
-    return redirect('/')
+    return redirect('/login')
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -139,15 +187,24 @@ def logout():
 
 @app.route('/study-session/<study_session_id>', methods=['POST', 'GET'])
 def display_study_sess(study_session_id):
-    # grab the corresponding study_sesion from the id given
+    # grab the corresponding study_session from the id given
     # query for the specific study_session based on the study_session_id given to us
     
     user_id = session['logged_in']
     roster = take_attendence(study_session_id)
     study_session = get_study_session_by_id(study_session_id)
+
+
+    if request.form.get("comment_input"):
+        comment = request.form.get("comment")
+        user_id = user_id
+        create_comment(comment, study_session_id, user_id)
+        return redirect(f"/study-session/{study_session_id}")
+    comments = get_comments(study_session_id)
+
     
 
-    return render_template("study-session.html", study_session=study_session, roster=roster)
+    return render_template("study-session.html", study_session=study_session, roster=roster, comments=comments)
     # render template => load this html file
     # redirect => take this user to another route
 
@@ -160,7 +217,7 @@ def profile(username):
    
     # to get the created study sessions by this specific user:
     created_sessions = student_obj.study_sessions
-    
+
     # one student can create many study sessions
     # a study session can only be created by one user
     # student.study_sessions = [] <-- "many" of our "one to many"  rlsp
@@ -224,7 +281,7 @@ def create_connection(study_session_id):
     print("********")
     print("********")
 
-    return render_template('index.html', study_sessions=study_sessions)
+    return redirect('/')
 
 
 # @app.route('/res')
@@ -289,6 +346,12 @@ def view_projects():
 def view_about():
     """Return information about the Hackbrighter web application'"""
     return render_template("about.html")
+
+@app.route('/user_preferences')
+# @login_required
+def view_preferences():
+    """Return student direct message inbox'"""
+    return render_template("user_preferences.html")
 
 #log out
 #forgot password

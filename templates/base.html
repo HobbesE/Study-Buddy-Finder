@@ -2,72 +2,80 @@
 <html>
     <head>
     {% block head %}
+        
         <!-- Bootstrap CSS from getbootstrap.com -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
         integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <title>{% block title %}{% endblock %}</title>
-        <!-- Logo -->
-        <div id="logo">
-            
-            <div class="row">
-                <div class="col-md-1"><img src="static/HBlogo.svg" width="100" height="100"></div>
-                <div class="col-md-3"><h1>Hackbrighter</h1><h5>Keep coding in community.</h5></div>
-                <div class="col-md-1 offset-md-7">Logout</div>
-                <!-- TODO: add logout button -->
-            </div>
-        </div>  
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
     {% endblock %}
     </head>    
+    
     <body>   
+        <!-- Logout Nav Bar and Logo Header-->
+        <section class="Collapsing Log out header">
+            <nav class="navbar navbar-expand-sm navbar-light">
+                <a href="/" class= "navbar-brand"><img src="static/HBlogo.svg" width="100" height="100" class=d-inline-block align-top></a>
+                <div class="col"><h1>Hackbrighter</h1><h5>Keep coding in community.</h5></div>
+                <button
+                    class="navbar-toggler"
+                    type="button"
+                    data-bs-toggle="collapse"
+                    data-bs-target="#toggleMobileMenu"
+                    aria-controls="toggleMobileMenu"
+                    aria-expanded="false"
+                    aria-lable="Toggle navigation"
+                >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="toggleMobileMenu">
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li><a class="nav-link" href="/logout">Logout</a></li>
+                        <li><a class="nav-link" href="/user_preferences">User Preferences</a></li>
+                    </ul>
+                </div>
+            </nav>
+        </section>
+
+        <!-- <nav class="navbar navbar-expand-sm navbar-light">
+        <a href="/" class= "navbar-brand"><img src="static/HBlogo.svg" width="100" height="100"></a>
+        <div class="col"><h1>Hackbrighter</h1><h5>Keep coding in community.</h5></div>
+        </nav> -->
+
+    <!-- Nav Bar -- Main Tabs-->
+    <nav class="navbar navbar-expand-sm navbar-light">        
+        <div class="container">
+        <ul class="nav nav-tabs" id="myTab" role="tablist">
+            <li class="nav-link"><a href="/">Home</a></li>
+            <li class="nav-link"><a href="/student/ TODO: HOW DO I LINK THIS FROM BASE.HTML">My Study Sessions</a></li>
+            <li class="nav-link"><a href="/buddies">Buddies</a></li>
+            <li class="nav-link"><a href="/inbox">Inbox</a></li>
+            <li class="nav-link"><a class="/team_calendar" href="#">Calendar</a></li>
+            <li class="nav-link"><a href="/hackbrighter_map">Study Live Map</a></li>
+            <li class="nav-link"><a href="/about">About the App</a></li>
+        </ul>
+        </div>
+        </nav>
+
+        <script>
+            $(".nav li").on("click", function(){
+                $(".nav li").removeClass("active");
+                $(this).addClass("active");
+
+            });
+        </script>
+    </nav>
+
+        <!-- Content -->    
+
+        <div id="inherrited content">
+            {% block content %} {% endblock %}
+        </div>
+        <!-- JS Bootstrap5 Bundle plugin-- bottom of body -->
         
-        <!-- JS Bootstrap5 Bundle plugin -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-
-        <ul class="nav nav-tabs">
-            <li class="nav-item">
-                <a href="/">Home</a>
-            </li>
-            <li class="nav-item">
-                <a href="/student/ TODO: HOW DO I LINK THIS FROM BASE.HTML">My Study Sessions</a>
-            </li>
-            <li class="nav-item">
-                <a href="/buddies">Buddies</a>
-            </li>
-            <li class="nav-item">
-                <a href="/inbox">Inbox</a>
-            </li>
-            <li class="nav-item">
-                <a class="/team_calendar" href="#">Calendar</a>
-            </li>
-            <li class="nav-item">
-                <a href="/hackbrighter_map">Study Live Map</a>
-            </li>
-            <li class="nav-item">
-                <a href="/about">About the App</a>
-            </li>
-          </ul>
-
-
-<!-- 
-
-            <div id="navbar">
-                <div class="row">
-                    <div class="col-12">
-                        <a href="/">Home</a>
-                        <a href="/student/ TODO: HOW DO I LINK THIS FROM BASE.HTML">My Study Sessions</a>
-                        <a href="/buddies">Buddies</a>
-                        <a href="/inbox">Inbox</a>
-                        <a href="/hackbrighter_map">Study Live Map</a>
-                        <a href="/hackbrighter_map">Study Live Map</a>
-                        <a href="/about">About the App</a>
-                    </div>
-                </div>
-            </div> -->
-    <div id="content">
-    {% block content %} {% endblock %}
     </body>
 </html>
