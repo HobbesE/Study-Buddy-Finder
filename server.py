@@ -44,6 +44,7 @@ def home():
         return render_template('login.html')
     else:
         study_sessions=get_study_sessions()
+        #list of study session objects
         print('&&&&&&&&&&&&')
     
     return render_template('index.html', study_sessions=study_sessions)
@@ -193,18 +194,15 @@ def display_study_sess(study_session_id):
     user_id = session['logged_in']
     roster = take_attendence(study_session_id)
     study_session = get_study_session_by_id(study_session_id)
-
-
-    if request.form.get("comment_input"):
-        comment = request.form.get("comment")
-        user_id = user_id
-        create_comment(comment, study_session_id, user_id)
-        return redirect(f"/study-session/{study_session_id}")
-    comments = get_comments(study_session_id)
+    # if request.method == 'POST':
+    #     message = requests.form.get('message')
+    #     create_comment= (message, study_session_id, user_id)
+    #     return redirect(f"/study-session/{study_session_id}")
+    # # comments = get_comments(study_session_id)
 
     
 
-    return render_template("study-session.html", study_session=study_session, roster=roster, comments=comments)
+    return render_template("study-session.html", study_session=study_session, roster=roster)
     # render template => load this html file
     # redirect => take this user to another route
 
@@ -223,13 +221,29 @@ def profile(username):
     # student.study_sessions = [] <-- "many" of our "one to many"  rlsp
     # study_session.creator = <Student> <-- "one"
     participating_sessions = get_user_study_sessions(student_obj)
-
+    print("*"*30)
+    print(participating_sessions)
     # print('*****************IN USER PROFILE ROUTE!******************')
     # print(student_sessions) #when you print in a view function it prints in the ~terminal~!
 
     # participants_for_study_sessions(participant_id)
 
-    return render_template("profile.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+    return render_template("profile2.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+
+@app.route('/student')
+# @login_required
+def reroute_profile():  
+    """Return student profile page"""
+    id=session['logged_in']
+    student=Student.query.get(id)
+    username=student.username
+
+    student_obj = Student.query.filter_by(username=username).first()
+    created_sessions = student_obj.study_sessions
+    participating_sessions = get_user_study_sessions(student_obj)
+
+    return render_template("profile2.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+    #return redirect(f"/student/{username}")
 
 
 @app.route('/create_opportunity')
@@ -327,7 +341,27 @@ def view_calendar():
 # @login_required
 def view_buddies():
     """Return page with students user has collaborated with in the past"""
-    return render_template("buddies.html")
+    """Return student profile page"""
+
+    student_obj = Student.query.filter_by(username="JBland07").first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
+   
+    # to get the created study sessions by this specific user:
+    created_sessions = student_obj.study_sessions
+
+    # one student can create many study sessions
+    # a study session can only be created by one user
+    # student.study_sessions = [] <-- "many" of our "one to many"  rlsp
+    # study_session.creator = <Student> <-- "one"
+    participating_sessions = get_user_study_sessions(student_obj)
+    print("*"*30)
+    print(participating_sessions)
+    # print('*****************IN USER PROFILE ROUTE!******************')
+    # print(student_sessions) #when you print in a view function it prints in the ~terminal~!
+
+    # participants_for_study_sessions(participant_id)
+
+    return render_template("buddies.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+
 
 @app.route('/inbox')
 # @login_required

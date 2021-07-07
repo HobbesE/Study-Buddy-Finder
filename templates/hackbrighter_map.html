@@ -13,47 +13,65 @@
           html,
           body {
             height: 100%;
-            margin: 0;
+            margin: 10px;
             padding: 0;
           }
     </style>
   </head>
 
 <body>
-  <div class="container">
-    <div class="row">
-      <div class="col-3">
-        <nav class="navbar navbar-light bg-light">
-            <form>
-              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-            </form>
-          </nav>
-        </div>  
-      <div class="col-3" id="map">
-        <script>
-          function initMap() {
-          const sfBayCoords = {
-            lat:37.601773,
-            lng:-122.202870
-          };
-          console.log(document.querySelector('#map'))
+
+
+       
+          <div class="container">
+            <div class="row p-5 navbar navbar-light">
+                <div class="col-12 page-heading">Study Live Map</div>
+                <div class="col-1"> 
+                    <ul class="navbar-nav ms-auto text-center">
+                        <li>
+                            <!-- <form method="get" action="/create_opportunity">
+                            <button class="nbtn btn-warning btn-lg float-end" >+</button>
+                            </form> -->
+                        </li>
+                    </ul>
+                </div>
+            </div>
           
-          const basicMap = new google.maps.Map(
-            document.querySelector('#map'),
-    
-            {
-              center: sfBayCoords,
-              zoom: 9,
-            }
-          );
-          }
-          
-        </script>
-        </div>
-    </div>
-  </div>
-    
+  <div class="map-section">          
+          <div class="container">
+            <div class="row">
+              <div class="col-3">
+                <nav class="navbar navbar-light bg-light">
+                    <form>
+                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                  </nav>
+                </div>  
+              <div class="col-3" id="map">
+                <script>
+                  function initMap() {
+                  const sfBayCoords = {
+                    lat:37.601773,
+                    lng:-122.202870
+                  };
+                  console.log(document.querySelector('#map'))
+                  
+                  const basicMap = new google.maps.Map(
+                    document.querySelector('#map'),
+            
+                    {
+                      center: sfBayCoords,
+                      zoom: 9,
+                    }
+                  );
+                  }
+                  
+                </script>
+                </div>
+            </div>
+          </div>
+  </div>   
 
     
     <script 

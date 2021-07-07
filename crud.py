@@ -1,6 +1,6 @@
 """Crud Operations for Study Buddy finder"""
 
-from model import Student, Attendence, StudySession, Comment, connect_to_db, db
+from model import Student, Attendence, StudySession, connect_to_db, db
 import random
 
 
@@ -209,17 +209,17 @@ def create_comment(comment, study_session_id, user_id):
 
     return new_comment
 
-def get_comments(study_session_id):
-    """Return all comments within a study session page"""
+# def get_comments(study_session_id):
+#     """Return all comments within a study session page"""
 
-    comments = Comment.query.filter(Comment.study_session_id == study_session_id).all()
-    comments_list = []
-    if comments:
-        for comment in comments:
-            dict_comments = {}
-            user = get_participant(user_id)
-            dict_comments[user] = comment.comment
-            list_comments.append(dict_comments)
+#     comments = Comment.query.filter(Comment.study_session_id == study_session_id).all()
+#     comments_list = []
+#     if comments:
+#         for comment in comments:
+#             dict_comments = {}
+#             user = get_participant(user_id)
+#             dict_comments[user] = comment.comment
+#             list_comments.append(dict_comments)
 
 # def get_participants_for_study_session(target_user_id):
 #     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)

@@ -1,26 +1,44 @@
 {% extends "base.html" %}
 {% block content %}
 
-        <!-- Page Heading -->
+        <!-- Page Heading with Create Modal -->
         <div class="container">
         <div class="row p-5 navbar navbar-light">
-            <div class="col-6"><h2>Study Buddy Opportunities</h2></div>
+            <div class="col-10 page-heading">Study Opportunities</div>
             <div class="col-1"> 
-                <ul class="navbar-nav ms-auto text-center">
+                <ul class="navbar-nav ms-auto">
                     <li>
-                        <form method="get" action="/create_opportunity">
-                        <button class="nbtn btn-warning btn-lg float-end" ">+</button>
-                        </form>
+                        <!-- Trigger/Open The Modal -->
+                        <!-- <form method="get" action="/create_opportunity"> -->
+                        <button id="myBtn" class="nbtn btn-warning btn-lg float-end" >+</button>
+                        <!-- </form> -->
+
+                        <!-- The Modal -->
+                        <div id="myModal" class="modal">
+
+                        <!-- Modal content -->
+                        <div class="modal-content">
+                            <span align="right" class="close">&times;</span>
+                            <span><h3>Create a New Study Opportunity</h3></span>
+                            <p>
+                                <div class="img src=/static/HBlogo.svg" alt="hackbright logo"></div>
+                                <form action="/create_opportunity" method='POST'>
+                                  <div id="topic"><label>Topic:</label><input type="text" name="topic"></div>
+                                  <!-- <div id="date"><label>Date:</label><input type="date" name="proposed_date"></div> -->
+                                  <div id="proposed_time"><label>Time (PST):</label><input type="datetime-local" name="proposed_time"></div>
+                                  <div id="capacity"><label>Room Capacity:</label><input type="text" name=capacity></div>
+                                  <div id="prerequisites"><label>Prerequisites:</label><input type="text" name="prerequisites"></div>
+                                  <div id="invite"><label>Send invite to students: </label><input type="text" name="invite"></div>     
+                                  <div id="submit_opportunity"><input type="Submit" alt="submit form to create a new study session"></button></div></p>
+                        </div>
+                        </div>
                     </li>
                 </ul>
             </div>
         </div>
-        
-        
-        <div class="row p-5 float-end">
+        <!-- <div class="row p-5 float-end">
             <h7><a href="/team_calendar">Calendar View</a></h7></p>
-        </div>
-
+        </div> -->
         <!-- Search Study Sessions -->
         <form class="form-inline">
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
@@ -29,32 +47,30 @@
 
         <!-- Opportunity Table -->
 
-        
-
         {% if study_sessions %}
-        <div class="container">
+        <div class="opportunity table">
         {% for study_session in study_sessions %}
-        <div class="row">
-            <div class="row">
-                <div class="col-3">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
-                <div class="col-3">Date: {{ study_session.proposed_date}}</div>
-                <div class="col-3">Time: {{ study_session.proposed_time}}</div>
+        <div class="study-session-tile ">
+            <div class="row study-session-attribute">
+                <div class="col-4 tile-heading">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
+                <!-- <div class="col-2">Date: {{ study_session.proposed_date}}</div> -->
+                <div class="col-4 tile-heading">Day and Time(PST):<br> {{ study_session.proposed_time}}</div>
                 {% if study_session.capacity %}
-                <div class="col-3">Capacity: {{ study_session.capacity }}</div>
+                <div class="col-3 tile-heading">Capacity: {{ study_session.capacity }}</div>
                 {% endif %}
             </div>
-                <div class="col">Participants: </div>
-            <div class="row">
-                <div class="col-2">
-                    <a href="/student/{{study_session.creator.username}}"> 
+            <!-- <div class="col tile-heading">Attending: </div> -->
+            <div class="row" >
+                <div class="col-2 username">
+                    <a class="username" href="/student/{{study_session.creator.username}}"> 
                     {{ study_session.creator.username}}</a><br>
-                    <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url}}" alt="user icon" style="width:42px;height:42px;"></a>
+                    <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url}}" alt="user icon" style="width:50%"></a>
                 </div>
                 {% for attendence in study_session.attendences %}
-                <div class="col-2">
-                    <a href="/student/{{ attendence.student.username}}">
+                <div class="col-2 username">
+                    <a class="username" href="/student/{{ attendence.student.username}}">
                     {{attendence.student.username}}</a><br>
-                    <a href="/student/{{ attendence.student.icon_url }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
+                    <a href="/student/{{ attendence.student.username }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:50%"> </a><br>   
                 </div>
                 {% endfor %}
                 <div class="col">

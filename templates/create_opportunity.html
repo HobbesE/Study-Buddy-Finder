@@ -12,28 +12,23 @@
 
 <!-- Modal Box Form Section -->
 <!-- TODO: link to create_opp_button.js and create CSS for Modal Box -->
+  <div class="modal_opp_form">
+  <div class="modal-content">
+    <div class="close">(close)</div>
+    <div class="img src=/static/HBlogo.svg" alt="hackbright logo"></div>
+    <form action="/create_opportunity" method='POST'>
+      <div id="topic"><label>Topic:</label><input type="text" name="topic"></div>
+      <!-- <div id="date"><label>Date:</label><input type="date" name="proposed_date"></div> -->
+      <div id="proposed_time"><label>Time (PST):</label><input type="datetime-local" name="proposed_time"></div>
+      <div id="capacity"><label>Room Capacity:</label><input type="text" name=capacity></div>
+      <div id="prerequisites"><label>Prerequisites:</label><input type="text" name="prerequisites"></div>
+      <div id="invite"><label>Send invite to students (separate usernames by comma): </label><input type="text" name="invite"></div>     
+      <div id="submit_opportunity"><input type="Submit" alt="submit form to create a new study session"></button></div>
 
-<div class="modal_opp_form">
-<div class="modal-content">
-  <div class="close">(close)</div>
-  <div class="img src=/static/HBlogo.svg" alt="hackbright logo"></div>
-  <form action="/create_opportunity" method='POST'>
-    <div id="topic"><label>Topic:</label><input type="text" name="topic"></div>
-    <div id="proposed_time"><label>Time of Day:</label><select name="proposed_time">
-      <option value="morning">Dawn</option>
-      <option value="noon">High Noon</option>
-      <option value="night">Sundown</option>
-      </select></div>
-    <div id="capacity"><label>Room Capacity:</label><input type="text" name=capacity></div>
-    <div id="prerequisites"><label>Prerequisites:</label><input type="text" name="prerequisites"></div>
-    <div id="invite"><label>Send invite to students (separate usernames by comma): </label><input type="text" name="invite"></div>     
-    <div id="submit_opportunity"><input type="Submit" alt="submit form to create a new study session"></button></div>
-
-    <!-- (Invite particular students to session; should prompt other students with notification to join/reject. Creator should see their answer.) -->
-  </form>
-</div>
-</div>
-
+      <!-- (Invite particular students to session; should prompt other students with notification to join/reject. Creator should see their answer.) -->
+    </form>
+  </div>
+  </div>
 <script>
   document.getElementByID('button')
 

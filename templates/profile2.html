@@ -1,0 +1,186 @@
+{% extends "base.html" %}
+{% block title %}Hackbrighter Profile{% endblock %}
+
+{% block head %}
+{% endblock %}
+
+
+<!-- #Pop-up sticky should ask people to update their location and personal deets on this page.
+#Location is vital to scheduling by time zone.
+#if user has a valid location chosen, cancel pop-up sticky
+#if user tries to create a new study session without a valid location in their profile,
+#bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
+{% block content %}
+<div class="container">
+    <div class="row p-5 navbar navbar-light">
+        <div class="col-10 page-heading">Student Profile</div>
+        <div class="col-1"> 
+            <ul class="navbar-nav ms-auto text-center">
+                <li>
+                    <form method="get" action="/create_opportunity">
+                    <button class="nbtn btn-warning btn-lg float-end" >+</button>
+                    </form>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+<div class="row">
+
+<div class="col-md-3 col-lg-4">
+    <div class="profile-card">
+    <img src= {{student_obj.icon_url}} class="">
+        <div class="change-icon">
+            <button onclick = "ToggleUpload()">Upload Icon</button>
+            <div id="change-icon" style="display:none">
+                <form>
+                    <div class="form-group">
+                    <label for="icon">Upload a Custom Icon</label>
+                    <input type="file" class="form-control-file" id="icon">
+                    </div>
+                </form>
+            </div>
+            <script>
+                function ToggleUpload() {
+                    var x = document.getElementById("change-icon"),
+                        displayValue=""
+                    if (x.style.display = "")
+                        displayValue = "none";
+
+                    x.style.display = displayValue
+                }
+            </script>
+        </div>
+        <br>
+        <br>
+        <br>
+        <div class="personal-info">
+            <h2>About {{student_obj.username}}</h2>
+            Name: Hobbes Entrikin<br><br>
+            Cohort: Ada 2021<br><br>
+            Location: San Francisco, CA<br><br>
+            Past Roles: Optician, Community Organizer, Trainer<br><br>
+            Goals: Backend FTW! I am not transitioning careers-- I am growing FURTHER into organizing through programming!
+            I am interested in the future of preventitive medicine through technological advancement. I would love to be a programmer for smart glasses.
+            Good posture changes everything!<br><br>
+
+            Github: <a href="github.com/CassiRoo">HobbesiRoo</a><br><br>
+
+            LinkedIn: <a href="https://www.linkedin.com/in/hobbes-entrikin-1b2978200/">Hobbes Entrikin</a><br><br>
+
+            Spotify: <a href="https://open.spotify.com/user/12121881478">Hobbes Entrikin's Spotify</a><br><br>
+
+            Instagram: <a href="https://www.instagram.com/program_W0W/">program_W0W</a><br><br>
+
+            <form method="POST">
+                <input type="submit" value="Edit"></form>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div class="col-md-9 col-lg-6">
+    <div class="section-heading"> My Study Sessions: </div>
+    {% if created_sessions %}
+        {% for study_session in created_sessions %}
+        <div class="study-session-tile">
+            <div class="row study-session-attribute">
+                <div class="col-3">
+                    <div class="tile-heading">Topic: </div>
+                    <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a>
+                </div>
+                <div class="col-4">
+                    <div class="tile-heading">Day and Time (PST): </div>
+                    {{ study_session.proposed_time}}
+                </div>
+                {% if study_session.capacity %}
+                <div class="col-3">
+                    <div class="tile-heading">Capacity: </div>
+                    {{ study_session.capacity }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="row tile-heading">Attending: </div>
+            <div class="row">
+                <div class="col-2"><a class="username" href="/student"> {{ study_session.creator.username}}</a><br>
+                    <a class="username" href="/student"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:42px;height:42px;"></a>
+                </div>
+                {% for attendence in study_session.attendences %}
+                <div class="col-2">
+                    <a class="username" href="/student/{{ attendence.student.username}}">{{attendence.student.username}}</a><br>
+                    <a href="/student/{{ attendence.student.icon_url }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:42px;height:42px;"></a>   
+                </div>
+                {% endfor %}
+                <div class="col">
+                    <form action="/join_session/{{study_session.study_session_id}}">
+                    <button class='float-end' type='submit' >JOIN</button>
+                    </form>
+                </div>
+            </div>
+        </div study session tile>
+
+        {% endfor %}
+    {% endif %}
+        <div class="section-heading">My Joined Sessions: </div>
+    {% if participating_sessions %}
+        {% for study_session in participating_sessions %}
+        <div class="study-session-tile ">
+            <div class="row study-session-attribute">
+                <div class="col-3">
+                    <div class="tile-heading">Topic: </div>
+                    <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a>
+                </div>
+                <div class="col-4">
+                    <div class="tile-heading">Day and Time (PST): </div>
+                    {{ study_session.proposed_time}}
+                </div>
+                {% if study_session.capacity %}
+                <div class="col-3">
+                    <div class="tile-heading">Capacity: </div>
+                    {{ study_session.capacity }}
+                </div>
+                {% endif %}
+            </div>
+            <div class="row tile-heading">Attending: </div>
+            <div class="row">
+                <div class="col-2">
+                    <a class="username" href="/student/{{study_session.creator.username}}"> 
+                    {{ study_session.creator.username}}</a><br>
+                    <a href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:42px;height:42px;"></a>
+                </div>
+                {% for attendence in study_session.attendences %}
+                <div class="col-2">
+                    <a class="username" href="/student/{{ attendence.student.username}}">
+                    {{attendence.student.username}}</a><br>
+                    <a href="/student/{{ attendence.student.username }}"> <img src="{{ attendence.student.icon_url }}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
+                </div>
+        {% endfor %}
+                
+                <div class="col">
+                    <form action="/join_session/{{study_session.study_session_id}}">
+                    <button class='float-end' type='submit' >JOIN</button>
+                    </form>
+                </div>
+            </div>
+        </div study session tile>
+        {% endfor %}
+    {% endif %}
+{% endblock %}
+</div>
+</div>
+
+Auto-generated cute animal picture for icon-- import choice<br>
+Input to let people upload their own picture. POST How can I round frame it?<br>
+<br>
+Cohort POST drop down menu-- ability to change it for deferred students<br>
+Location field POST-- City? Neighborhood? Offset address? IF NOTHING ELSE-- add "time zone" to front page<br>
+Goals text area POST <br>
+LinkedIn field POST (interactive url)<br>
+Github field POST(interactive url)<br>
+
+
+
+
+
+
+

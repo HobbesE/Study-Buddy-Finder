@@ -53,6 +53,10 @@ class Student(db.Model):
     zipcode = db.Column(db.String)
     # sessions_attended = db.Column(db.Integer)
 
+    # comments= db.relationship('Comment', backref='author')
+
+
+
     def __repr__(self):
         return (f"<Student username={self.username} id={self.user_id} ")
     
@@ -103,6 +107,8 @@ class StudySession(db.Model):
     
 
     creator = db.relationship('Student', backref='study_sessions')
+    # comments = db.relationship('Comment', backref='study_session')
+
     # participant = db.relationship('Student', backref='study_sessions')
     #^Since there can be multiple participants in a study session, we will actually reference the Attendence table
     # topic = db.relationship('Topic', backref='study_sessions')
@@ -120,19 +126,22 @@ class StudySession(db.Model):
     def __repr__(self):
         return f'<StudySession study_session_id={self.study_session_id} proposed_time={self.proposed_time} participant={self.participant} topic = {self.topic} active = {self.active}>'
 
-class Comment(db.Model):
-    """Comments within a study session page"""
+# class Comment(db.Model):
+#     """Comments within a study session page"""
 
-    __tablename__: 'comments'
+#     __tablename__: 'comments'
 
-    comment_id = db.Column(db.Integer, autoincrement = True, primary_key=True)
-    study_session_id = db.Column(db.Integer), db.ForeignKey('study_sessions.study_session_id')
-    text = db.Column(db.String(700))
-    user_id = db.Column(db.Integer), db.ForeignKey('students.user_id')
-    timestamp = db.Column(db.DateTime(), index=True)
+#     comment_id = db.Column(db.Integer, autoincrement = True, primary_key=True)
+#     author_id = db.Column(db.Integer), db.ForeignKey('students.user_id')
+#     message = db.Column(db.Text)
+#     timestamp = db.Column(db.DateTime())
+#     status = db.Column(db.Boolean, default=False)
+#     study_session_id = db.Column(db.Integer), db.ForeignKey('study_sessions.study_session_id')
 
-    def __repr__(self):
-        return f'<Comment comment_id={self.comment_id}> text={self.text} user_id={self.user_id}'
+#     def __repr__(self):
+#         return f'<Comment comment_id={self.comment_id}> text={self.text} user_id={self.user_id}'
+
+
 
 # class Topic(db.Model):
 

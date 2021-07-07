@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
     <head>
-    {% block head %}
+    
         
         <!-- Bootstrap CSS from getbootstrap.com -->
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" 
@@ -10,15 +10,267 @@
 
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width">
-    {% endblock %}
+   
+        <style>
+            
+            * {
+                box-sizing: border-box;
+            }
+            
+            .lucia {
+                background-color: rgb(118, 190, 178);
+                font-style: normal;}
+
+            .logo-nav-bar{
+                background-color: rgb(118, 190, 178);
+                font-style: normal;
+                }
+            .nav-tabs{
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            word-spacing: 2px;
+            color: #000000;
+            font-weight: 700;
+            text-decoration: none solid rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+            }
+
+            .nav-tabs-active{
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            font-size: 12px;
+            letter-spacing: 2px;
+            word-spacing: 2px;
+            color: #ad3b3b;
+            font-weight: 700;
+            text-decoration: none solid rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+            }
+
+            .page-heading {
+            display: flexbox;
+            background-color: #f1ac17;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            font-size: 35px;
+            letter-spacing: 2px;
+            word-spacing: 2px;
+            color: #ad3b3b;
+            font-weight: 700;
+            text-decoration: none solid rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+
+            }
+
+            .section-heading{
+            display: flexbox;
+            background-color: #f1ac17;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            font-size: 28px;
+            letter-spacing: 2px;
+            word-spacing: 2px;
+            color: #ad3b3b;
+            font-weight: 700;
+            text-decoration: none solid rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+
+            }
+
+            .study-session-tile {
+            display: flexbox;
+            background-color: #0074d9;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            justify-content: center;
+            padding: 20px;
+            font-size: medium;
+            }
+
+            .study-session-attribute {
+            background-color: #9ec7ee;
+            border-radius: 10px;
+            justify-content: left;
+            padding: 5px;
+            font-size: medium;
+            }
+
+            .tile-heading {
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            font-size: 15px;
+            color: #111624;
+            font-weight: 700;
+            text-decoration: none solid rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+            }
+
+            .username{
+            font-size: 10px;
+            color: #e2a430;
+            text-decoration: none solid rgb(68, 68, 68);
+            text-justify: center;
+            font-weight: 700;
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+            
+            }
+
+            .map-section {
+            display: flexbox;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            justify-content: center;
+            padding: 20px;
+            font-size: medium;
+            }
+
+            .resources-section {
+            display: flexbox;
+            height: 400px;
+            overflow: auto;
+            background-color: #8bc3f5;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            justify-content: center;
+            padding: 20px;
+            font-size: medium;
+            }
+            
+            .chat-section {
+            height: 400px;
+            display: flexbox;
+            overflow: auto;
+            background-color: #8bc3f5;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            justify-content: center;
+            padding: 20px;
+            font-size: medium;
+            }
+
+            .chat-bubble-left {
+            display: flexbox;
+            background-color: #4ec258;
+            border-radius: 30px;
+            margin-bottom: 5px;
+            margin-right: 30%;
+            justify-content: left;
+            padding: 10px;
+            font-size: medium;
+            }
+
+            .chat-bubble-right {
+            display: flexbox;
+            background-color: #0066be;
+            border-radius: 30px;
+            margin-bottom: 5px;
+            margin-left: 30%;
+            justify-content: right;
+            padding: 10px;
+            font-size: medium;
+            }
+
+            .profile-card {
+            background-color: #d9a600;
+            border-radius: 10px;
+            margin-bottom: 10px;
+            justify-content: center;
+            padding: 10px;
+            font-size: small;
+            }
+
+            .personal-info {
+            display: flexbox;
+            background-color: #bee4f5;
+            border-radius: 30px;
+            margin-bottom: 30px;
+            justify-content: center;
+            padding: 20px;
+            font-size: small;
+            }
+
+
+            a:hover { text-decoration: none; }
+            a:active { text-decoration: none; }
+            a:link { text-decoration: none; }
+            a:visited { text-decoration: none; }
+
+             img {
+            max-width: 100%;
+            max-height: 100%;
+            }
+
+            /* The Modal (background) */
+            .modal {
+            display: none; /* Hidden by default */
+            position: fixed; /* Stay in place */
+            z-index: 1; /* Sit on top */
+            left: 0;
+            top: 0;
+            width: 100%; /* Full width */
+            height: 100%; /* Full height */
+            overflow: auto; /* Enable scroll if needed */
+            background-color: rgb(0,0,0); /* Fallback color */
+            background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+            }
+
+            /* Modal Content/Box */
+            .modal-content {
+            background-color: #fefefe;
+            margin: 15% auto; /* 15% from the top and centered */
+            padding: 20px;
+            border: 1px solid #888;
+            width: 80%; /* Could be more or less, depending on screen size */
+            }
+
+            /* The Close Button */
+            .close {
+            color: #aaa;
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            }
+
+            .close:hover,
+            .close:focus {
+            color: black;
+            text-decoration: none;
+            cursor: pointer;
+            }
+
+            .about {
+            border-color:#d9a600;
+            border: dotted;
+            border-collapse: separate;
+            border-spacing: 15px;
+            padding: 20px;
+            }
+
+            </style>
+        {% block head %} {% endblock %}
+
+
     </head>    
     
     <body>   
         <!-- Logout Nav Bar and Logo Header-->
-        <section class="Collapsing Log out header">
-            <nav class="navbar navbar-expand-sm navbar-light">
+        <section class="Collapsing Log out header logo-nav-bar">
+            <nav class="navbar navbar-expand-sm navbar-light offset-1">
                 <a href="/" class= "navbar-brand"><img src="static/HBlogo.svg" width="100" height="100" class=d-inline-block align-top></a>
-                <div class="col"><h1>Hackbrighter</h1><h5>Keep coding in community.</h5></div>
+                <div class="col "><h1>Hackbrighter</h1><h5>Keep coding in community.</h5></div>
                 <button
                     class="navbar-toggler"
                     type="button"
@@ -46,35 +298,108 @@
 
     <!-- Nav Bar -- Main Tabs-->
     <nav class="navbar navbar-expand-sm navbar-light">        
-        <div class="container">
-        <ul class="nav nav-tabs" id="myTab" role="tablist">
-            <li class="nav-link"><a href="/">Home</a></li>
-            <li class="nav-link"><a href="/student/ TODO: HOW DO I LINK THIS FROM BASE.HTML">My Study Sessions</a></li>
-            <li class="nav-link"><a href="/buddies">Buddies</a></li>
-            <li class="nav-link"><a href="/inbox">Inbox</a></li>
-            <li class="nav-link"><a class="/team_calendar" href="#">Calendar</a></li>
-            <li class="nav-link"><a href="/hackbrighter_map">Study Live Map</a></li>
-            <li class="nav-link"><a href="/about">About the App</a></li>
+        <div class="container lucia">
+        <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
+            <li class="nav-item"><a class="nav-link active"
+                class="nav-link"
+                id="home-tab"
+                data-mdb-toggle="tab"
+                href="/"
+                role="tab"
+                aria-controls="home-tab"
+                aria-selected="true">
+                Home</a>
+            </li>
+            <li class="nav-item"><a 
+                class="nav-link"
+                id="profile-tab"
+                data-mdb-toggle="tab"
+                href="/student"
+                role="tab"
+                aria-controls="profile-tab"
+                aria-selected="false">
+                My Study Sessions</a>
+            </li>
+            <!-- <li class="nav-link"><a href="/buddies">Buddies</a></li> -->
+            <!-- <li class="nav-link"><a href="/inbox">Inbox</a></li> -->
+            <li class="nav-item"><a 
+                class="nav-link"
+                id="calendar-tab"
+                data-mdb-toggle="tab"
+                href="/team_calendar"
+                role="tab"
+                aria-controls="calendar-tab"
+                aria-selected="false">
+                Calendar</a>
+            </li>
+            <li class="nav-item"><a 
+                class="nav-link"
+                id="map-tab"
+                data-mdb-toggle="tab"
+                href="/hackbrighter_map"
+                role="tab"
+                aria-controls="map-tab"
+                aria-selected="false">
+                Study Live Map</a>
+            </li>
+            <li class="nav-item"><a class="nav-link"
+                id="ex1-tab-3"
+                data-mdb-toggle="tab"
+                href="/about"
+                role="tab"
+                aria-controls="about-tab"
+                aria-selected="false">
+                About the App</a>
+            </li>
         </ul>
         </div>
         </nav>
 
+        
+
+        <!-- Content -->  
+        {% block content %} {% endblock %}
+        <!-- Modal Script -->
         <script>
-            $(".nav li").on("click", function(){
+            
+
+            // Get the modal
+            var modal = document.getElementById("myModal");
+            
+            // Get the button that opens the modal
+            var btn = document.getElementById("myBtn");
+            
+            // Get the <span> element that closes the modal
+            var span = document.getElementsByClassName("close")[0];
+            
+            // When the user clicks on the button, open the modal
+            btn.onclick = function() {
+              modal.style.display = "block";
+            }
+            
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+              modal.style.display = "none";
+            }
+            
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function(event) {
+              if (event.target == modal) {
+                modal.style.display = "none";
+              }
+            }
+        </script>
+
+
+        <!-- JS Bootstrap5 Bundle plugin-- bottom of body -->
+
+
+        <script>
+            $(".nav li").on("click", () => {
                 $(".nav li").removeClass("active");
                 $(this).addClass("active");
-
             });
         </script>
-    </nav>
-
-        <!-- Content -->    
-
-        <div id="inherrited content">
-            {% block content %} {% endblock %}
-        </div>
-        <!-- JS Bootstrap5 Bundle plugin-- bottom of body -->
-        
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" 
         integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
     </body>

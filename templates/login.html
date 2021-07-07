@@ -1,18 +1,19 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Hackbrighter Login</title>
+{% extends "base.html" %}
+{% block title %}Hackbrighter Sign Up{% endblock %}
+
+{% block content %}
+
+<title>Hackbrighter Login</title>
   </head>
-  <body>
-    <h2>Log in to Hackbrighter</h2>
-    <form action="/login" method="POST">
-        <div id= "username"><label>username: </label><input type="text" name="username" alt="Please input your username."></div>
-        <div id= "password"><label>password: </label><input type="password" name="password" alt="Please input your password."></div>
-        <div id= "submit_button"><input type="Submit" alt="Click to log in."></div>
-    </form>
-    <p>or</p>
-    <p><a href="/register">Create a New Account</a></p><br>
-  </body>
-</html>
+  <div class="offset-4">
+  
+      <h2>Log in to Hackbrighter</h2>
+      <form action="/login" method="POST">
+          <div id= "username"><label>username: </label><input type="text" name="username" alt="Please input your username."></div>
+          <div id= "password"><label>password: </label><input type="password" name="password" alt="Please input your password."></div>
+          <div id= "submit_button"><input type="Submit" alt="Click to log in."></div>
+      </form><br>
+      <p>or</p>
+      <p><a href="/register">Create a New Account</a></p><br>
+  </div>
+    {% endblock %}
