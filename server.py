@@ -15,18 +15,6 @@ import crud
 from jinja2 import StrictUndefined
 
 
-# # def connect_to_db(flask_app, db_uri='postgresql:///hackbrighter', echo=True):
-# #     flask_app.config['SQLALCHEMY_DATABASE_URI'] = db_uri
-# #     flask_app.config['SQLALCHEMY_ECHO'] = echo
-# #     flask_app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-
-# #     db.app = flask_app
-# #     db.init_app(fask_app)
-
-# #     print('Connected to the db!')
-
-# API_KEY = 'AIzaSyAa-gF8p3QpuV1Yh0GnqjWUDDyZ43ixQpE'
-
 
 app = Flask(__name__)
 app.secret_key = "DEBUG"
@@ -49,13 +37,6 @@ def home():
     
     return render_template('index.html', study_sessions=study_sessions)
 
-# @app.route('/')
-# def home_table():
-#     """query database for existing study sessions, and display them!"""
-#     study_sessions=crud.get_sessions()
-#     print('*'*20)
-#     print(study_sessions)
-#     return render_template('index.html', study_sessions=study_sessions)
     
 @app.route('/register') #same endpoint for a different method
 def render_register_page():
