@@ -141,6 +141,17 @@ class StudySession(db.Model):
 #     def __repr__(self):
 #         return f'<Comment comment_id={self.comment_id}> text={self.text} user_id={self.user_id}'
 
+class Comment(db.Model):
+    """Comments for chatting within a study session"""
+    __tablename__ = "comments"
+
+    comment_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    comment = db.Column(db.Text)
+    event_id = db.Column(db.Integer, db.ForeignKey("study_sessions.study_session_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("students.user_id"))
+
+    def __repr__(self):
+        return f"<Comment comment_id={self.user_id} comment={self.comment}>"
 
 
 # class Topic(db.Model):
