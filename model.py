@@ -99,7 +99,7 @@ class StudySession(db.Model):
     #                     #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
     #                     db.ForeignKey('students.user_id'))
     proposed_date = db.Column(db.DateTime)
-    proposed_time = db.Column(db.String) #TODO: Change DateTime to account for time zones!!!!
+    proposed_time = db.Column(db.String)
     topic = db.Column(db.String, nullable=False)
     capacity = db.Column(db.String)
     prerequisites = db.Column(db.String)
@@ -107,7 +107,7 @@ class StudySession(db.Model):
     
 
     creator = db.relationship('Student', backref='study_sessions')
-    # comments = db.relationship('Comment', backref='study_session')
+    comments = db.relationship('Comment', backref='study_session')
 
     # participant = db.relationship('Student', backref='study_sessions')
     #^Since there can be multiple participants in a study session, we will actually reference the Attendence table
@@ -146,12 +146,12 @@ class Comment(db.Model):
     __tablename__ = "comments"
 
     comment_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
-    comment = db.Column(db.Text)
-    event_id = db.Column(db.Integer, db.ForeignKey("study_sessions.study_session_id"))
+    comment = db.Column(db.String)
+    study_session_id = db.Column(db.Integer, db.ForeignKey("study_sessions.study_session_id"))
     user_id = db.Column(db.Integer, db.ForeignKey("students.user_id"))
 
     def __repr__(self):
-        return f"<Comment comment_id={self.user_id} comment={self.comment}>"
+        return f"<Comment comment_id={self.user_id} comment={self.comment} study_session_id={self.study_session_id}>"
 
 
 # class Topic(db.Model):

@@ -107,11 +107,28 @@
 
                 </div>
 
-                <form action="/study-session/{{study_session}}" method="POST">
+                <form action="/study-session/{{study_session_id}}" method="POST">
                     <div id="add_comment"></div>
-                    <textarea class="form-control mb-10" rows="5" name="message" placeholder="Say something..."></textarea>
-                    <br>
-                    <button type="submit" class="primary-btn" name="add_comment" value="Post" onclick="insert()">Post</button>
+                    <div>
+                        <h4>
+                            Comments
+                        </h4>
+                        
+                        {% for dict_comment in comments %}
+                            {{dict_comment}}
+                            {% for username, comment in dict_comment.items() %}
+                                <p>
+                                    <b>{{ username }}:</b> {{ comment }}
+                                </p>
+                            {% endfor %}
+                        {% endfor %}
+                    </div>
+                    <div>
+                        <textarea name="comment" id="comment" placeholder="Write a comment ..." rows="2" cols="35"></textarea>
+                    </div>
+                    <div>
+                        <button onclick="enterMessage()" type="submit" value="Add Comment" name="add_comment" id="add_comment">
+                    </div>
                     </div>
                 </form>
 
@@ -120,4 +137,27 @@
         </div>
 
     </table>
+    <script>
+    var stuff = [];
+    function enterMessage() {
+        var yourName = document.getElementById("name").value,
+            yourMessage = document.getElementById("message").value,
+            h2 = document.createElement("h2"),
+            p = document.createElement("p"),
+            theSelection = Number(document.getElementById("theSelect").value);
+        h2.innerHTML = yourName;
+        p.innerHTML = yourMessage;
+        console.log(theSelection)
+        if (theSelection === 1) {
+            document.getElementById("division").appendChild(h2)
+            document.getElementById("division").appendChild(p)
+        }
+        else {
+            document.body.appendChild(h2)
+            document.body.appendChild(p)
+        }
+    }
+    </script>
+    <!-- <script src="/static/js/events.js"></script> -->
+
     {% endblock %}

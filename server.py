@@ -167,23 +167,21 @@ def logout():
     logout_user()
     return redirect("/")
 
-@app.route('/study-session/<study_session_id>', methods=['POST', 'GET'])
+@app.route('/study-session/<int:study_session_id>', methods=['POST', 'GET'])
 def display_study_sess(study_session_id):
     # grab the corresponding study_session from the id given
     # query for the specific study_session based on the study_session_id given to us
     
-    user_id = session['logged_in']
+    print(type(study_session_id))
+    user_id = int(session['logged_in'])
     roster = take_attendence(study_session_id)
     study_session = get_study_session_by_id(study_session_id)
-    # if request.method == 'POST':
-    #     message = requests.form.get('message')
-    #     create_comment= (message, study_session_id, user_id)
-    #     return redirect(f"/study-session/{study_session_id}")
-    # # comments = get_comments(study_session_id)
+    comments = get_comments(study_session_id)
+    if request.method == 'POST':
+        return redirect(f"/study-session/{study_session_id}")
 
-    
 
-    return render_template("study-session.html", study_session=study_session, roster=roster)
+    return render_template("study-session.html", study_session=study_session, roster=roster, study_session_id=study_session_id, comments=comments)
     # render template => load this html file
     # redirect => take this user to another route
 
@@ -223,8 +221,9 @@ def reroute_profile():
     created_sessions = student_obj.study_sessions
     participating_sessions = get_user_study_sessions(student_obj)
 
-    return render_template("profile2.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
-    #return redirect(f"/student/{username}")
+    # return render_template("profile2.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+    # ^ used this during demo night because images are not loading to this page for some reason. Hmm!! TODO
+    return redirect(f"/student/{username}")
 
 
 @app.route('/create_opportunity')
