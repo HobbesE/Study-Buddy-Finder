@@ -4,20 +4,26 @@
 
 {% block content %}
 <div class="container">
-    <div class="row p-5 navbar navbar-light">
-        <div class="col-6 page-heading">Study Opportunities</div>
-        <div class="col-1"> 
-            <ul class="navbar-nav ms-auto text-center">
-                <li>
-                    <form method="get" action="/create_opportunity">
-                    <button class="nbtn btn-warning btn-lg float-end" >+</button>
-                    </form>
-                </li>
-            </ul>
+    <div class="col-12 page-heading"><center>Study Live Map</center></div>
+    
+    <center>
+    <div class="row">
+        <div class="col-3 offset-1">
+            <form method="get" action="https://calendar.google.com/calendar/u/0?cid=M3ZoMm" class="col-5 note study-session-attribute">
+                Add Hackbrighter Group Events calendar to your google calendar<br>
+                <button class="btn btn-warning btn-sm offset-6 " >+</button>
+            </form>
         </div>
+        <div class="col-5 tile-heading past-study-session-tile" >    
+        Additional Calendar Overlay for Hackbrighter study sessions... coming soon!
     </div>
+    </center>
+</div>
+        
 
-    <iframe src="https://calendar.google.com/calendar/embed?src=3vh2fn732jd7872nmtf4q8l5uc%40group.calendar.google.com&ctz=America%2FLos_Angeles" 
-    style="border: 0" width="1200" height="1000" frameborder="0" scrolling="no"></iframe>
-
-   {% endblock %}
+<br>
+<div class="col-12 offset-1">
+<iframe src="https://calendar.google.com/calendar/embed?src=3vh2fn732jd7872nmtf4q8l5uc%40group.calendar.google.com&ctz=America%2FLos_Angeles" 
+style="border: 0" width="1000" height="800" frameborder="0" scrolling="no"></iframe>
+</div>
+{% endblock %}

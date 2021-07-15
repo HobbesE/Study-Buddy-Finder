@@ -58,14 +58,14 @@
         </div>
         <div class="row">
 
-            <div class="col-2"><a class="username" href="/student"> {{ study_session.creator.username}}</a><br>
+            <div class="col-2"><a class="username" href="/student/{{ study_session.creator.username}}"> {{ study_session.creator.username}}</a><br>
                 <a class="username" href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:50%"></a>
             </div>
                 {% for attendence in study_session.attendences %}
             <div class="col-2">
                 <a class="username" href="/student/{{ attendence.student.username}}">
                 {{attendence.student.username}}</a><br>
-                <a href="/student/{{ attendence.student.username }}"> <img src="/student/{{ attendence.student.icon_url}}" alt="user icon" style="width:50%"> </a><br>   
+                <a href="/student/{{ attendence.student.username }}"> <img src="{{ attendence.student.icon_url}}" alt="user icon" style="width:50%"> </a><br>   
             </div>
                 {% endfor %}
             <div class="col">

@@ -34,7 +34,10 @@
 
             .lucia {
                 background-color: rgb(118, 190, 178);
-                font-style: normal;}
+                font-style: normal;
+                max-width: 1700px; 
+                margin: 0 auto;
+                }
 
             .logo-nav-bar{
                 background-color: rgb(118, 190, 178);
@@ -84,6 +87,16 @@
 
             }
 
+            .textboxid{
+            height:30px;
+            }
+
+            .update-personal-info{
+            max-width: 500px; 
+            margin: 0 auto;
+            }
+
+
             .section-heading{
             display: flexbox;
             background-color: #f1ac17;
@@ -91,6 +104,7 @@
             margin-bottom: 30px;
             font-family: "Trebuchet MS", Helvetica, sans-serif;
             font-size: 28px;
+            padding-left:20px;
             letter-spacing: 2px;
             word-spacing: 2px;
             color: #ad3b3b;
@@ -104,17 +118,33 @@
 
             .study-session-tile {
             display: flexbox;
-            background-color: #0074d9;
+            background-color: #be625f;
             border-radius: 30px;
-            margin-bottom: 30px;
+            border-color: rgb(148, 80, 80);
+            border-style: solid;
+            margin-bottom: 0px;
             justify-content: center;
             padding: 20px;
             font-size: medium;
             }
 
-            .study-session-attribute {
-            background-color: #9ec7ee;
+            .past-study-session-tile {
+            display: flexbox;
+            background-color: #db7516;
             border-radius: 10px;
+            border-color: rgb(61, 61, 61);
+            border-style: solid;
+            margin-bottom: 2px;
+            justify-content: center;
+            padding: 5px;
+            font-size: medium;
+            }
+
+            .study-session-attribute {
+            background-color: #b6e1e9;
+            border-radius: 10px;
+            border-color: rgb(61, 61, 61);
+            border-style: solid;
             justify-content: left;
             padding: 5px;
             font-size: medium;
@@ -123,6 +153,17 @@
             .tile-heading {
             font-family: "Trebuchet MS", Helvetica, sans-serif;
             font-size: 15px;
+            color: #111624;
+            font-weight: 700;
+            text-decoration: none solid rgb(68, 68, 68);
+            font-style: normal;
+            font-variant: normal;
+            text-transform: none;
+            }
+
+            .note {
+            font-family: "Trebuchet MS", Helvetica, sans-serif;
+            font-size: 10px;
             color: #111624;
             font-weight: 700;
             text-decoration: none solid rgb(68, 68, 68);
@@ -156,8 +197,10 @@
             display: flexbox;
             height: 400px;
             overflow: auto;
-            background-color: #8bc3f5;
+            background-color: #b6e1e9;
             border-radius: 30px;
+            border-color: rgb(61, 61, 61);
+            border-style: solid;
             margin-bottom: 30px;
             justify-content: center;
             padding: 20px;
@@ -168,7 +211,9 @@
             height: 400px;
             display: flexbox;
             overflow: auto;
-            background-color: #8bc3f5;
+            background-color: #b6e1e9;
+            border-color: rgb(61, 61, 61);
+            border-style: solid;
             border-radius: 30px;
             margin-bottom: 30px;
             justify-content: center;
@@ -218,9 +263,13 @@
             }
 
 
-            a:hover { text-decoration: none; }
+            a:hover { text-decoration: none; 
+                color:rgb(107, 18, 18)
+            }
             a:active { text-decoration: none; }
-            a:link { text-decoration: none; }
+            a:link { text-decoration: none; 
+                color:rgb(80, 14, 14)
+            }
             a:visited { text-decoration: none; }
 
              img {
@@ -274,6 +323,11 @@
             padding: 20px;
             }
 
+            .vertical-center {
+            -ms-transform: translateY(-50%);
+            transform: translateY(-50%);
+            }
+
             </style>
         {% block head %} {% endblock %}
 
@@ -313,16 +367,16 @@
 
     <!-- Nav Bar -- Main Tabs-->
     <nav class="navbar navbar-expand-sm navbar-light">        
-        <div class="container lucia">
+        <div class="col-12 lucia">
         <ul class="nav nav-tabs nav-fill mb-3" id="myTab" role="tablist">
-            <li class="nav-item"><a class="nav-link active"
+            <li class="nav-item"><a 
                 class="nav-link"
                 id="home-tab"
                 data-mdb-toggle="tab"
                 href="/"
                 role="tab"
                 aria-controls="home-tab"
-                aria-selected="true">
+                aria-selected="false">
                 Home</a>
             </li>
             <li class="nav-item"><a 

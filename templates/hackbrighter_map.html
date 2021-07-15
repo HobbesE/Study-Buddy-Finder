@@ -7,7 +7,7 @@
     <style>
         #map {
             height: 400px;
-            width: 400px;
+            width: 1000px;
             background-color: grey;
           }  
           html,
@@ -18,10 +18,7 @@
           }
     </style>
   </head>
-
 <body>
-
-
        
           <div class="container">
             <div class="row p-5 navbar navbar-light">
@@ -40,15 +37,16 @@
   <div class="map-section">          
           <div class="container">
             <div class="row">
-              <div class="col-3">
+              <div class="col-8">
                 <nav class="navbar navbar-light bg-light">
                     <form>
-                      <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                      <input class="form-control" type="search" placeholder="Search" aria-label="Search">
                       <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     </form>
                   </nav>
                 </div>  
-              <div class="col-3" id="map">
+                </div>
+              <div class="row" id="map">
                 <script>
                   function initMap() {
                   const sfBayCoords = {

@@ -13,6 +13,7 @@ from crud import *
 import crud
 # import crud
 from jinja2 import StrictUndefined
+from sqlalchemy.orm.attributes import flag_modified
 
 
 
@@ -28,14 +29,20 @@ login_manager.init_app(app)
 def home():
     """Return main study buddy table as homepage."""
 
+    
+
     if not session.get('logged_in'):
         return render_template('login.html')
     else:
         study_sessions=get_study_sessions()
-        #list of study session objects
-        print('&&&&&&&&&&&&')
-    
-    return render_template('index.html', study_sessions=study_sessions)
+        study_sessions_to_show=[]
+        for study_session in study_sessions:
+            study_session_time = datetime.strptime(study_session.proposed_time, "%Y-%m-%dT%H:%M")
+            now= datetime.now()
+            if study_session_time >= now:
+                study_sessions_to_show.append(study_session)
+            
+    return render_template('index.html', study_sessions=study_sessions, study_sessions_to_show=study_sessions_to_show)
 
     
 @app.route('/register') #same endpoint for a different method
@@ -194,6 +201,8 @@ def display_study_sess(study_session_id):
     resources = get_resources(study_session_id)
     user_id = session["logged_in"]
 
+ 
+
 
     return render_template("study-session.html", study_session=study_session, roster=roster, study_session_id=study_session_id, comments=comments, resources=resources, user_id=user_id)
     # render template => load this html file
@@ -228,7 +237,21 @@ def profile(username):
 
     # participants_for_study_sessions(participant_id)
 
-    return render_template("profile2.html", student_obj=student_obj, personal_obj=personal_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+       
+    study_sessions=get_study_sessions()
+    study_sessions_to_show=[]
+    completed_sessions=[]
+    for study_session in study_sessions:
+        study_session_time = datetime.strptime(study_session.proposed_time, "%Y-%m-%dT%H:%M")
+        now= datetime.now()
+        if study_session_time >= now:
+            study_sessions_to_show.append(study_session)
+        elif study_session_time <= now:
+            completed_sessions.append(study_session)
+
+
+
+    return render_template("profile2.html", student_obj=student_obj, personal_obj=personal_obj, created_sessions=created_sessions, participating_sessions=participating_sessions, study_sessions_to_show=study_sessions_to_show, completed_sessions=completed_sessions)
 
 @app.route('/student')
 # @login_required
@@ -378,22 +401,55 @@ def view_about():
     """Return information about the Hackbrighter web application'"""
     return render_template("about.html")
 
+
 @app.route('/user_preferences')
-# @login_required
-
-
-def view_preferences():
-    """Return student direct message inbox'"""
-    
+#@login_required
+def redirect_preferences():
+    """Send the user to personal preferences page"""
     user_id=session['logged_in']
     student=Student.query.get(user_id)
     username=student.username
-    
-    student_obj = Student.query.filter_by(username=username).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
-    personal_obj = Personal.query.get(user_id)
-    print(personal_obj) 
 
-    return render_template("user_preferences.html", student_obj=student_obj, personal_obj=personal_obj, user_id=user_id)
+    return redirect(f"/user_preferences/{user_id}")
+
+@app.route(f'/user_preferences/<user_id>', methods=['POST', 'GET'])
+# @login_required
+def view_preferences(user_id):
+    """Return page to change user's personal info'"""
+    
+    user_id=session['logged_in']
+    student=Student.query.get(user_id)
+    # username=student.username
+    student_obj = Student.query.filter_by(user_id=user_id).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
+    personal_obj = Personal.query.get(user_id)
+    created_sessions = student_obj.study_sessions
+    participating_sessions = get_user_study_sessions(student_obj)
+
+    form= Personal()
+    pronouns_to_update = Personal.query.get_or_404(user_id)
+    
+    if request.method == "POST":
+        personal_obj.user_id=user_id
+        personal_obj.pronouns=request.form['pronouns']
+        personal_obj.location=request.form['location']
+        personal_obj.goals=request.form['goals']
+        personal_obj.past_roles=request.form['past_roles']
+        personal_obj.github=request.form['github']
+        personal_obj.linkedin=request.form['linkedin']
+        personal_obj.spotify=request.form['spotify']
+        personal_obj.instagram=request.form['instagram']
+        try:
+            db.session.commit()
+            flash("Update Successful")
+            return render_template(f"user_preferences.html", student_obj=student_obj, personal_obj=personal_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+
+        except:
+            flash("Error! That didn't quite work! Try again.")
+            return render_template(f"user_preferences.html", student_obj=student_obj, personal_obj=personal_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+
+    else:
+            return render_template(f"user_preferences.html", student_obj=student_obj, personal_obj=personal_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+ 
 
 #log out
 #forgot password
@@ -403,9 +459,6 @@ def view_preferences():
 #inside a study session
 #study buddy opportunty board-- homepage?
 #dashboard
-
-
-
 
 if __name__ == '__main__':
     connect_to_db(app, echo=False)

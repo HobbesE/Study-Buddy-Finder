@@ -28,7 +28,7 @@
                                   <div id="proposed_time"><label>Time (PST):</label><input type="datetime-local" name="proposed_time"></div>
                                   <div id="capacity"><label>Room Capacity:</label><input type="text" name=capacity></div>
                                   <div id="prerequisites"><label>Prerequisites:</label><input type="text" name="prerequisites"></div>
-                                  <div id="invite"><label>Send invite to students: </label><input type="text" name="invite"></div>     
+                                  <!-- <div id="invite"><label>Send invite to students: </label><input type="text" name="invite"></div>      -->
                                   <div id="submit_opportunity"><input type="Submit" alt="submit form to create a new study session"></button></div></p>
                         </div>
                         </div>
@@ -44,12 +44,15 @@
             <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
+        <br>
+        <br>
 
         <!-- Opportunity Table -->
 
         {% if study_sessions %}
         <div class="opportunity table">
         {% for study_session in study_sessions %}
+        {% if study_session in study_sessions_to_show %}
         <div class="study-session-tile ">
             <div class="row study-session-attribute">
                 <div class="col-4 tile-heading">Topic: <a href="/study-session/{{study_session.study_session_id}}">{{ study_session.topic }}</a></div>
@@ -82,6 +85,7 @@
         </div>
             <br>
             <br>         
+        {% endif %}
         {% endfor %}
         {% endif %}
         </div>   

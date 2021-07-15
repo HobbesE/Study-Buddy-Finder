@@ -2,6 +2,7 @@
 
 from model import Student, Personal, Attendence, StudySession, Comment, Resource, connect_to_db, db
 import random
+from sqlalchemy import update
 
 
 
@@ -84,6 +85,12 @@ def create_personal_info(pronouns, location, goals, past_roles, github, linkedin
     db.session.commit()
 
     return personal_info
+
+def edit_personal_info(user_id, pronouns, location, goals, past_roles, github, linkedin, spotify, instagram):
+
+    updated_info = update(personal_info).values(pronouns=pronouns, location=location, goals=goals, past_roles=past_roles, github=github, linkedin=linkedin, spotify=spotify, instagram=instagram)
+
+    return updated_info
 
 def attend(study_session_id, user_id):
 

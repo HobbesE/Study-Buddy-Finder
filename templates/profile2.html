@@ -11,15 +11,37 @@
 #if user tries to create a new study session without a valid location in their profile,
 #bring up a pop-up form that takes in their city or redirects their page to "/student/&lt;username&gt;" -->
 {% block content %}
-<div class="container">
+  <!-- Page Heading with Create Modal -->
+  <div class="container">
     <div class="row p-5 navbar navbar-light">
         <div class="col-10 page-heading">Student Profile</div>
         <div class="col-1"> 
-            <ul class="navbar-nav ms-auto text-center">
+            <ul class="navbar-nav ms-auto">
                 <li>
-                    <form method="get" action="/create_opportunity">
-                    <button class="nbtn btn-warning btn-lg float-end" >+</button>
-                    </form>
+                    <!-- Trigger/Open The Modal -->
+                    <!-- <form method="get" action="/create_opportunity"> -->
+                    <button id="myBtn" class="nbtn btn-warning btn-lg float-end" >+</button>
+                    <!-- </form> -->
+
+                    <!-- The Modal -->
+                    <div id="myModal" class="modal">
+
+                    <!-- Modal content -->
+                    <div class="modal-content">
+                        <span align="right" class="close">&times;</span>
+                        <span><h3>Create a New Study Opportunity</h3></span>
+                        <p>
+                            <div class="img src=/static/HBlogo.svg" alt="hackbright logo"></div>
+                            <form action="/create_opportunity" method='POST'>
+                              <div id="topic"><label>Topic:</label><input type="text" name="topic"></div>
+                              <!-- <div id="date"><label>Date:</label><input type="date" name="proposed_date"></div> -->
+                              <div id="proposed_time"><label>Time (PST):</label><input type="datetime-local" name="proposed_time"></div>
+                              <div id="capacity"><label>Room Capacity:</label><input type="text" name=capacity></div>
+                              <div id="prerequisites"><label>Prerequisites:</label><input type="text" name="prerequisites"></div>
+                              <!-- <div id="invite"><label>Send invite to students: </label><input type="text" name="invite"></div>      -->
+                              <div id="submit_opportunity"><input type="Submit" alt="submit form to create a new study session"></button></div></p>
+                    </div>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -56,23 +78,35 @@
         <br>
         <div class="personal-info">
             <h2>About {{student_obj.username}}</h2>
-            Name: {{student_obj.username}}<br><br>
-            Cohort: {{student_obj.cohort_name}}{{student_obj.cohort_year}}<br><br>
-            Location: <br><br>
-            Past Roles: CREATE INPUT<br><br>
-            Goals: CREATE INPUT<br><br>
+            Name: {{student_obj.first_name}} {{student_obj.last_name}}<br><br>
+            Cohort: {{student_obj.cohort_name}} {{student_obj.cohort_year}}<br><br>
+            Location: {{personal_obj.location}}<br><br>
+            Past Roles: {{personal_obj.past_roles}}<br><br>
+            Goals: {{personal_obj.goals}}<br><br>
 
-            Github: <a href="{{personal_obj.github}}">HANDLE</a><br><br>
+            Github: 
+                {% if personal_obj.github %}
+                <a href="{{personal_obj.github}}">{{ student_obj.username }}</a>
+                {% endif %}
+                <br><br>
+            LinkedIn:
+                {% if personal_obj.linkedin %}
+                <a href="{{personal_obj.linkedin}}">{{ student_obj.first_name }} {{ student_obj.last_name }} on LinkedIn</a>
+                {% endif %}
+                <br><br>
+            Spotify:
+                {% if personal_obj.spotify %}
+                <a href={{personal_obj.spotify}}>{{ student_obj.username }}</a>
+                {% endif %}
+                <br><br>
+            Instagram: 
+                {% if personal_obj.instagram %}
+                <a href="{{personal_obj.instagram}}">{{ student_obj.username }}</a>
+                {% endif %}
+                <br>
 
-            LinkedIn: <a href="{{personal_obj.linkedin}}">{{student_obj.first_name}} {{student_obj.last_name}}</a><br><br>
+                <input type="button" onclick="window.location.href='/user_preferences';" value="edit" />
 
-            Spotify: <a href="https://open.spotify.com/user/12121881478">Hobbes Entrikin's Spotify</a><br><br>
-
-            Instagram: <a href="https://www.instagram.com/program_W0W/">program_W0W</a><br><br>
-
-            <form method="POST">
-                <input type="submit" value="Edit"></form>
-            </form>
         </div>
     </div>
 </div>
@@ -81,6 +115,7 @@
     <div class="section-heading"> My Study Sessions: </div>
     {% if created_sessions %}
         {% for study_session in created_sessions %}
+        {% if study_session in study_sessions_to_show %}
         <div class="study-session-tile">
             <div class="row study-session-attribute">
                 <div class="col-3">
@@ -116,12 +151,15 @@
                 </div>
             </div>
         </div study session tile>
-
+        {% endif %}
         {% endfor %}
     {% endif %}
+    <br>
+
         <div class="section-heading">My Joined Sessions: </div>
     {% if participating_sessions %}
         {% for study_session in participating_sessions %}
+        {% if study_session in study_sessions_to_show %}
         <div class="study-session-tile ">
             <div class="row study-session-attribute">
                 <div class="col-3">
@@ -152,8 +190,8 @@
                     {{attendence.student.username}}</a><br>
                     <a href="/student/{{ attendence.student.username }}"> <img src="{{ attendence.student.icon_url }}" alt="user icon" style="width:42px;height:42px;"> </a><br>   
                 </div>
-        {% endfor %}
-                
+        
+               
                 <div class="col">
                     <form action="/join_session/{{study_session.study_session_id}}">
                     <button class='float-end' type='submit' >JOIN</button>
@@ -162,11 +200,27 @@
             </div>
         </div study session tile>
         {% endfor %}
+        {% endif %} 
+        {% endfor %}
     {% endif %}
-{% endblock %}
-</div>
-</div>
 
+
+
+
+</div>
+</div>
+<div class="col">
+    <br>
+    <div class="section-heading">Past Sessions: </div>
+    {% for study_session in completed_sessions %}
+    <div class="past-study-session-tile tile-heading">
+        <a href="/study-session/{{study_session.study_session_id}}">Topic: {{ study_session.topic }} | </a><a href="/study-session/{{study_session.study_session_id}}">Lead by: {{ study_session.creator.username }} | </a>
+        <a href="/study-session/{{study_session.study_session_id}}">Date: {{ study_session.proposed_time }} | </a>
+    </div>
+    {% endfor %}
+    
+</div>
+{% endblock %}
 (check) Auto-generated cute animal picture for icon-- import choice<br>
 Input to let people upload their own picture. POST How can I round frame it?<br>
 <br>

@@ -8,15 +8,15 @@
 
 {% block content %}
 
-<div class="container">
+<!-- <div class="container">
     <div class="row p-5 navbar navbar-light">
         <div class="col-10 page-heading">About Hackbrighter & The Hackbright Team</div>
         <div class="col-1"> 
             <ul class="navbar-nav ms-auto text-center">
                 <li>
-                    <!-- <form method="get" action="/create_opportunity">
+                    <form method="get" action="/create_opportunity">
                     <button class="nbtn btn-warning btn-lg float-end" >+</button>
-                    </form> -->
+                    </form> 
                 </li>
             </ul>
         </div>
@@ -35,8 +35,52 @@
     Github Link: <br>
     LinkedIn Link: <br>
     Spotify Profile: <br>
-    Instagram: <br>
-    
+    Instagram: <br> -->
+<div class= "update-personal-info ">
+<p id= "reg_intro" class="intro"><h2>Update Your Personal Information</h2></p><br>
+<form action="/user_preferences/{{student_obj.username}}" method="POST" class="form-control" value="personal_obj.pronouns">
+        <div class="form-row">
+        <div class="col-md">
+            <label for="validationCustom01">Pronouns:</label>
+            <input type="text" name="pronouns" class="form-control" id="validationCustom01" placeholder="she/her/hers">
+        </div>
+        <div class="col-md">
+            <label for="validationCustom02">Location:</label>
+            <input type="text" name="location" class="form-control" id="validationCustom02" placeholder="San Francisco, CA">                
+        </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col-md">
+                <label for="validationCustom03">Goals:</label>
+                <input type="text" name= "goals" class="form-control" id="validationCustom02" placeholder="What brought you to tech?">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md">
+                <label for="validationCustomUsername">Past Roles:</label>
+                <input type="text" name="past_roles" class="form-control" id="validationCustomUsername" placeholder="Before you got this cool." aria-describedby="inputGroupPrepend">
+            </div>
+        </div>
+        <div class="col-md">
+            <label for="validationCustomPassword">Github url:</label>
+            <input type="text" name="github" class="form-control" id="validationCustomUsername" placeholder="paste URL" aria-describedby="inputGroupPrepend">
+        </div>    
+        <div class="col-md">
+            <label for="validationCustomPassword">LinkedIn url:</label>
+            <input type="text" name="linkedin" class="form-control" id="validationCustomUsername" placeholder="paste URL" aria-describedby="inputGroupPrepend">
+        </div>    
+        <div class="col-md">
+            <label for="validationCustomPassword">Spotify url</label>
+            <input type="text" name="spotify" class="form-control" id="validationCustomUsername" placeholder="paste URL" aria-describedby="inputGroupPrepend">
+        </div>    
+        <div class="col-md">
+            <label for="validationCustomPassword">Instagram url</label>
+            <input type="text" name="instagram" class="form-control" id="validationCustomUsername" placeholder="paste URL" aria-describedby="inputGroupPrepend">
+        </div>    
+        <button class="btn btn-primary" type="submit">Submit</button>
+</form>
+</div>
 </div>
 
 
