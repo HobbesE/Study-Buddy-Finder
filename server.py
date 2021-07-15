@@ -55,9 +55,14 @@ def create_student_view():
     email = request.form.get('email')
     cohort_name = request.form.get('cohort_name')
     cohort_year = request.form.get('cohort_year')
-    city = request.form.get('city')
-    state = request.form.get('state')
-    zipcode = request.form.get('zipcode')
+    pronouns= "" 
+    location= ""
+    goals= ""
+    past_roles= ""
+    github= ""
+    linkedin= ""
+    spotify= ""
+    instagram= ""
 
     icons= [
     "static/Creative-Tail-Animal-bat.svg.png", 
@@ -105,8 +110,8 @@ def create_student_view():
 
     #print(first_name, cohort_name, cohort_year, username)
 
-    new_user=create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url, city, state, zipcode)
-    print(new_user)
+    new_user = create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url) 
+    new_personal_info= create_personal_info(pronouns, location, goals, past_roles, github, linkedin, spotify, instagram)
 
     
     # TODO:Check if user exists before adding them
@@ -138,11 +143,10 @@ def login():
     if request.method == 'POST':
         username = request.form.get("username")
         password = request.form.get("password")
-
         student = Student.query.filter_by(username=username).first()
         if not student:
             flash("Hmm.. that didn't quite work.")
-            return redirect("/")
+            return redirect("/login")
 
 #        login_user(user, remember=True)
 
@@ -153,7 +157,7 @@ def login():
             flash("You're in!")
             return redirect("/")
         else:flash("Ope. That didn't go well.")
-        return redirect("/")
+        return redirect("/login")
 
 @app.route("/logout")
 # @login_required
@@ -172,16 +176,26 @@ def display_study_sess(study_session_id):
     # grab the corresponding study_session from the id given
     # query for the specific study_session based on the study_session_id given to us
     
-    print(type(study_session_id))
-    user_id = int(session['logged_in'])
+    if session['logged_in']:
+        if request.form.get("add_comment"):
+            comment = request.form.get("comment")
+            user_id = session["logged_in"]
+            create_comment(comment, study_session_id, user_id)
+            return redirect(f"/study-session/{study_session_id}")
+        elif request.form.get("add_resource"):
+            resource = request.form.get("resource")
+            description = request.form.get("description")
+            user_id = session["logged_in"]
+            create_resource(resource, description, study_session_id, user_id)
+            return redirect(f"/study-session/{study_session_id}")
     roster = take_attendence(study_session_id)
     study_session = get_study_session_by_id(study_session_id)
     comments = get_comments(study_session_id)
-    if request.method == 'POST':
-        return redirect(f"/study-session/{study_session_id}")
+    resources = get_resources(study_session_id)
+    user_id = session["logged_in"]
 
 
-    return render_template("study-session.html", study_session=study_session, roster=roster, study_session_id=study_session_id, comments=comments)
+    return render_template("study-session.html", study_session=study_session, roster=roster, study_session_id=study_session_id, comments=comments, resources=resources, user_id=user_id)
     # render template => load this html file
     # redirect => take this user to another route
 
@@ -190,24 +204,31 @@ def display_study_sess(study_session_id):
 def profile(username):  
     """Return student profile page"""
 
+    user_id=session['logged_in']
+    student=Student.query.get(user_id)
+    username=student.username
     student_obj = Student.query.filter_by(username=username).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
-   
-    # to get the created study sessions by this specific user:
+    
+    
+    personal_obj = Personal.query.get(user_id)
     created_sessions = student_obj.study_sessions
 
     # one student can create many study sessions
     # a study session can only be created by one user
     # student.study_sessions = [] <-- "many" of our "one to many"  rlsp
     # study_session.creator = <Student> <-- "one"
+    
+    # Put a conditional here to stop creator from joining.
+    
     participating_sessions = get_user_study_sessions(student_obj)
     print("*"*30)
-    print(participating_sessions)
+    print(personal_obj)
     # print('*****************IN USER PROFILE ROUTE!******************')
     # print(student_sessions) #when you print in a view function it prints in the ~terminal~!
 
     # participants_for_study_sessions(participant_id)
 
-    return render_template("profile2.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
+    return render_template("profile2.html", student_obj=student_obj, personal_obj=personal_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
 
 @app.route('/student')
 # @login_required
@@ -222,7 +243,8 @@ def reroute_profile():
     participating_sessions = get_user_study_sessions(student_obj)
 
     # return render_template("profile2.html", student_obj=student_obj, created_sessions=created_sessions, participating_sessions=participating_sessions)
-    # ^ used this during demo night because images are not loading to this page for some reason. Hmm!! TODO
+    # ^ used this during demo night because images are not loading to this page for some reason. Hmm!!
+    # Turned out to be that my image src was missing a "/" before the url. It only worked on the homepage because that page's route is "/"! Huh!
     return redirect(f"/student/{username}")
 
 
@@ -267,13 +289,6 @@ def create_connection(study_session_id):
     # study_session = get_study_session_by_id(study_session_id)
     user_id=session['logged_in']    
     attend(study_session_id, user_id)
-    print('$$$$$$$$$$ study session id: $$$$$$$$$$$$')
-    print(study_session_id)
-    print(type(study_session_id))
-    print('$$$$$$$$$$ user id: $$$$$$$$$$$$')   #TODO: Why do I have to click JOIN twice for it to go through?
-    print(user_id)
-    print("********")
-    print("********")
 
     return redirect('/')
 
@@ -323,7 +338,7 @@ def view_buddies():
     """Return page with students user has collaborated with in the past"""
     """Return student profile page"""
 
-    student_obj = Student.query.filter_by(username="JBland07").first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
+    student_obj = Student.query.filter_by(username="username").first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
    
     # to get the created study sessions by this specific user:
     created_sessions = student_obj.study_sessions
@@ -353,6 +368,9 @@ def view_inbox():
 # @login_required
 def view_projects():
     """Return project sharing page'"""
+    print("Ask Alena to make a StHack Overflow page")
+    print("Ask Sam if she'd like to contribute her locations code to help people find cool study spaces")
+    print("Place to host ongoing project teams?")
     return render_template("projects.html")
 
 @app.route('/about')
@@ -363,9 +381,20 @@ def view_about():
 
 @app.route('/user_preferences')
 # @login_required
+
+
 def view_preferences():
     """Return student direct message inbox'"""
-    return render_template("user_preferences.html")
+    
+    user_id=session['logged_in']
+    student=Student.query.get(user_id)
+    username=student.username
+    
+    student_obj = Student.query.filter_by(username=username).first()   #what we want to filter by=the subjective attribute we're going to be filtering for (JBland07)
+    personal_obj = Personal.query.get(user_id)
+    print(personal_obj) 
+
+    return render_template("user_preferences.html", student_obj=student_obj, personal_obj=personal_obj, user_id=user_id)
 
 #log out
 #forgot password

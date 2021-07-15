@@ -31,7 +31,7 @@
     <div class="profile-card">
     <img src= {{student_obj.icon_url}} class="">
         <div class="change-icon">
-            <button onclick = "ToggleUpload()">Upload Icon</button>
+            <!-- <button onclick = "ToggleUpload()">Upload Icon</button> -->
             <div id="change-icon" style="display:none">
                 <form>
                     <div class="form-group">
@@ -57,14 +57,14 @@
         <div class="personal-info">
             <h2>About {{student_obj.username}}</h2>
             Name: {{student_obj.username}}<br><br>
-            Cohort: {{student_obj.name}}{{student_obj.year}}<br><br>
-            Location: {{student_obj.city}}, {{student_obj.state}}<br><br>
+            Cohort: {{student_obj.cohort_name}}{{student_obj.cohort_year}}<br><br>
+            Location: <br><br>
             Past Roles: CREATE INPUT<br><br>
             Goals: CREATE INPUT<br><br>
 
-            Github: <a href="github.com/CassiRoo">HobbesiRoo</a><br><br>
+            Github: <a href="{{personal_obj.github}}">HANDLE</a><br><br>
 
-            LinkedIn: <a href="https://www.linkedin.com/in/hobbes-entrikin-1b2978200/">Hobbes Entrikin</a><br><br>
+            LinkedIn: <a href="{{personal_obj.linkedin}}">{{student_obj.first_name}} {{student_obj.last_name}}</a><br><br>
 
             Spotify: <a href="https://open.spotify.com/user/12121881478">Hobbes Entrikin's Spotify</a><br><br>
 

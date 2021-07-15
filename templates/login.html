@@ -5,15 +5,20 @@
 
 <title>Hackbrighter Login</title>
   </head>
-  <div class="offset-4">
-  
-      <h2>Log in to Hackbrighter</h2>
+  <div class="form offset-4">
+  <h2>Log in to Hackbrighter</h2>
+      <ul id="form-messages">
+        <li>Error</li>
+      </ul>
       <form action="/login" method="POST">
-          <div id= "username"><label>username: </label><input type="text" name="username" alt="Please input your username."></div>
-          <div id= "password"><label>password: </label><input type="password" name="password" alt="Please input your password."></div>
-          <div id= "submit_button"><input type="Submit" alt="Click to log in."></div>
+          <label>username: </label><input type="text" id= "username" name="username" alt="Please input your username."><br>
+          <label>password: </label><input type="password" id= "password" name="password" alt="Please input your password."><br>
+          <button type="submit" id="btn-submit" alt="Click to log in.">Login</button>
       </form><br>
       <p>or</p>
       <p><a href="/register">Create a New Account</a></p><br>
   </div>
-    {% endblock %}
+
+
+
+  {% endblock %}

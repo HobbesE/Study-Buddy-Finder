@@ -23,6 +23,10 @@
                   display: flex;
                 }
             </style>
+
+            <script>
+                $("#add_resource").ready()
+            </script>
     </head>   
 <body>
     
@@ -53,16 +57,15 @@
             <!-- <div class="col">Attending: </div> -->
         </div>
         <div class="row">
-            <div class="col-2">
-                <a class="username" href="/student/{{study_session.creator.username}}"> 
-                {{ study_session.creator.username}}</a><br>
-                <a href="/student/{{study_session.creator.username}}"><img src="./{{ study_session.creator.icon_url }}" alt="user icon" style="width:50%"></a>
+
+            <div class="col-2"><a class="username" href="/student"> {{ study_session.creator.username}}</a><br>
+                <a class="username" href="/student/{{study_session.creator.username}}"><img src="{{ study_session.creator.icon_url }}" alt="user icon" style="width:50%"></a>
             </div>
                 {% for attendence in study_session.attendences %}
             <div class="col-2">
                 <a class="username" href="/student/{{ attendence.student.username}}">
                 {{attendence.student.username}}</a><br>
-                <a href="/student/{{ attendence.student.username }}"> <img src="./static/Creative-Tail-Animal-dolphin.svg.png" alt="user icon" style="width:50%"> </a><br>   
+                <a href="/student/{{ attendence.student.username }}"> <img src="/student/{{ attendence.student.icon_url}}" alt="user icon" style="width:50%"> </a><br>   
             </div>
                 {% endfor %}
             <div class="col">
@@ -77,87 +80,57 @@
 
     <table>
         <div class="row">
-                <form action="/" method="POST">
             <div class="column">
-                <label>Resources:</label>
+                <form id="add_resource" action="/study-session/{{study_session_id}}" method="POST">
+                <label><h4>Resources:</h4></label>
                 <div class="resources-section">
-                <ul>
-                    <li>A resource!</li>
-                    <li>Another resource!</li>
-                    <li>Wait check this one out too!</li>
-                </ul>
+                    <div id="add_resource">
+                        <div>
+                        <ul>
+    
+                            {% for dict_resource in resources %}
+                                {% for user, resource in dict_resource.items() %}
+                                    <li>
+                                        {{resource}}
+                                    </li>
+                                {% endfor %}
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
                 </div>
                 
                 <div id="add_resource"></div>
-                <textarea class="form-control mb-10" rows="5" name="prerequisites_textarea" placeholder="Add a Resource... "></textarea>
+                <textarea name="resource" id="resource" placeholder="Share a resource..." rows="2" cols="50"></textarea>
                 <br>
-                <button type="submit" class="primary-btn" name="prerequisites" value="Add" onclick="insert()">Add</button>
+                <input class="btn-submit" type="submit"  name="add_resource" value="Post" id= "add_comment" >
                 </form>
             </div>
+
             <div class="column">
                 
-                <label>Discussion:</label><br>
+                <label><h4>Discussion:</h4></label><br>
                 <div class="chat-section">
-                    <div class="chat-bubble-left col-8">suzieq: "Thanks for joining! We have room for a few more!"</div>
-                    <div class="chat-bubble-left col-8">JBland07: "Sweet. I'll invite Maya."</div>
-                    <div class="chat-bubble-right col-8">japanpanda: "Where should we meet up?"</div>
-                    <div class="chat-bubble-left col-8">suzieq: "How about Malala A on Discord?"</div>
-                    <div class="chat-bubble-left col-8">MamaLucia: "Crazy Daisy! I was going to say the same thing! See you all there!"</div>
-
-
-                </div>
-
                 <form action="/study-session/{{study_session_id}}" method="POST">
-                    <div id="add_comment"></div>
-                    <div>
-                        <h4>
-                            Comments
-                        </h4>
-                        
+                    <div id="add_comment">
                         {% for dict_comment in comments %}
-                            {{dict_comment}}
-                            {% for username, comment in dict_comment.items() %}
-                                <p>
-                                    <b>{{ username }}:</b> {{ comment }}
-                                </p>
+                            {% for user, comment in dict_comment.items() %}
+                                <p><b>{{ user.username }}:</b> {{ comment }}</p>
                             {% endfor %}
                         {% endfor %}
                     </div>
+                </div>
                     <div>
-                        <textarea name="comment" id="comment" placeholder="Write a comment ..." rows="2" cols="35"></textarea>
+                        <textarea name="comment" id="comment" placeholder="Write a comment ..." rows="4" cols="50"></textarea>
                     </div>
                     <div>
-                        <button onclick="enterMessage()" type="submit" value="Add Comment" name="add_comment" id="add_comment">
-                    </div>
+                        <input class="primary-btn" type="submit" value="Add Comment" name="add_comment" id="add_comment">
                     </div>
                 </form>
-
-
             </div>
         </div>
 
     </table>
-    <script>
-    var stuff = [];
-    function enterMessage() {
-        var yourName = document.getElementById("name").value,
-            yourMessage = document.getElementById("message").value,
-            h2 = document.createElement("h2"),
-            p = document.createElement("p"),
-            theSelection = Number(document.getElementById("theSelect").value);
-        h2.innerHTML = yourName;
-        p.innerHTML = yourMessage;
-        console.log(theSelection)
-        if (theSelection === 1) {
-            document.getElementById("division").appendChild(h2)
-            document.getElementById("division").appendChild(p)
-        }
-        else {
-            document.body.appendChild(h2)
-            document.body.appendChild(p)
-        }
-    }
-    </script>
-    <!-- <script src="/static/js/events.js"></script> -->
+
 
     {% endblock %}

@@ -26,9 +26,6 @@ student_data= [
         "icon_url":"static/Creative-Tail-Animal-squirrel.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2018", 
-        "city":"Topeka", 
-        "state":"KS", 
-        "zipcode":"66604", 
     }, 
     {   
         "username":"japanpanda", 
@@ -39,9 +36,6 @@ student_data= [
         "icon_url":"static/Creative-Tail-Animal-tiger.svg.png", 
         "cohort_name":"Katherine", 
         "cohort_year":"2020", 
-        "city":"San Francisco", 
-        "state":"CA", 
-        "zipcode":"94114", 
     },
     {   
         "username":"notthefool", 
@@ -52,9 +46,6 @@ student_data= [
         "icon_url":"static/Creative-Tail-Animal-fox.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2021", 
-        "city":"Kansas City", 
-        "state":"MO", 
-        "zipcode":"64114", 
     },
     {
         "username":"notthefool2", 
@@ -65,9 +56,6 @@ student_data= [
         "icon_url":"static/Creative-Tail-Animal-elephant.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2021", 
-        "city":"Kansas City", 
-        "state":"MO", 
-        "zipcode":"64110", 
     },
     {
         "username":"mamamaya", 
@@ -78,9 +66,6 @@ student_data= [
         "icon_url":"static/Creative-Tail-Animal-duck.svg.png", 
         "cohort_name":"Katherine", 
         "cohort_year":"2019", 
-        "city":"Kansas City", 
-        "state":"KS", 
-        "zipcode":"68142", 
     },
     {
         "username":"susieq", 
@@ -91,9 +76,6 @@ student_data= [
         "icon_url":"static/Creative-Tail-Animal-bee.svg.png", 
         "cohort_name":"Ada", 
         "cohort_year":"2020", 
-        "city":"Chicago", 
-        "state":"IL", 
-        "zipcode":"77712", 
     },
     {
         "username":"balloonicorn", 
@@ -103,15 +85,12 @@ student_data= [
         "email":"balloonicorn@hackbright.com", 
         "icon_url":"static/Creative-Tail-Animal-zebra.svg.png", 
         "cohort_name":"Katherine", 
-        "cohort_year":"2021", 
-        "city":"San Francisco", 
-        "state":"CA", 
-        "zipcode":"94103", 
+        "cohort_year":"2021",
     }]
 
 students_in_db = []
 for student in student_data:
-    username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url, city, state, zipcode = (
+    username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url = (
         student["username"],
         student["password"],
         student['first_name'],
@@ -119,12 +98,9 @@ for student in student_data:
         student['email'],
         student['cohort_name'],
         student['cohort_year'],
-        student['icon_url'],
-        student['city'],
-        student['state'],
-        student['zipcode']
+        student['icon_url']
     )
-    db_student = crud.create_student(username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url, city, state, zipcode)
+    db_student = crud.create_student(username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url)
     students_in_db.append(db_student)
 
 

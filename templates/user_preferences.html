@@ -1,3 +1,46 @@
 {% extends "base.html" %}
-{% block content %}
+{% block title %}Hackbrighter Profile{% endblock %}
+
+{% block head %}
 {% endblock %}
+
+
+
+{% block content %}
+
+<div class="container">
+    <div class="row p-5 navbar navbar-light">
+        <div class="col-10 page-heading">About Hackbrighter & The Hackbright Team</div>
+        <div class="col-1"> 
+            <ul class="navbar-nav ms-auto text-center">
+                <li>
+                    <!-- <form method="get" action="/create_opportunity">
+                    <button class="nbtn btn-warning btn-lg float-end" >+</button>
+                    </form> -->
+                </li>
+            </ul>
+        </div>
+    </div>
+
+<div class= "about col-9">
+    <h2>User Preferences</h2><br>
+
+    
+    Username: {{student_obj.username}}<br>
+    Email: {{ student_obj.email }}<br>
+    Pronouns: {{ personal_obj.pronouns }}<br>
+    Location: <br>
+    Goals: <br>
+    Past Roles: <br>
+    Github Link: <br>
+    LinkedIn Link: <br>
+    Spotify Profile: <br>
+    Instagram: <br>
+    
+</div>
+
+
+
+
+{% endblock %}
+

@@ -1,74 +1,89 @@
 """Crud Operations for Study Buddy finder"""
 
-from model import Student, Attendence, StudySession, Comment, connect_to_db, db
+from model import Student, Personal, Attendence, StudySession, Comment, Resource, connect_to_db, db
 import random
 
 
 
-def create_student(username, password, first_name, last_name, email, cohort_name, cohort_year, icon_url, city, state, zipcode):
+def create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url):
     """Create and return a new student."""
 
     icons= [
-    "static/Creative-Tail-Animal-bat.svg.png", 
-    "static/Creative-Tail-Animal-bear.svg.png",
-    "static/Creative-Tail-Animal-bee.svg.png",
-    "static/Creative-Tail-Animal-but.svg.png",
-    "static/Creative-Tail-Animal-butterflly.svg.png",
-    "static/Creative-Tail-Animal-camel.svg.png",
-    "static/Creative-Tail-Animal-cat.svg.png",
-    "static/Creative-Tail-Animal-cheetah.svg.png",
-    "static/Creative-Tail-Animal-coala.svg.png",
-    "static/Creative-Tail-Animal-cow.svg.png",
-    "static/Creative-Tail-Animal-crocodile.svg.png",
-    "static/Creative-Tail-Animal-dinosaur.svg.png",
-    "static/Creative-Tail-Animal-dog.svg.png",
-    "static/Creative-Tail-Animal-dolphin.svg.png",
-    "static/Creative-Tail-Animal-dove.svg.png",
-    "static/Creative-Tail-Animal-duck.svg.png",
-    "static/Creative-Tail-Animal-eagle.svg.png",
-    "static/Creative-Tail-Animal-elephant.svg.png",
-    "static/Creative-Tail-Animal-flamingo.svg.png",
-    "static/Creative-Tail-Animal-fox.svg.png",
-    "static/Creative-Tail-Animal-frog.svg.png",
-    "static/Creative-Tail-Animal-giraffe.svg.png",
-    "static/Creative-Tail-Animal-gorilla.svg.png",
-    "static/Creative-Tail-Animal-horse.svg.png",
-    "static/Creative-Tail-Animal-kangoroo.svg.png",
-    "static/Creative-Tail-Animal-leopard.svg.png",
-    "static/Creative-Tail-Animal-lion.svg.png",
-    "static/Creative-Tail-Animal-monkey.svg.png",
-    "static/Creative-Tail-Animal-mouse.svg.png",
-    "static/Creative-Tail-Animal-panda.svg.png",
-    "static/Creative-Tail-Animal-parrot.svg.png",
-    "static/Creative-Tail-Animal-penguin.svg.png",
-    "static/Creative-Tail-Animal-sheep.svg.png",
-    "static/Creative-Tail-Animal-snake.svg.png",
-    "static/Creative-Tail-Animal-squirrel.svg.png",
-    "static/Creative-Tail-Animal-tiger.svg.png",
-    "static/Creative-Tail-Animal-turtle.svg.png",
-    "static/Creative-Tail-Animal-wolf.svg.png",
-    "static/Creative-Tail-Animal-zebra.svg.png"
+    "/static/Creative-Tail-Animal-bat.svg.png", 
+    "/static/Creative-Tail-Animal-bear.svg.png",
+    "/static/Creative-Tail-Animal-bee.svg.png",
+    "/static/Creative-Tail-Animal-but.svg.png",
+    "/static/Creative-Tail-Animal-butterflly.svg.png",
+    "/static/Creative-Tail-Animal-camel.svg.png",
+    "/static/Creative-Tail-Animal-cat.svg.png",
+    "/static/Creative-Tail-Animal-cheetah.svg.png",
+    "/static/Creative-Tail-Animal-coala.svg.png",
+    "/static/Creative-Tail-Animal-cow.svg.png",
+    "/static/Creative-Tail-Animal-crocodile.svg.png",
+    "/static/Creative-Tail-Animal-dinosaur.svg.png",
+    "/static/Creative-Tail-Animal-dog.svg.png",
+    "/static/Creative-Tail-Animal-dolphin.svg.png",
+    "/static/Creative-Tail-Animal-dove.svg.png",
+    "/static/Creative-Tail-Animal-duck.svg.png",
+    "/static/Creative-Tail-Animal-eagle.svg.png",
+    "/static/Creative-Tail-Animal-elephant.svg.png",
+    "/static/Creative-Tail-Animal-flamingo.svg.png",
+    "/static/Creative-Tail-Animal-fox.svg.png",
+    "/static/Creative-Tail-Animal-frog.svg.png",
+    "/static/Creative-Tail-Animal-giraffe.svg.png",
+    "/static/Creative-Tail-Animal-gorilla.svg.png",
+    "/static/Creative-Tail-Animal-horse.svg.png",
+    "/static/Creative-Tail-Animal-kangoroo.svg.png",
+    "/static/Creative-Tail-Animal-leopard.svg.png",
+    "/static/Creative-Tail-Animal-lion.svg.png",
+    "/static/Creative-Tail-Animal-monkey.svg.png",
+    "/static/Creative-Tail-Animal-mouse.svg.png",
+    "/static/Creative-Tail-Animal-panda.svg.png",
+    "/static/Creative-Tail-Animal-parrot.svg.png",
+    "/static/Creative-Tail-Animal-penguin.svg.png",
+    "/static/Creative-Tail-Animal-sheep.svg.png",
+    "/static/Creative-Tail-Animal-snake.svg.png",
+    "/static/Creative-Tail-Animal-squirrel.svg.png",
+    "/static/Creative-Tail-Animal-tiger.svg.png",
+    "/static/Creative-Tail-Animal-turtle.svg.png",
+    "/static/Creative-Tail-Animal-wolf.svg.png",
+    "/static/Creative-Tail-Animal-zebra.svg.png"
     ]
     icon_url=random.choice(icons)
 
     student = Student(
         username = username,
         password = password,
-        email = email,
-        first_name = first_name,
+        first_name = first_name,     #if these are out of order, data will populate into wrong columns
         last_name = last_name,
+        email = email,
         cohort_name = cohort_name,
         cohort_year = cohort_year,
-        icon_url = icon_url,
-        city = city,
-        state = state,
-        zipcode = zipcode
+        icon_url = icon_url
     )
 
     db.session.add(student)
     db.session.commit()
 
     return student
+
+def create_personal_info(pronouns, location, goals, past_roles, github, linkedin, spotify, instagram):
+    """Create personal details associated with user which can be updated"""
+    personal_info = Personal(
+        pronouns = pronouns,
+        location = location,
+        goals = goals,
+        past_roles = past_roles,
+        github = github,
+        linkedin = linkedin,
+        spotify = spotify,
+        instagram = instagram
+    )
+
+    db.session.add(personal_info)
+    db.session.commit()
+
+    return personal_info
 
 def attend(study_session_id, user_id):
 
@@ -217,11 +232,40 @@ def get_comments(study_session_id):
     if comments:
         for comment in comments:
             dict_comments = {}
-            user = get_participant(user_id)
+            user = get_participant(comment.user_id)
             dict_comments[user] = comment.comment
             comments_list.append(dict_comments)
 
     return comments_list
+
+def create_resource(resource, description, study_session_id, user_id):
+    """Create a new resource within a study session page"""
+
+    new_resource = Resource(resource=resource, description=description, study_session_id=study_session_id, user_id=user_id)
+
+    db.session.add(new_resource)
+    db.session.commit()
+
+    return new_resource
+
+def get_resources(study_session_id):
+    """Return all resources within a study session page"""
+
+    resources = Resource.query.filter(Resource.study_session_id == study_session_id).all()
+    resources_list = []
+    if resources:
+        for resource in resources:
+            dict_resources = {}
+            user = get_participant(resource.user_id)
+            dict_resources[user] = resource.resource
+            resources_list.append(dict_resources)
+
+    return resources_list
+
+def is_user_signed_in():
+    """ Check if user is signed in """
+
+    return session.get("signed_in_user_id") is not None
 
 # def get_participants_for_study_session(target_user_id):
 #     participants_for_study_sessions = StudySession.query.filter_by(participant_id=target_user_id)

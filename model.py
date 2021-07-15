@@ -46,15 +46,7 @@ class Student(db.Model):
     icon_url = db.Column(db.String) 
     cohort_name = db.Column(db.String) 
     cohort_year = db.Column(db.String) 
-    # location = db.Column(db.String) .  #Keep it!
-    # goals = db.Column(db.String)
-    city = db.Column(db.String)
-    state = db.Column(db.String)
-    zipcode = db.Column(db.String)
     # sessions_attended = db.Column(db.Integer)
-
-    # comments= db.relationship('Comment', backref='author')
-
 
 
     def __repr__(self):
@@ -63,6 +55,26 @@ class Student(db.Model):
     # def study(self, sessions_attended=1):
     #     """Add one study session to student's count"""
     #     self.study += sessions_attended
+
+class Personal(db.Model):
+    """Comments for chatting within a study session"""
+    __tablename__ = "personal_info"
+
+    user_id = db.Column(db.Integer, db.ForeignKey("students.user_id"), autoincrement=True, primary_key=True)
+    pronouns = db.Column(db.String)
+    location = db.Column(db.String)
+    goals = db.Column(db.Text)
+    past_roles = db.Column(db.Text)
+    github = db.Column(db.String)
+    linkedin = db.Column(db.String)
+    spotify = db.Column(db.String)
+    instagram = db.Column(db.String)
+
+
+    def __repr__(self):
+        return f"<Personal user_id={self.user_id} pronouns={self.pronouns} location={self.location}>"
+
+
 
 class Attendence(db.Model):
     """association between student and study opportunity posting"""
@@ -98,8 +110,8 @@ class StudySession(db.Model):
     #                 (db.Integer, 
     #                     #autoincrement = True,  foreign keys don't need to be auto-incremented because primary keys already are!
     #                     db.ForeignKey('students.user_id'))
-    proposed_date = db.Column(db.DateTime)
-    proposed_time = db.Column(db.String)
+    proposed_date = db.Column(db.DateTime )
+    proposed_time = db.Column(db.String, nullable=False)
     topic = db.Column(db.String, nullable=False)
     capacity = db.Column(db.String)
     prerequisites = db.Column(db.String)
@@ -153,6 +165,19 @@ class Comment(db.Model):
     def __repr__(self):
         return f"<Comment comment_id={self.user_id} comment={self.comment} study_session_id={self.study_session_id}>"
 
+
+class Resource(db.Model):
+    """Comments for chatting within a study session"""
+    __tablename__ = "resources"
+
+    resource_id = db.Column(db.Integer, autoincrement=True, primary_key=True)
+    resource = db.Column(db.String)
+    description = db.Column(db.String)
+    study_session_id = db.Column(db.Integer, db.ForeignKey("study_sessions.study_session_id"))
+    user_id = db.Column(db.Integer, db.ForeignKey("students.user_id"))
+
+    def __repr__(self):
+        return f"<Resource user_id={self.user_id} resource={self.resource} study_session_id={self.study_session_id}>"
 
 # class Topic(db.Model):
 
