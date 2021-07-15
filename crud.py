@@ -87,10 +87,16 @@ def create_personal_info(pronouns, location, goals, past_roles, github, linkedin
 
 def attend(study_session_id, user_id):
 
+    study_session = get_study_session_by_id(study_session_id)
+    creator = study_session.creator.user_id
+
     record_exists = Attendence.query.filter(Attendence.study_session_id==study_session_id, Attendence.user_id==user_id).first()
+
 
     if record_exists:
         return
+    if user_id == creator:
+      return
     else:
         attendence = Attendence(
             study_session_id=study_session_id, 
@@ -186,6 +192,7 @@ def take_attendence(study_session_id):
     attendees = Attendence.query.filter_by(study_session_id=study_session.study_session_id).all()
     # [<Attendence attendence_id= 1 study_session_id 1>, <Attendence attendence_id= 2 study_session_id 1>, 
     #  <Attendence attendence_id= 3 study_session_id 1>, ...]
+    # creator = study_session.creator.username
     
     student_objects=[]
     student_usernames = []
@@ -193,9 +200,13 @@ def take_attendence(study_session_id):
     for attendee in attendees:
         student = get_participant(attendee.user_id)
         username = student.username
-        if username not in student_usernames:
-            student_usernames.append(username)
-            student_objects.append(student)
+        if username not in student_usernames: 
+            # if username is not creator:     #still shows up on page, just without details? Change in crud.attend instead.
+                student_usernames.append(username)
+                student_objects.append(student)
+    print("################")
+    print(student_usernames)
+    print(student_objects)
             
         # trying to check if that student is in there twice
         # each student we grab their unique username

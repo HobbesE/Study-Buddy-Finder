@@ -289,7 +289,6 @@ def create_connection(study_session_id):
     # study_session = get_study_session_by_id(study_session_id)
     user_id=session['logged_in']    
     attend(study_session_id, user_id)
-
     return redirect('/')
 
 
