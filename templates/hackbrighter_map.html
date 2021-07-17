@@ -36,7 +36,7 @@
           
   <div class="map-section">          
           <div class="container">
-            <div class="row">
+            <!-- <div class="row">
               <div class="col-8">
                 <nav class="navbar navbar-light bg-light">
                     <form>
@@ -45,33 +45,25 @@
                     </form>
                   </nav>
                 </div>  
-                </div>
+                </div> -->
               <div class="row" id="map">
                 <script>
+                  let pos;
+                  let map;
                   function initMap() {
-                  const sfBayCoords = {
-                    lat:37.601773,
-                    lng:-122.202870
-                  };
-                  console.log(document.querySelector('#map'))
-                  
-                  const basicMap = new google.maps.Map(
-                    document.querySelector('#map'),
-            
-                    {
-                      center: sfBayCoords,
-                      zoom: 9,
-                    }
-                  );
+                    pos= {lat: 37.657, lng: 122.213};
+                    map= new google.maps.Map (document.getElementById('map'), {
+                      center: pos,
+                      zoom: 15
+                    });
                   }
-                  
+
                 </script>
                 </div>
             </div>
           </div>
   </div>   
 
-    
     <script 
         async defer 
         src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa-gF8p3QpuV1Yh0GnqjWUDDyZ43ixQpE&callback=initMap">
