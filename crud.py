@@ -4,53 +4,51 @@ from model import Student, Personal, Attendence, StudySession, Comment, Resource
 import random
 from sqlalchemy import update
 
-
-
 def create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url):
     """Create and return a new student."""
 
-    icons= [
-    "/static/Creative-Tail-Animal-bat.svg.png", 
-    "/static/Creative-Tail-Animal-bear.svg.png",
-    "/static/Creative-Tail-Animal-bee.svg.png",
-    "/static/Creative-Tail-Animal-but.svg.png",
-    "/static/Creative-Tail-Animal-butterflly.svg.png",
-    "/static/Creative-Tail-Animal-camel.svg.png",
-    "/static/Creative-Tail-Animal-cat.svg.png",
-    "/static/Creative-Tail-Animal-cheetah.svg.png",
-    "/static/Creative-Tail-Animal-coala.svg.png",
-    "/static/Creative-Tail-Animal-cow.svg.png",
-    "/static/Creative-Tail-Animal-crocodile.svg.png",
-    "/static/Creative-Tail-Animal-dinosaur.svg.png",
-    "/static/Creative-Tail-Animal-dog.svg.png",
-    "/static/Creative-Tail-Animal-dolphin.svg.png",
-    "/static/Creative-Tail-Animal-dove.svg.png",
-    "/static/Creative-Tail-Animal-duck.svg.png",
-    "/static/Creative-Tail-Animal-eagle.svg.png",
-    "/static/Creative-Tail-Animal-elephant.svg.png",
-    "/static/Creative-Tail-Animal-flamingo.svg.png",
-    "/static/Creative-Tail-Animal-fox.svg.png",
-    "/static/Creative-Tail-Animal-frog.svg.png",
-    "/static/Creative-Tail-Animal-giraffe.svg.png",
-    "/static/Creative-Tail-Animal-gorilla.svg.png",
-    "/static/Creative-Tail-Animal-horse.svg.png",
-    "/static/Creative-Tail-Animal-kangoroo.svg.png",
-    "/static/Creative-Tail-Animal-leopard.svg.png",
-    "/static/Creative-Tail-Animal-lion.svg.png",
-    "/static/Creative-Tail-Animal-monkey.svg.png",
-    "/static/Creative-Tail-Animal-mouse.svg.png",
-    "/static/Creative-Tail-Animal-panda.svg.png",
-    "/static/Creative-Tail-Animal-parrot.svg.png",
-    "/static/Creative-Tail-Animal-penguin.svg.png",
-    "/static/Creative-Tail-Animal-sheep.svg.png",
-    "/static/Creative-Tail-Animal-snake.svg.png",
-    "/static/Creative-Tail-Animal-squirrel.svg.png",
-    "/static/Creative-Tail-Animal-tiger.svg.png",
-    "/static/Creative-Tail-Animal-turtle.svg.png",
-    "/static/Creative-Tail-Animal-wolf.svg.png",
-    "/static/Creative-Tail-Animal-zebra.svg.png"
-    ]
-    icon_url=random.choice(icons)
+    # icons= [
+    # "/static/Creative-Tail-Animal-bat.svg.png", 
+    # "/static/Creative-Tail-Animal-bear.svg.png",
+    # "/static/Creative-Tail-Animal-bee.svg.png",
+    # "/static/Creative-Tail-Animal-but.svg.png",
+    # "/static/Creative-Tail-Animal-butterflly.svg.png",
+    # "/static/Creative-Tail-Animal-camel.svg.png",
+    # "/static/Creative-Tail-Animal-cat.svg.png",
+    # "/static/Creative-Tail-Animal-cheetah.svg.png",
+    # "/static/Creative-Tail-Animal-coala.svg.png",
+    # "/static/Creative-Tail-Animal-cow.svg.png",
+    # "/static/Creative-Tail-Animal-crocodile.svg.png",
+    # "/static/Creative-Tail-Animal-dinosaur.svg.png",
+    # "/static/Creative-Tail-Animal-dog.svg.png",
+    # "/static/Creative-Tail-Animal-dolphin.svg.png",
+    # "/static/Creative-Tail-Animal-dove.svg.png",
+    # "/static/Creative-Tail-Animal-duck.svg.png",
+    # "/static/Creative-Tail-Animal-eagle.svg.png",
+    # "/static/Creative-Tail-Animal-elephant.svg.png",
+    # "/static/Creative-Tail-Animal-flamingo.svg.png",
+    # "/static/Creative-Tail-Animal-fox.svg.png",
+    # "/static/Creative-Tail-Animal-frog.svg.png",
+    # "/static/Creative-Tail-Animal-giraffe.svg.png",
+    # "/static/Creative-Tail-Animal-gorilla.svg.png",
+    # "/static/Creative-Tail-Animal-horse.svg.png",
+    # "/static/Creative-Tail-Animal-kangoroo.svg.png",
+    # "/static/Creative-Tail-Animal-leopard.svg.png",
+    # "/static/Creative-Tail-Animal-lion.svg.png",
+    # "/static/Creative-Tail-Animal-monkey.svg.png",
+    # "/static/Creative-Tail-Animal-mouse.svg.png",
+    # "/static/Creative-Tail-Animal-panda.svg.png",
+    # "/static/Creative-Tail-Animal-parrot.svg.png",
+    # "/static/Creative-Tail-Animal-penguin.svg.png",
+    # "/static/Creative-Tail-Animal-sheep.svg.png",
+    # "/static/Creative-Tail-Animal-snake.svg.png",
+    # "/static/Creative-Tail-Animal-squirrel.svg.png",
+    # "/static/Creative-Tail-Animal-tiger.svg.png",
+    # "/static/Creative-Tail-Animal-turtle.svg.png",
+    # "/static/Creative-Tail-Animal-wolf.svg.png",
+    # "/static/Creative-Tail-Animal-zebra.svg.png"
+    # ]
+    # icon_url=random.choice(icons)
 
     student = Student(
         username = username,

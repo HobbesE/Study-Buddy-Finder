@@ -51,22 +51,22 @@
                   let pos;
                   let map;
                   function initMap() {
-                    pos= {lat: 37.657, lng: 122.213};
+                    pos= {lat: 37.601773, lng: -122.202870};
                     map= new google.maps.Map (document.getElementById('map'), {
                       center: pos,
-                      zoom: 15
+                      zoom: 9
                     });
                   }
-
+                  
                 </script>
                 </div>
             </div>
           </div>
   </div>   
 
+    
     <script 
-        async defer 
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa-gF8p3QpuV1Yh0GnqjWUDDyZ43ixQpE&callback=initMap">
+        async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAa-gF8p3QpuV1Yh0GnqjWUDDyZ43ixQpE&callback=initMap">
     </script>
 </body>
 {% endblock %}
