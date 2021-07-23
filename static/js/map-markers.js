@@ -7,11 +7,17 @@ function initMap() {
     };
 
     const basicMap = new google.maps.Map(
-        
-    )
+        document.querySelector('#map'),
+        {
+            center: sfBayCoords,
+            zoom: 11
+        }
+    );
 
     const sfMarker = new google.maps.Marker({
         position: sfBayCoords,
         title: 'Headquarters',
         map: basicMap
     });
+
+    
