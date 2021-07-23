@@ -16,7 +16,7 @@ Hackbrighter Study Buddy Finder, a study buddy app for remote distance learners
 
 <p align="center">
   <a href="https://github.com/HobbesE/Study-Buddy-Finder">
-    <img src="static/hackbrighter logo.svg" alt="Logo" width="80" height="80">
+    <img src="static/hackbrighter logo.svg" alt="Logo" width="110" height="110">
   </a>
 
   <h3 align="center">Hackbrighter: A Study Buddy Finder</h3>
