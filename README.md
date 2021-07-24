@@ -6,9 +6,7 @@
 -->
 
 
-[![https://www.linkedin.com/in/hobbes-entrikin-1b2978200/][linkedin-shield]]
-
-# Study-Buddy-Finder
+# Hackbrighter: a Study-Buddy-Finder app
 
 <p align="center">
   <a href="https://github.com/HobbesE/Study-Buddy-Finder">
@@ -20,14 +18,12 @@
   <p align="center">
     Hackbrighter Study Buddy Finder, a study buddy app for remote distance learners
 
-    <br />
+    <br>
     <a href="https://github.com/HobbesE/Study-Buddy-Finder"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
+    <br>
+    <br>
     <a href="https://github.com/HobbesE/Study-Buddy-Finder">View Demo</a>
-    ·
     <a href="https://github.com/HobbesE/Study-Buddy-Finder/issues">Report Bug</a>
-    ·
     <a href="https://github.com/HobbesE/Study-Buddy-Finder/issues">Request Feature</a>
   </p>
 </p>
