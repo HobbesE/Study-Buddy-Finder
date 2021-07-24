@@ -6,7 +6,7 @@
 -->
 
 
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/hobbes-entrikin-1b2978200/]
+[![https://www.linkedin.com/in/hobbes-entrikin-1b2978200/][linkedin-shield]]
 
 # Study-Buddy-Finder
 
