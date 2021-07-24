@@ -38,14 +38,14 @@ class Student(db.Model):
     user_id= db.Column(db.Integer,
                         autoincrement=True,
                         primary_key=True)
-    username = db.Column(db.String(32), unique=True)
-    password = db.Column(db.String)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
-    email = db.Column(db.String, unique=True)
+    username = db.Column(db.String(20), unique=True, nullable=False)
+    password = db.Column(db.String(20), nullable=False)
+    first_name = db.Column(db.String(20), nullable=False)
+    last_name = db.Column(db.String(20))
+    email = db.Column(db.String, unique=True, nullable=False)
     icon_url = db.Column(db.String) 
-    cohort_name = db.Column(db.String) 
-    cohort_year = db.Column(db.String) 
+    cohort_name = db.Column(db.String, nullable=False) 
+    cohort_year = db.Column(db.String, nullable=False) 
     # sessions_attended = db.Column(db.Integer)
 
 

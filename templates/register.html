@@ -5,32 +5,36 @@
 <br>
 <div class= "col-5 offset-3 outline">
     <center><p id= "reg_intro" class="intro"><h2>Create a Hackbrighter Account</h2></p></center><br>
-    <form action="/register" method="POST" class="needs-validation" novalidate>
+    <form action="/register" method="POST">
         <div class="form-row">
-            <div class="col">
-                <label for="validationCustom01">First name</label>
-                <input type="text" name="first_name" class="form-control" id="validationCustom01" placeholder="First name" required>
+            <div class="input-container">
+                <label>First name</label>
+                <input type="text" name="first_name" class="input"  placeholder="First name" required>
             </div>
-            <div class="col=">
-                <label for="validationCustom02">Last name</label>
-                <input type="text" name="last_name" class="form-control" id="validationCustom02" placeholder="Last name" required>
+            <div class="input-container">
+                <label>Last name</label>
+                <input type="text" name="last_name" class="input" placeholder="Last name" required>
             </div>
-            <div class="form-row">
+            <div class="input-container" data-error="Sorry, that email is already in use. Try logging in!">
                 <div class="">
-                    <label for="validationCustom03">Email</label>
-                    <input type="text" name= "email" class="form-control" id="validationCustom02" placeholder="Email" required>
+                    <label>Email</label>
+                    <input type="text" class="input" placeholder="Email" required>
                 </div>
             </div>
-            <div class="form-row">
-                <div class="">
-                    <label for="validationCustomUsername">Username</label>
-                    <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="Pick a good one! It'll be displayed across the website." aria-describedby="inputGroupPrepend" required>
+            <div class="input-container">
+                <div class="input-container" data-error="Sorry, that username is taken.">
+                    <label>Username</label>
+                    <input type="text" class="input" placeholder="Pick a good one! It'll be displayed across the website." aria-describedby="Username" required>
                 </div>
             </div>
-            <div class="">
-                <label for="validationCustomPassword">Password</label>
-                <input type="password" name="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
+            <div class="input-container">
+                <label for="password">Password</label>
+                <input type="password" class="input" aria-describedby="Confirm Password" required>
             </div>      
+            <div class="input-container" data-error="Password confirmation failed. Please check spelling.">
+                <label for="passwordvalidation">Confirm Password</label>
+                <input type="password" class="input" aria-describedby="Confirm Password" required>
+            </div>  
         </div>
 
         <center>
@@ -65,7 +69,12 @@
 <br>
 <br>
 
-    
+<script>
+    document.querySelectorAll('.input-container[data-error] .input').forEach(inpEl => {
+        inpEl.addEventListener('input', () => inpEl.parentElement.removeAttribute('data-error'));
+    });
+
+</script>
 
 
 

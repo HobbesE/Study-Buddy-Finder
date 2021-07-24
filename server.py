@@ -6,15 +6,11 @@ from flask_sqlalchemy import SQLAlchemy
 from flask import Flask, render_template, redirect, request, session, flash
 from flask_login import LoginManager, login_user, login_required, logout_user
 from model import Student, Attendence, StudySession, connect_to_db, db
-# from crud import create_student
 from datetime import timedelta, datetime, timezone
-# import crud sometimes doesn't work. Try "from crud import astrisk"
 from crud import *
 import crud
-# import crud
 from jinja2 import StrictUndefined
 from sqlalchemy.orm.attributes import flag_modified
-
 
 
 app = Flask(__name__)
@@ -28,8 +24,6 @@ login_manager.init_app(app)
 @app.route('/')
 def home():
     """Return main study buddy table as homepage."""
-
-    
 
     if not session.get('logged_in'):
         return render_template('login.html')
@@ -50,6 +44,7 @@ def render_register_page():
     """Return account registration """
     
     return render_template("register.html")
+
 
 @app.route('/register', methods = ['POST']) #same endpoint for a different method
 def create_student_view():
@@ -117,9 +112,12 @@ def create_student_view():
 
 
     #print(first_name, cohort_name, cohort_year, username)
-
-    new_user = create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url) 
-    new_personal_info= create_personal_info(pronouns, location, goals, past_roles, github, linkedin, spotify, instagram)
+    if Student.query.filter(Student.email == email).one():
+        flash("This email address is already in use.")
+        return redirect('/register')
+    else:   
+        new_user = create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url) 
+        new_personal_info= create_personal_info(pronouns, location, goals, past_roles, github, linkedin, spotify, instagram)
 
     
     # TODO:Check if user exists before adding them
