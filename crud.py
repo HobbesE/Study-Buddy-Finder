@@ -7,49 +7,6 @@ from sqlalchemy import update
 def create_student(username, password, email, first_name, last_name, cohort_name, cohort_year, icon_url):
     """Create and return a new student."""
 
-    # icons= [
-    # "/static/Creative-Tail-Animal-bat.svg.png", 
-    # "/static/Creative-Tail-Animal-bear.svg.png",
-    # "/static/Creative-Tail-Animal-bee.svg.png",
-    # "/static/Creative-Tail-Animal-but.svg.png",
-    # "/static/Creative-Tail-Animal-butterflly.svg.png",
-    # "/static/Creative-Tail-Animal-camel.svg.png",
-    # "/static/Creative-Tail-Animal-cat.svg.png",
-    # "/static/Creative-Tail-Animal-cheetah.svg.png",
-    # "/static/Creative-Tail-Animal-coala.svg.png",
-    # "/static/Creative-Tail-Animal-cow.svg.png",
-    # "/static/Creative-Tail-Animal-crocodile.svg.png",
-    # "/static/Creative-Tail-Animal-dinosaur.svg.png",
-    # "/static/Creative-Tail-Animal-dog.svg.png",
-    # "/static/Creative-Tail-Animal-dolphin.svg.png",
-    # "/static/Creative-Tail-Animal-dove.svg.png",
-    # "/static/Creative-Tail-Animal-duck.svg.png",
-    # "/static/Creative-Tail-Animal-eagle.svg.png",
-    # "/static/Creative-Tail-Animal-elephant.svg.png",
-    # "/static/Creative-Tail-Animal-flamingo.svg.png",
-    # "/static/Creative-Tail-Animal-fox.svg.png",
-    # "/static/Creative-Tail-Animal-frog.svg.png",
-    # "/static/Creative-Tail-Animal-giraffe.svg.png",
-    # "/static/Creative-Tail-Animal-gorilla.svg.png",
-    # "/static/Creative-Tail-Animal-horse.svg.png",
-    # "/static/Creative-Tail-Animal-kangoroo.svg.png",
-    # "/static/Creative-Tail-Animal-leopard.svg.png",
-    # "/static/Creative-Tail-Animal-lion.svg.png",
-    # "/static/Creative-Tail-Animal-monkey.svg.png",
-    # "/static/Creative-Tail-Animal-mouse.svg.png",
-    # "/static/Creative-Tail-Animal-panda.svg.png",
-    # "/static/Creative-Tail-Animal-parrot.svg.png",
-    # "/static/Creative-Tail-Animal-penguin.svg.png",
-    # "/static/Creative-Tail-Animal-sheep.svg.png",
-    # "/static/Creative-Tail-Animal-snake.svg.png",
-    # "/static/Creative-Tail-Animal-squirrel.svg.png",
-    # "/static/Creative-Tail-Animal-tiger.svg.png",
-    # "/static/Creative-Tail-Animal-turtle.svg.png",
-    # "/static/Creative-Tail-Animal-wolf.svg.png",
-    # "/static/Creative-Tail-Animal-zebra.svg.png"
-    # ]
-    # icon_url=random.choice(icons)
-
     student = Student(
         username = username,
         password = password,
@@ -65,6 +22,54 @@ def create_student(username, password, email, first_name, last_name, cohort_name
     db.session.commit()
 
     return student
+
+def choose_icon():
+    icons= [
+        "static/Creative-Tail-Animal-bat.svg.png", 
+        "static/Creative-Tail-Animal-bear.svg.png",
+        "static/Creative-Tail-Animal-bee.svg.png",
+        "static/Creative-Tail-Animal-bug.svg.png",
+        "static/Creative-Tail-Animal-bird.svg.png",
+        "static/Creative-Tail-Animal-butterfly.svg.png",
+        "static/Creative-Tail-Animal-camel.svg.png",
+        "static/Creative-Tail-Animal-cat.svg.png",
+        "static/Creative-Tail-Animal-cheetah.svg.png",
+        "static/Creative-Tail-Animal-coala.svg.png",
+        "static/Creative-Tail-Animal-cow.svg.png",
+        "static/Creative-Tail-Animal-crocodile.svg.png",
+        "static/Creative-Tail-Animal-dinosaur.svg.png",
+        "static/Creative-Tail-Animal-dog.svg.png",
+        # "static/Creative-Tail-Animal-dolphin.svg.png",
+        "static/Creative-Tail-Animal-dove.svg.png",
+        "static/Creative-Tail-Animal-duck.svg.png",
+        "static/Creative-Tail-Animal-eagle.svg.png",
+        "static/Creative-Tail-Animal-elephant.svg.png",
+        "static/Creative-Tail-Animal-flamingo.svg.png",
+        "static/Creative-Tail-Animal-fox.svg.png",
+        "static/Creative-Tail-Animal-frog.svg.png",
+        "static/Creative-Tail-Animal-giraffe.svg.png",
+        "static/Creative-Tail-Animal-gorilla.svg.png",
+        "static/Creative-Tail-Animal-horse.svg.png",
+        "static/Creative-Tail-Animal-kangoroo.svg.png",
+        "static/Creative-Tail-Animal-leopard.svg.png",
+        "static/Creative-Tail-Animal-lion.svg.png",
+        "static/Creative-Tail-Animal-monkey.svg.png",
+        "static/Creative-Tail-Animal-mouse.svg.png",
+        "static/Creative-Tail-Animal-panda.svg.png",
+        "static/Creative-Tail-Animal-parrot.svg.png",
+        "static/Creative-Tail-Animal-penguin.svg.png",
+        "static/Creative-Tail-Animal-sheep.svg.png",
+        "static/Creative-Tail-Animal-snake.svg.png",
+        "static/Creative-Tail-Animal-squirrel.svg.png",
+        "static/Creative-Tail-Animal-tiger.svg.png",
+        "static/Creative-Tail-Animal-turtle.svg.png",
+        "static/Creative-Tail-Animal-wolf.svg.png",
+        "static/Creative-Tail-Animal-zebra.svg.png"
+        ]
+    icon_url=random.choice(icons)
+    return icon_url
+
+
 
 def create_personal_info(pronouns, location, goals, past_roles, github, linkedin, spotify, instagram):
     """Create personal details associated with user which can be updated"""
@@ -139,21 +144,23 @@ def create_study_session(participant, proposed_time, topic, capacity, prerequisi
 
 #     return topic
 
-def get_roster_list():
-    study_sessions=get_study_sessions()
-    roster_list=[]
-    
-    for study_session in study_sessions:
-        roster = take_attendence(study_session.study_session_id)
-        roster_list.append(roster)
-    print('888888888888888888888888')
-    print(roster_list)
-    return roster_list
+
+def get_user_by_email(email):
+    "return a user by a provided email"
+    return Student.query.filter(Student.email == email).first()
 
 def get_study_sessions():
     """Return all study sessions"""
-    
     return StudySession.query.all()
+
+def get_roster_list():
+    "return a list of students for all study sessions ever created"
+    study_sessions=get_study_sessions()
+    roster_list=[]
+    for study_session in study_sessions:
+        roster = take_attendence(study_session.study_session_id)
+        roster_list.append(roster)
+    return roster_list
 
 def get_user_study_sessions(student_obj): # <Student username="JBland07">
     """Return user's relevant study sessions"""
