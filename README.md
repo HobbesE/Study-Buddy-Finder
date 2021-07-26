@@ -5,14 +5,8 @@
 *** See the bottom of this document for the declaration of the reference variables
 -->
 
-[![Demo Video][YouTube-shield]][www.youtube.com]
-[![Live Web App][Hackbrighter-shield]][www.hackbrighter.com]
-[![LinkedIn][linkedin-shield]][https://www.linkedin.com/in/hobbes-entrikin-1b2978200/]
-[![Bootcamp Curriculum][Hackbright-shield]][https://hackbrightacademy.com/]
 
-# Study-Buddy-Finder
-
-Hackbrighter Study Buddy Finder, a study buddy app for remote distance learners
+# Hackbrighter: a Study-Buddy-Finder app
 
 <p align="center">
   <a href="https://github.com/HobbesE/Study-Buddy-Finder">
@@ -22,15 +16,14 @@ Hackbrighter Study Buddy Finder, a study buddy app for remote distance learners
   <h3 align="center">Hackbrighter: A Study Buddy Finder</h3>
 
   <p align="center">
-    An awesome README template to jumpstart your projects!
-    <br />
+    Hackbrighter Study Buddy Finder, a study buddy app for remote distance learners
+
+    <br>
     <a href="https://github.com/HobbesE/Study-Buddy-Finder"><strong>Explore the docs »</strong></a>
-    <br />
-    <br />
+    <br>
+    <br>
     <a href="https://github.com/HobbesE/Study-Buddy-Finder">View Demo</a>
-    ·
     <a href="https://github.com/HobbesE/Study-Buddy-Finder/issues">Report Bug</a>
-    ·
     <a href="https://github.com/HobbesE/Study-Buddy-Finder/issues">Request Feature</a>
   </p>
 </p>
