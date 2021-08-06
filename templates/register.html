@@ -1,63 +1,53 @@
+{% extends "base.html" %}
 {% block title %}Hackbrighter Sign Up{% endblock %}
 
 {% block content %}
-
+<div container>
     <p id= "reg_intro" class="intro"><h2>Create a Hackbrighter Account</h2></p><br>
     <form action="/register" method="POST" class="needs-validation" novalidate>
         <div class="form-row">
             <div class="col-md-6">
         <div class="col-md-6">
             <label for="validationCustom01">First name</label>
-            <input type="text" name="first_name" class="form-control" id="validationCustom01" placeholder="First name" value="Balloonicorn" required>
+            <input type="text" name="first_name" class="form-control" id="validationCustom01" placeholder="First name" required>
             <div class="valid-feedback">
                 Nice!
             </div>
-            </div>
-            <div class="col-md-6">
-            <input type="text" name="first_name" class="form-control" id="validationCustom01" placeholder="First name" required>
         </div>
         <div class="col-md-6">
             <label for="validationCustom02">Last name</label>
-            <input type="text" name="last_name" class="form-control" id="validationCustom02" placeholder="Last name" value="Unicorn" required>
-            <div class="valid-feedback">
-                Nice!
-            </div>
-            </div>
             <input type="text" name="last_name" class="form-control" id="validationCustom02" placeholder="Last name" required>
-        </div>
+                <div class="valid-feedback">
+                    Nice!
+                </div>
+            </div>
         <div class="form-row">
             <div class="form-group">
             <label for="validationCustom03">Email</label>
-            <input type="text" name= "email" class="form-control" id="validationCustom02" placeholder="Email" value="balloonicorn.d.unicorn@hackbright.com" required>
-              <div class="valid-feedback">
-                  Nice!
-              </div>
-            <div class="col-md-6">
-                <label for="validationCustom03">Email</label>
-                <input type="text" name= "email" class="form-control" id="validationCustom02" placeholder="Email" required>
+            <input type="text" name= "email" class="form-control" id="validationCustom02" placeholder="Email" required>
+                <div class="valid-feedback">
+                    Nice!
+                </div>
             </div>
         </div>
         <div class="form-row">
             <div class="col-md-6">
             <label for="validationCustomUsername">Username</label>
-              <div class="input-group">
-              <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="balloonicorn" aria-describedby="inputGroupPrepend" required>
-                <div class="invalid-feedback">
-                    Please choose a unique username.
+                <div class="input-group">
+                    <input type="text" name="username" class="form-control" id="validationCustomUsername" placeholder="balloonicorn" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                        Please choose a unique username.
+                    </div>
                 </div>
-              </div>
-            </div>
+                </div>
             <div class=col-md-6">
             <label for="validationCustomPassword">Password</label>
-              <div class="input-group">
-              <input type="password" name="password" class="form-control" id="validationCustomUsername" placeholder="" aria-describedby="inputGroupPrepend" required>
-                  <div class="invalid-feedback">
-                      Please choose a strong password.
-                  </div>
+                <div class="input-group">
+                    <input type="password" name="password" class="form-control" id="validationCustomUsername" placeholder="" aria-describedby="inputGroupPrepend" required>
+                    <div class="invalid-feedback">
+                        Please choose a strong password.
+                    </div>
                 </div>    
-              </div>
-                <label for="validationCustomUsername">Username</label>
-                <input type="text" name="username" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
             </div>
         </div>
         <div class="form-row">
@@ -81,11 +71,7 @@
             <div class="invalid-feedback">
                 Please provide a valid zip.
             </div>
-            </div>
-        <div class="col-md-6">
-            <label for="validationCustomPassword">Password</label>
-            <input type="password" name="password" class="form-control" id="validationCustomUsername" aria-describedby="inputGroupPrepend" required>
-        </div>      
+            </div>    
 
         </div>
         <div class="form-row">
@@ -94,7 +80,6 @@
           <label for="validationCustom07">Cohort Name</label>
           <select name="cohort_name">
               <option value="Ada">Ada</option>
-@@ -83,7 +42,8 @@
               <option value="Grace">Grace</option>
           </select>
           </div>
@@ -104,7 +89,6 @@
           <label for="validationCustom08">Cohort Year</label>
           <select name="cohort_year">
               <option value="2019">2022</option>
-@@ -92,32 +52,18 @@
               <option value="Beyond">Beyond!</option>
           </select>
           <h5><a href="/define-cohort">What's this?</a></h5>
@@ -115,7 +99,7 @@
 
     </div>
     </form>
-
+</div>
 
     <script>
     // Example starter JavaScript for disabling form submissions if there are invalid fields
